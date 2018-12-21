@@ -1,4 +1,4 @@
-baseURL = "http://gadgetlunatic.com/"
+baseURL = "https://gadgetlunatic.com/"
 languageCode = "ja-jp"
 title = "gadgetlunatic"
 theme = "hugo-gl-theme"
