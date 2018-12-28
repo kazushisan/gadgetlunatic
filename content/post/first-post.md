@@ -1,7 +1,7 @@
 ---
 title: "はじめての投稿"
 date: 2018-12-21T20:36:36+09:00
-draft: true
+draft: false
 no_toc: true
 ---
 
