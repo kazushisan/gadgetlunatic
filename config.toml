@@ -4,6 +4,8 @@ title = "gadgetlunatic"
 theme = "hugo-gl-theme"
 hasCJKLanguage = true
 paginate = 3
+googleAnalytics = "UA-131471081-1"
+
 [menu]
 	[[menu.main]]
 		identifier = "twitter"

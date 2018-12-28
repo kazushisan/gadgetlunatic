@@ -1,3 +1,3 @@
 [submodule "themes/hugo-gl-theme"]
 	path = themes/hugo-gl-theme
-	url = https://1f0a887d098ae40fdc8c7ab7ff11652c89776679:x-oauth-basic@github.com/kazushisan/hugo-gl-theme.git
+	url = https://github.com/kazushisan/hugo-gl-theme.git
