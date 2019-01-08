@@ -1,5 +1,5 @@
 ---
-title: "Linuxにインストール"
+title: "Arch Linuxにインストール"
 date: 2018-10-22T17:52:36+09:00
 draft: false
 weight: 2
