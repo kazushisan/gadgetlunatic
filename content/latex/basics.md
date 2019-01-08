@@ -55,6 +55,28 @@ type: "documentation"
 ```
 と付け加えます。
 
+## 箇条書き
+
+```
+\begin{enumerate} % 順序ありのリスト
+\item 項目1
+\item 項目2
+\end{enumerate}
+
+\begin{itemize} % 順序なしのリスト
+\item 項目
+\item 項目
+\begin{itemize}
+```
+
+箇条書きのスタイルを変更するには、プリアンブルに`\usepackage{enumitem}`を追加したうえで、オプションを
+```
+\begin{enumerate}[label=\textbf{\arabic*}, leftmargin=*]
+```
+のように指定する。
+
+
+
 
 [^1]: `\date{}`コマンドを省略した場合にも同じように今日の日付が出力されます。
 

@@ -5,6 +5,8 @@ draft: false
 ---
 gadgetlunatic – Mac, Web開発などの話題に関するメモおよびLaTeXの使い方などのまとめ
 
+[このサイトについて](/post/first-post)
+
 ## 好きなこと
 
 - Mac
@@ -15,8 +17,11 @@ gadgetlunatic – Mac, Web開発などの話題に関するメモおよびLaTeX�
 
 大学では経営工学を学んでいるのでRなどを使ったデータ解析にも興味があります。
 
+
 ## About
 
 Twitter: [@kazushikonosu](https://twitter.com/kazushikonosu)
 
 Github: [kazushisan](https://github.com/kazushisan)
+
+連絡はTwitterまで。
