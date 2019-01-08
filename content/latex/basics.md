@@ -7,7 +7,7 @@ type: "documentation"
 ---
 ## はじめに
 
-[導入](https://gadgetlunatic.com/latex/introduction/)で書いたように、以降ではLuaLaTeXの使用を前提とします。
+[導入](/latex/introduction/)で書いたように、以降ではLuaLaTeXの使用を前提とします。
 
 まずは、最低限のソースファイルを作ってみます。仮に`article.tex`として、下の内容でテキストファイルを作成します。
 
@@ -35,25 +35,37 @@ type: "documentation"
 
 `\maketitle`コマンドを書くことによって実際にタイトルが生成されます。そのため、`\maketitle`がない場合にはタイトルは表示されません。`\date{}`コマンドによって日付を記入できます。`\date{\today}`で今日の日付を自動的に出力することもできます。[^1]
 
-`\thanks{}`コマンドを使うことで、所属をいい感じに表示してみました。
+`\thanks{}`コマンドを使うことで、所属などを脚注として追加できます。
 
 ## 見出し
 
 主に使うのは以下のコマンドだと思います。
 
 ```
-\section{}
-\subsection{}
-\subsubsection{}
-\paragraph{}
-\subsubparagraph{}
+\section{} % 節
+\subsection{} % 項
+\subsubsection{} % 目
+\paragraph{} % 段落
+\subsubparagraph{} % 小段落
 ```
 
-見出しのスタイルを変更したい時には、`\renewcommand`コマンドを使うことができます。私がよく使う例だと`subsection`に`section`の番号を表示させないようにすることがあります。これを実現するには、
+見出しのスタイルを変更したい時には、`\renewcommand`コマンドを使うことができます。ためしに次の行をプリアンブルに追加してみましょう。
 ```
 \renewcommand{\thesubsection}{\arabic{subsection}}
 ```
-と付け加えます。
+これによって通常1.1などと表示される`subsection`の見出しに`section`の番号(1.1の1.の部分)を表示させないようにすることができます。
+
+`\renewcommand`に続く最初の`{}`で`\the`を追加した見出しの種類を記述し、どの見出しのスタイルを変更するかを指定します。続く`{}`で、実際の書式を設定します。例の`\arabic`だけでなく、次のオプションがあります。
+
+|コマンド|形式|例|
+|---|---|---|
+|`\arabic`|アラビア数字|1, 2, 3, ...|
+|`\roman`|ローマ数字|ⅰ, ⅱ, ⅲ, ...|
+|`\Roman`|ローマ数字|Ⅰ, Ⅱ, Ⅲ, ...|
+|`\alph`|アルファベット|a, b, c, ...|
+|`\Alph`|アルファベット|A, B, C, ...|
+
+`\arabic`などのコマンドに囲まれた部分にはカウンタを指定します。カウンタとはTeXで見出しの番号が入っている変数のようなものです。見出しの名前を指定することで指定できます。
 
 ## 箇条書き
 
@@ -73,7 +85,7 @@ type: "documentation"
 ```
 \begin{enumerate}[label=\textbf{\arabic*}, leftmargin=*]
 ```
-のように指定する。
+のように指定します。
 
 
 

@@ -41,4 +41,4 @@ type: "documentation"
 \setlength{\evensidemargin}{-0.4truemm} % 左からのオフセットを25mmになおす。
 \addtolength{\textwidth}{-50truemm} % 本文の幅から50mm引く
 ```
-と記述します。マージンを他の値に設定したい場合も、コメントを読めば理解できると思います。
+と記述します。
