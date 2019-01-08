@@ -7,7 +7,7 @@ type: "documentation"
 ---
 ## ヘッダー・ページ番号
 
-ヘッダーの設定を変更するには、[プリアンブル](https://gadgetlunatic.com/latex/basics/#はじめに)で`\pagestyle{}`コマンドを、特定のページのみのヘッダー設定を変更するには`\thispagestyle`コマンドを用います。
+ヘッダーの設定を変更するには、[プリアンブル](https://gadgetlunatic.com/latex/basics/#はじめに)で`\pagestyle`コマンドを、特定のページのみのヘッダー設定を変更するには`\thispagestyle`コマンドを用います。
 
 共通して利用できるオプションは以下の通りです。
 
