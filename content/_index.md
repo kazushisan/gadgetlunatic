@@ -7,17 +7,6 @@ gadgetlunatic – Mac, Web開発などの話題に関するメモおよびLaTeX�
 
 [このサイトについて](/post/first-post)
 
-## 好きなこと
-
-- Mac
-- Linux
-- Web開発 (HTML/CSS/Javascript/Node.js/Vue/React)
-
-などなど...
-
-大学では経営工学を学んでいるのでRなどを使ったデータ解析にも興味があります。
-
-
 ## About
 
 Twitter: [@kazushikonosu](https://twitter.com/kazushikonosu)
