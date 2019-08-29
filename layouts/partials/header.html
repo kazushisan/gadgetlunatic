@@ -1,0 +1,22 @@
+<header class="global-header">
+	<div class="main">
+		<h1><a href="{{.Site.BaseURL}}">{{- .Site.Title -}}</a></h1>
+	</div>
+	<div class="sub">
+		<ul>
+			{{ range .Site.Menus.main }}
+				<li>
+					<a href="{{ .URL }}">
+						{{ .Pre }}
+						<span>{{ .Name }}</span>
+					</a>
+				</li>
+			{{ end}}
+		</ul>
+	</div>
+	{{ if ( eq .Type "documentation" | and .IsPage) }}
+		{{- partial "table-for-documentation.html" . -}}
+	{{ else if .IsPage }}
+		{{- partial "table-of-contents.html" . -}}
+	{{ end }}
+</header>

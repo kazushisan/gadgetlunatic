@@ -1,0 +1,14 @@
+{{ define "title" }}
+{{- .CurrentSection.Title }} {{ .Title }} | {{ .Site.Title -}}
+{{ end }}
+{{ define "main" }}
+<article>
+	<header class="post-header">
+		<h1>{{ .Title }}</h1>
+		<p>Updated: {{ .Lastmod.Format "Mon Jan 2, 2006" -}}</p>
+	</header>
+	<section class="post-content">
+		{{ .Content }}
+	</section>
+</article>
+{{ end }}

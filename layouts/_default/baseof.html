@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>
+			{{- block "title" . -}}
+			{{ if .IsHome }}{{- .Site.Title -}}{{ else }}{{- .Title }} | {{ .Site.Title -}}{{ end }}
+			{{- end -}}
+		</title>
+		<link rel="stylesheet" href="/css/bundle.css">
+		{{ template "_internal/opengraph.html" . }}
+		{{ template "_internal/twitter_cards.html" . }}
+		{{ template "_internal/google_analytics_async.html" . }}
+	</head>
+	{{ if .Page.IsHome }}
+    <body class="top-page">
+	{{ else }}
+	<body>
+	{{ end }}
+		<div id="wrap">
+			{{- partial "sp-header.html" . -}}
+			{{- partial "header.html" . -}}
+			<div id="content" class="{{ .Kind }}">
+				{{- block "main" . }}{{- end }}
+			</div>
+			{{- partial "footer.html" . -}}
+			<script src="/js/bundle.js"></script>
+		</div>
+    </body>
+</html>
