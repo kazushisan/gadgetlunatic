@@ -1,0 +1,32 @@
+{{ define "main" }}
+<div class="documentation-list">
+	<header class="list-page-title">
+		<h1>
+				{{ .Title }}
+		</h1>
+	</header>
+	<ul class="documentation-pages">
+		{{ range .Pages.ByWeight }}
+			<li class="documentation-page">
+				<h1>
+					<a href="{{ .Permalink }}" class="on">{{ .Title }}</a>
+				</h1>
+			{{ $headers := findRE "<h2.*?>(.|\n])+?</h2>" .Content }}
+			{{ $hasHeader := ge (len $headers) 1 }}
+			{{ $permalink := .Permalink }}
+			{{if $hasHeader }}
+				<ul class="documentation-page-index">
+				{{ range $header := $headers }}
+					{{ $name := ($header | plainify) }}
+					{{ $tag := htmlEscape $header | replaceRE "^&lt;(h.).+$" "$1" }}
+					{{ $id := htmlEscape $header | replaceRE "^.+id=&#34;(.+)&#34;.+$" "$1" }}
+					{{ $url := delimit ( slice $permalink "#" $id) "" }}
+					<li class="{{ $tag }}"><a href="{{ $url }}">{{ htmlUnescape $name }}</a></li>
+				{{ end }}
+				</ul>
+			{{ end }}
+			</li>
+		{{ end }}
+	</ul>
+</div>
+{{ end }}

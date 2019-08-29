@@ -1,0 +1,20 @@
+{{ define "main" }}
+{{ $noToc := eq $.Params.no_toc true }}
+{{ if $noToc }}
+<article class="no_toc">
+{{ else }}
+<article>
+{{ end }}
+	<header class="post-header">
+		<h1>{{- .Title -}}</h1>
+		<p>{{- .Date.Format "Mon Jan 2, 2006" -}}
+		{{ if ne .Date .Lastmod }}
+		Update: {{ .Lastmod.Format "Mon Jan 2, 2006" -}}
+		{{ end }}</p>
+	</header>
+	<section class="post-content">
+		{{ .Content }}
+	</section>
+	<footer class="post-footer"></footer>
+</article>
+{{ end }}

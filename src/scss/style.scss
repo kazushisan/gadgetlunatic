@@ -1,0 +1,34 @@
+@charset "utf-8";
+@import 'variables';
+@import 'reset';
+// @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700');
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700');
+
+body{
+	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+	// font-family: "Source Sans Pro", sans-serif;
+	font-size: $font-size;
+	line-height: 1.6em;
+	font-weight: normal;
+	font-feature-settings: "pkna" 1;
+	background-color: $white;
+	color: $color;
+}
+code{
+	font-family: 'Source Code Pro', monospace;
+}
+#wrap{
+	width:100vw;
+	overflow: hidden;
+	position: relative;
+}
+
+
+@import 'header';
+@import 'content';
+@import 'single';
+@import 'list';
+@import 'pagination';
+@import 'footer';
+@import 'table-navigation';
+
