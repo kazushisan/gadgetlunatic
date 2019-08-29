@@ -1,5 +1,5 @@
 baseURL = "https://gadgetlunatic.com/"
-languageCode = "ja-jp"
+languageCode = "ja"
 title = "gadgetlunatic"
 theme = "hugo-gl-theme"
 hasCJKLanguage = true
