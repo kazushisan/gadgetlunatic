@@ -16,12 +16,6 @@ const scroll = new SmoothScroll('a[href*="#"]', {
 		) + navHeight
 })
 
-const { hash } = window.location
-
-if (hash) {
-	scroll.animateScroll(document.querySelector(hash))
-}
-
 document.addEventListener('scrollStop', () => {
 	document.body.classList.remove('show-menu')
 })
@@ -51,6 +45,12 @@ if (toc && isDocumentation) {
 }
 
 if (tableOfContents) {
+	const { hash } = window.location
+
+	if (hash) {
+		scroll.animateScroll(document.getElementById(hash.slice(1)))
+	}
+
 	window.addEventListener('scroll', () => {
 		tableOfContents.manage()
 	})

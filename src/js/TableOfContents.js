@@ -19,6 +19,8 @@ class TableOfContents {
 
 			const { top } = header.getBoundingClientRect()
 
+			header.id = encodeURI(header.id).toLowerCase()
+
 			// add a link to each header
 			header.innerHTML = `<a href="#${id}">${innerHTML}</a>`
 
