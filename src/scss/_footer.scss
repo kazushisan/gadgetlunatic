@@ -12,25 +12,24 @@
 	transition: margin-left 0.3s ease-out;
 	border-top: 1px $grey-darker solid;
 	background-color: $grey;
-	div.main{
-		margin: 24px 32px;
-	}
-}
-.show-menu{
-	.global-footer{
-		margin-left: 300px;
-	}
-}
-@media screen and (min-width: 932px){
-	.global-footer{
+
+	@media #{$pc} {
 		z-index: 10;
-		div.main{
-			margin: 48px;
+	}
+
+	.show-menu & {
+		margin-left: 300px;
+
+		@media #{$pc} {
+			margin-left: -1px;
 		}
 	}
-	.show-menu{
-		.global-footer{
-			margin-left: -1px;
+
+	&__main{
+		margin: 24px 32px;
+
+		@media #{$pc} {
+			margin: 48px;
 		}
 	}
 }
