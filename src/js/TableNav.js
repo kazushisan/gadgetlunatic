@@ -1,6 +1,6 @@
 'use strict'
 
-export default class {
+class TableNav {
 	constructor(object){
 		if(!(typeof object === "object" && object.element && object.li_list && object.headers_list)) throw 'invalid argument'
 		this.ticking = false
@@ -12,14 +12,16 @@ export default class {
 			position_reverse: [],
 			list: object.headers_list
 		}
-		for(const header of this.headers.list){
+
+		this.headers.list.forEach(header => {
 			const id = header.getAttribute("id")
 			const innerHTML = header.innerHTML
 			const marginTop = document.defaultView.getComputedStyle(header).marginTop.replace('px', '')
 			this.headers.position.push
 			(header.getBoundingClientRect().top + window.scrollY - marginTop - this.navHeight)
 			header.innerHTML = `<a href="#${id}">${innerHTML}</a>`
-		}
+		})
+
 		this.headers.position_reverse = this.headers.position.reverse()
 	}
 	async manage(){
@@ -52,3 +54,5 @@ export default class {
 		}
 	}
 }
+
+export default TableNav

@@ -1,7 +1,7 @@
 {
-  "name": "hugo-gl-theme",
+  "name": "gadgetlunatic",
   "version": "0.0.1",
-  "description": "Hugo Theme for gadgetlunatic.com",
+  "description": "Personal Website",
   "main": "index.js",
   "scripts": {
     "watch": "webpack --watch",

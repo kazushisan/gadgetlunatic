@@ -1,6 +1,6 @@
 <div class="pagination">
     {{ if $.Paginator.HasPrev }}
-        <a class="preivous-link" href="{{ $.Paginator.Prev.URL }}">&larr; Previous</a>
+        <a class="previous-link" href="{{ $.Paginator.Prev.URL }}">&larr; Previous</a>
     {{ end }}
     <span class="page-number">Page {{ $.Paginator.PageNumber }} of {{ $.Paginator.TotalPages }}</span>
     {{ if $.Paginator.HasNext }}
