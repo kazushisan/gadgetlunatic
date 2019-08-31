@@ -1,13 +1,14 @@
 @charset "utf-8";
 
 .global-footer {
-  color: $white;
+  color: $black;
   overflow: hidden;
   position: relative;
   z-index: 5;
-  background-color: $theme;
+  background-color: $grey;
   width: 100vw;
   transition: margin-left 0.3s ease-out;
+  flex: 0 0 auto;
 
   @media #{$pc} {
     z-index: 10;

@@ -4,7 +4,9 @@
     "stylelint-scss"
 	],
 	"rules": {
-		"at-rule-no-unknown": false,
+		"at-rule-no-unknown": [true, {
+			"ignoreAtRules": ["/.+/"]
+		}],
 		"scss/at-rule-no-unknown": true
 	}
 }

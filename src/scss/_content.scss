@@ -1,20 +1,18 @@
 @charset "utf-8";
 
-div#wrap > #content {
+#content {
   margin-top: 60px;
-}
-
-div#wrap > #content {
   overflow: hidden;
   position: relative;
   z-index: 5;
   background-color: $white;
   width: 100vw;
   transition: margin-left 0.3s ease-out;
+  flex-grow: 1;
 }
 
 .show-menu {
-  div#wrap > #content {
+  #content {
     margin-left: 300px;
   }
 }
