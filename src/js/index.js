@@ -2,6 +2,7 @@
 
 import "../scss/style.scss";
 import TableNav from "./TableNav.js";
+import SmoothScroll from "smooth-scroll"
 
 const SmoothScroll = require("smooth-scroll");
 
