@@ -1,7 +1,7 @@
-const path = require("path")
-const autoprefixer = require("autoprefixer")
-const cssnano = require("cssnano")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const path = require('path')
+const autoprefixer = require('autoprefixer')
+const cssnano = require('cssnano')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = env => {
 	const isProduction = Boolean(env && env.production)
@@ -10,14 +10,14 @@ module.exports = env => {
 	return {
 		mode: isProduction ? 'production' : 'development',
 		devtool: isProduction ? 'source-map' : 'inline-source-map',
-		entry: path.resolve(__dirname, "src/js/index.js"),
+		entry: path.resolve(__dirname, 'src/js/index.js'),
 		output: {
-			path: path.resolve(__dirname, "static/js"),
+			path: path.resolve(__dirname, 'static/js'),
 			filename: 'bundle.js'
 		},
 		plugins: [
 			new MiniCssExtractPlugin({
-				filename: "../css/bundle.css"
+				filename: '../css/bundle.css'
 			})
 		],
 		module: {
@@ -45,10 +45,10 @@ module.exports = env => {
 							options: {
 								sourceMap: !isProduction,
 								plugins: [
-									cssnano({preset: 'default'}),
-									autoprefixer({grid: true})
+									cssnano({ preset: 'default' }),
+									autoprefixer({ grid: true })
 								]
-							  }
+							}
 						},
 						{
 							loader: 'sass-loader',
@@ -59,7 +59,7 @@ module.exports = env => {
 					]
 				},
 				{
-					test:  /\.(png|jpg|gif|svg)$/,
+					test: /\.(png|jpg|gif|svg)$/,
 					loader: 'file-loader',
 					options: {
 						outputPath: '../assets/'
