@@ -1,7 +1,9 @@
 'use strict'
 
+import 'core-js/stable'
+import 'regenerator-runtime/runtime'
+
 import '../scss/style.scss'
-// import TableNav from './TableNav.js'
 import TableOfContents from './TableOfContents'
 import SmoothScroll from 'smooth-scroll'
 
