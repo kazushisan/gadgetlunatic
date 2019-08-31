@@ -36,8 +36,8 @@ if(tablenav){
 }
 
 
-const menu_button = document.getElementById("menu_button")
-const sp_header_close = document.getElementById("sp-header-close")
+const menu_button = document.querySelector(".sp-header__button")
+const sp_header_close = document.querySelector(".sp-close-area")
 menu_button.onclick = (e) => {
 	document.body.classList.toggle("show-menu")
 	e.stopPropagation()

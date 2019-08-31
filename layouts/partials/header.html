@@ -1,11 +1,15 @@
 <header class="global-header">
-	<div class="main">
-		<h1><a href="{{.Site.BaseURL}}">{{- .Site.Title -}}</a></h1>
+	<div class="global-header__main">
+		<h1 class="global-header__title">
+			<a href="{{.Site.BaseURL}}" class="global-header__link">
+				{{- .Site.Title -}}
+			</a>
+		</h1>
 	</div>
-	<div class="sub">
-		<ul>
+	<div class="global-header__sub">
+		<ul class="global-header__list">
 			{{ range .Site.Menus.main }}
-				<li>
+				<li class="global-header__item">
 					<a href="{{ .URL }}">
 						{{ .Pre }}
 						<span>{{ .Name }}</span>
