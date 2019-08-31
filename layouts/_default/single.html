@@ -1,7 +1,7 @@
 {{ define "main" }}
-{{ $noToc := eq $.Params.no_toc true }}
-{{ if $noToc }}
-<article class="no_toc">
+{{ $toc := eq $.Params.toc true }}
+{{ if $toc }}
+<article class="toc">
 {{ else }}
 <article>
 {{ end }}

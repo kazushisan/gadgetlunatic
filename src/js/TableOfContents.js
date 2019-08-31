@@ -1,4 +1,4 @@
-const navHeight = 61
+const navHeight = 60
 
 class TableOfContents {
 	constructor({ headers, items, sub }) {

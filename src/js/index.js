@@ -7,7 +7,7 @@ import '../scss/style.scss'
 import TableOfContents from './TableOfContents'
 import SmoothScroll from 'smooth-scroll'
 
-const navHeight = 61
+const navHeight = 60
 
 const scroll = new SmoothScroll('a[href*="#"]', {
 	offset: anchor =>

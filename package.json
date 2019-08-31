@@ -28,7 +28,6 @@
     "prettier": "^1.18.2",
     "sass-loader": "^8.0.0",
     "stylelint": "^10.1.0",
-    "stylelint-config-recommended": "^2.2.0",
     "stylelint-scss": "^3.10.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7",
@@ -38,6 +37,7 @@
   "dependencies": {
     "core-js": "^3.2.1",
     "regenerator-runtime": "^0.13.3",
-    "smooth-scroll": "^16.1.0"
+    "smooth-scroll": "^16.1.0",
+    "stylelint-config-standard": "^18.3.0"
   }
 }

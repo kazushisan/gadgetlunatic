@@ -1,35 +1,27 @@
 @charset "utf-8";
 
-.global-footer{
-	color: $black;
-	overflow: hidden;
-	position: relative;
-	z-index:5;
-	background-color:$white;
-	width: 100vw;
-	margin-left: -1px;
-	border-left: 1px $grey-darker solid;
-	transition: margin-left 0.3s ease-out;
-	border-top: 1px $grey-darker solid;
-	background-color: $grey;
+.global-footer {
+  color: $white;
+  overflow: hidden;
+  position: relative;
+  z-index: 5;
+  background-color: $theme;
+  width: 100vw;
+  transition: margin-left 0.3s ease-out;
 
-	@media #{$pc} {
-		z-index: 10;
-	}
+  @media #{$pc} {
+    z-index: 10;
+  }
 
-	.show-menu & {
-		margin-left: 300px;
+  .show-menu & {
+    margin-left: 300px;
+  }
 
-		@media #{$pc} {
-			margin-left: -1px;
-		}
-	}
+  &__main {
+    margin: 48px 32px;
 
-	&__main{
-		margin: 24px 32px;
-
-		@media #{$pc} {
-			margin: 48px;
-		}
-	}
+    @media #{$pc} {
+      margin: 64px;
+    }
+  }
 }
