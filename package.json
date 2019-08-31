@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server & hugo server",
     "build": "webpack --env.production && hugo --minify",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src && stylelint ./src",
+    "lint:fix": "eslint --fix ./src && stylelint --fix ./src"
   },
   "author": "Kazushi Konosu",
   "license": "MIT",
@@ -26,6 +27,9 @@
     "postcss-loader": "^3.0.0",
     "prettier": "^1.18.2",
     "sass-loader": "^8.0.0",
+    "stylelint": "^10.1.0",
+    "stylelint-config-recommended": "^2.2.0",
+    "stylelint-scss": "^3.10.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7",
     "webpack-dev-server": "^3.8.0",
