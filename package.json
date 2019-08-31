@@ -4,7 +4,7 @@
   "description": "Personal Website",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server & hugo server",
+    "start": "webpack-dev-server & hugo server",
     "build": "webpack --env.production && hugo --minify",
     "lint": "eslint ./src"
   },
