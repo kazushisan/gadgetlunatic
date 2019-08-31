@@ -8,7 +8,11 @@
 	<ul>
 		{{ range (where .Site.RegularPages "Section" .CurrentSection.Section).ByWeight }}
 			{{if (eq .Permalink $permalink | and $hasHeader)}}
-				<li class="table-of-contents__item"><a href="{{ .Permalink }}" class="on">{{ .Title }}</a></li>
+				<li class="table-of-contents__item">
+					<a href="{{ .Permalink }}" class="table-of-contents__link table-of-contents__link--on">
+						{{ .Title }}
+					</a>
+				</li>
 				{{ range $header := $headers }}
 					{{ $name := ($header | plainify) }}
 					{{ $id := htmlEscape $header | replaceRE "^.+id=&#34;(.+)&#34;.+$" "$1" }}

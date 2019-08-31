@@ -33,7 +33,6 @@
 
 		&--sub {
 			font-size: 14px;
-			margin-left: 0.5em;
 		}
 	}
 
@@ -42,14 +41,27 @@
 		padding: 0 48px;
 		display: block;
 
-		&.on {
+		&--on {
 			color: $theme;
 			border-left: 4px $theme solid;
-			padding-left: 44px;			
+			padding-left: 44px;
+		}
+
+		&--sub-on {
+			color: $theme;
 		}
 
 		&:hover {
 			color: $theme;
+		}
+	}
+
+	// to be considered
+	&__item--sub &__link {
+		padding-left: 56px;
+
+		&--on {
+			padding-left: 52px;
 		}
 	}
 }
