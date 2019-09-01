@@ -43,6 +43,28 @@ If you are on macOS and using [Homebrew][brew], you can install Hugo with the fo
 
 For more detailed explanations, read the installation guides that follow for installing on macOS and Windows.
 
+```js
+let ticking = false
+window.addEventListener('scroll', () => {
+	if (window.innerWidth < 932 || !toc || ticking) return
+
+	ticking = true
+	const footerRect = document
+		.querySelector('.global-footer')
+		.getBoundingClientRect()
+
+	const bottom =
+		footerRect.y < window.innerHeight
+			? window.innerHeight - footerRect.y + 'px'
+			: ''
+
+	window.requestAnimationFrame(() => {
+		toc.style.bottom = bottom
+		ticking = false
+	})
+})
+```
+
 ### Linuxbrew (Linux)
 
 If you are on Linux and using [Linuxbrew][linuxbrew], you can install Hugo with the following one-liner:
@@ -129,7 +151,7 @@ brew install hugo
 
 If Homebrew is working properly, you should see something similar to the following:
 
-```
+```bash
 ==> Downloading https://homebrew.bintray.com/bottles/hugo-0.21.sierra.bottle.tar.gz
 ######################################################################### 100.0%
 ==> Pouring hugo-0.21.sierra.bottle.tar.gz
@@ -141,7 +163,7 @@ Replace `brew install hugo` with `brew install hugo --HEAD` if you want the abso
 
 `brew` should have updated your path to include Hugo. You can confirm by opening a new terminal window and running a few commands:
 
-```
+```bash
 $ # show the location of the hugo executable
 which hugo
 /usr/local/bin/hugo

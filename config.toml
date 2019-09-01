@@ -5,6 +5,9 @@ hasCJKLanguage = true
 paginate = 3
 googleAnalytics = "UA-131471081-1"
 
+pygmentsCodeFences= true
+pygmentsUseClasses = true
+
 [menu]
 	[[menu.main]]
 		identifier = "twitter"
