@@ -40,7 +40,7 @@ yarn install
 yarn start
 ```
 
-Webpack is used to bundle and handle assets under `/src`. To reduce disk writes, Webpack will not write write the bundled files during development. Instead, `webpack-dev-server` will start on `http://localhost:1314` and host the bundled files from memory.
+Webpack is used to bundle and handle assets under `/src`. To reduce disk writes, Webpack will not write write the bundled files to local storage during development. Instead, `webpack-dev-server` will start on `http://localhost:1314` and host the bundled files from memory.
 
 Hugo will run a server on `http://localhost:1313` and reference the Javascript / SCSS files hosted on `http://localhost:1314`.
 
@@ -54,7 +54,7 @@ yarn build
 
 Webpack will process Javascript/SCSS files and assets under `/src` and write to `/static`. It will also produce `/data/manifest.json` which includes the paths to bundled files.
 
-Using this manifest, Hugo will build the articles to `/public`
+Using this manifest, Hugo will build the articles to `/public`. Hugo will fail to build the website if `/data/manifest.json` is not present.
 
 ## Deploy
 
@@ -63,6 +63,8 @@ The website will deploy automatically when a commit is pushed to `origin/master`
 `gadgetlunatic.com` is hosted as a static website using Netlify.
 
 ## Lint
+
+Make sure that all Linters pass before making a commit.
 
 ```bash
 yarn lint
