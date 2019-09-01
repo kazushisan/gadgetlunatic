@@ -1,28 +1,18 @@
 @charset "utf-8";
 
-div#wrap > #content{
-	margin-top: 61px;
-}
-div#wrap > #content{
-	overflow: hidden;
-	position: relative;
-	z-index:5;
-	background-color:$white;
-	width: 100vw;
-	margin-left: -1px;
-	border-left: 1px $grey-darker solid;
-	transition: margin-left 0.3s ease-out;
-}
-.show-menu{
-	div#wrap > #content{
-		margin-left: 300px;
-	}
+#content {
+  margin-top: 60px;
+  overflow: hidden;
+  position: relative;
+  z-index: 5;
+  background-color: $white;
+  width: 100vw;
+  transition: margin-left 0.3s ease-out;
+  flex-grow: 1;
 }
 
-@media screen and (min-width: 932px){
-	.show-menu{
-		div#wrap > #content{
-			margin-left: -1px;
-		}
-	}
+.show-menu {
+  #content {
+    margin-left: 300px;
+  }
 }

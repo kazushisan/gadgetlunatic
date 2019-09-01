@@ -1,3 +1,9 @@
+{{ .Scratch.Set "css" "http://localhost:1314/css/bundle.css" }}
+{{ .Scratch.Set "js" "http://localhost:1314/js/bundle.js" }}
+{{ if not .Site.IsServer }}
+{{ .Scratch.Set "css" (index .Site.Data.manifest "main.css") }}
+{{ .Scratch.Set "js" (index .Site.Data.manifest "main.js") }}
+{{ end }}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -9,7 +15,8 @@
 			{{ if .IsHome }}{{- .Site.Title -}}{{ else }}{{- .Title }} | {{ .Site.Title -}}{{ end }}
 			{{- end -}}
 		</title>
-		<link rel="stylesheet" href="/css/bundle.css">
+		{{ $css := .Scratch.Get "css" }}
+		<link rel="stylesheet" href="{{ $css }}"></link>
 		{{ template "_internal/opengraph.html" . }}
 		{{ template "_internal/twitter_cards.html" . }}
 		{{ template "_internal/google_analytics_async.html" . }}
@@ -26,7 +33,8 @@
 				{{- block "main" . }}{{- end }}
 			</div>
 			{{- partial "footer.html" . -}}
-			<script src="/js/bundle.js"></script>
+			{{ $js := .Scratch.Get "js" }}
+			<script src="{{ $js }}"></script>
 		</div>
     </body>
 </html>

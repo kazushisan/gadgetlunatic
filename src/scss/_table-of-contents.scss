@@ -1,0 +1,66 @@
+@charset "utf-8";
+
+.table-of-contents {
+  position: relative;
+  margin: 24px 0;
+  padding-top: 24px;
+
+  @media #{$pc} {
+    border-top: none;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    z-index: 10;
+    padding: 48px 0;
+    margin: 0;
+    right: auto;
+    width: 300px;
+    background-color: $white;
+  }
+
+  &__title {
+    margin: 0 48px;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  &__item {
+    margin: 0.5em 0;
+    font-size: 16px;
+
+    &--sub {
+      font-size: 14px;
+    }
+  }
+
+  &__link {
+    color: inherit;
+    padding: 0 48px;
+    display: block;
+
+    &--on {
+      color: $theme;
+      border-left: 4px $theme solid;
+      padding-left: 44px;
+    }
+
+    &--sub-on {
+      color: $theme;
+    }
+
+    &:hover {
+      color: $theme;
+    }
+  }
+
+  // to be considered
+  &__item--sub &__link {
+    padding-left: 56px;
+
+    &--on {
+      padding-left: 52px;
+    }
+  }
+}

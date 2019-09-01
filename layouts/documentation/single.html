@@ -2,7 +2,7 @@
 {{- .CurrentSection.Title }} {{ .Title }} | {{ .Site.Title -}}
 {{ end }}
 {{ define "main" }}
-<article>
+<article class="toc">
 	<header class="post-header">
 		<h1>{{ .Title }}</h1>
 		<p>Updated: {{ .Lastmod.Format "Mon Jan 2, 2006" -}}</p>

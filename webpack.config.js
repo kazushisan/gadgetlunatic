@@ -1,7 +1,8 @@
-const path = require("path")
-const autoprefixer = require("autoprefixer")
-const cssnano = require("cssnano")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const path = require('path')
+const autoprefixer = require('autoprefixer')
+const cssnano = require('cssnano')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const ManifestPlugin = require('webpack-manifest-plugin')
 
 module.exports = env => {
 	const isProduction = Boolean(env && env.production)
@@ -10,16 +11,23 @@ module.exports = env => {
 	return {
 		mode: isProduction ? 'production' : 'development',
 		devtool: isProduction ? 'source-map' : 'inline-source-map',
-		entry: path.resolve(__dirname, "src/js/index.js"),
+		entry: path.resolve(__dirname, 'src/js/index.js'),
 		output: {
-			path: path.resolve(__dirname, "static/js"),
-			filename: 'bundle.js'
+			path: path.resolve(__dirname, 'static/'),
+			filename: `js/${isProduction ? '[hash].' : ''}bundle.js`,
+			publicPath: '/'
 		},
 		plugins: [
 			new MiniCssExtractPlugin({
-				filename: "../css/bundle.css"
+				filename: `css/${isProduction ? '[hash].' : ''}bundle.css`
+			}),
+			new ManifestPlugin({
+				fileName: '../data/manifest.json'
 			})
 		],
+		devServer: {
+			port: 1314
+		},
 		module: {
 			rules: [
 				{
@@ -45,10 +53,10 @@ module.exports = env => {
 							options: {
 								sourceMap: !isProduction,
 								plugins: [
-									cssnano({preset: 'default'}),
-									autoprefixer({grid: true})
+									cssnano({ preset: 'default' }),
+									autoprefixer({ grid: true })
 								]
-							  }
+							}
 						},
 						{
 							loader: 'sass-loader',
@@ -59,10 +67,10 @@ module.exports = env => {
 					]
 				},
 				{
-					test:  /\.(png|jpg|gif|svg)$/,
+					test: /\.(png|jpg|gif|svg)$/,
 					loader: 'file-loader',
 					options: {
-						outputPath: '../assets/'
+						outputPath: 'assets/'
 					}
 				}
 			]

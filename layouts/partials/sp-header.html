@@ -1,5 +1,7 @@
 <header class="sp-header">
-	<input type="button" value="menu" id="menu_button">
-	<h1><a href="{{.Site.BaseURL}}">{{- .Site.Title -}}</a></h1>
+	<input type="button" value="menu" id="menu_button" class="sp-header__button">
+	<h1 class="sp-header__title">
+		<a href="{{.Site.BaseURL}}" class="sp-header__link">{{- .Site.Title -}}</a>
+	</h1>
 </header>
-<div id="sp-header-close"></div>
+<div class="sp-close-area"></div>

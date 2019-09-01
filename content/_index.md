@@ -3,14 +3,6 @@ title: "トップページ"
 date: 2018-11-20T18:28:45+09:00
 draft: false
 ---
-gadgetlunatic – Mac, Web開発などの話題に関するメモおよびLaTeXの使い方などのまとめ
+gadgetlunatic – [@kazushikonosu](https://twitter.com/kazushikonosu)の個人サイト兼ブログ。Web開発の話やLaTeXについて書きます。
 
 [このサイトについて](/post/first-post)
-
-## About
-
-Twitter: [@kazushikonosu](https://twitter.com/kazushikonosu)
-
-Github: [kazushisan](https://github.com/kazushisan)
-
-連絡はTwitterまで。
