@@ -40,6 +40,8 @@ yarn install
 yarn start
 ```
 
+The result can be seen on `http://localhost:1313`.
+
 Webpack is used to bundle and handle assets under `/src`. To reduce disk writes, Webpack will not write write the bundled files to local storage during development. Instead, `webpack-dev-server` will start on `http://localhost:1314` and host the bundled files from memory.
 
 Hugo will run a server on `http://localhost:1313` and reference the Javascript / SCSS files hosted on `http://localhost:1314`.
