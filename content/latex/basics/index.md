@@ -31,7 +31,7 @@ type: "documentation"
 `\begin{document}`の直後に
 ```latex
 \title{タイトル}
-\author{作者\thanks{所属}}
+\author{作者}
 \date{2018年1月1日}
 \maketitle
 ```
@@ -50,7 +50,6 @@ type: "documentation"
 \subsection{} % 項
 \subsubsection{} % 目
 \paragraph{} % 段落
-\subsubparagraph{} % 小段落
 ```
 
 見出しのスタイルを変更したい時には、`\renewcommand`コマンドを使うことができます。ためしに次の行をプリアンブルに追加してみましょう。
@@ -95,7 +94,41 @@ type: "documentation"
 ```
 のように指定します。
 
+## 作成例
 
+以上の結果を踏まえて、ファイルを作成してみました。ソースコードは次の通りです。
+
+```latex
+\documentclass[12pt,a4j]{ltjsarticle}
+% プリアンブル
+\usepackage{luatexja}
+\begin{document}
+\title{タイトル}
+\author{作者}
+\date{2018年1月1日}
+\maketitle
+
+はじめてのLaTeX
+
+\section{節} % 節
+\subsection{項} % 項
+\subsubsection{目} % 目
+\paragraph{段落} % 段落
+
+\begin{enumerate} % 順序ありのリスト
+\item 項目1
+\item 項目2
+\end{enumerate}
+
+\begin{itemize} % 順序なしのリスト
+\item 項目
+\item 項目
+\end{itemize}
+\end{document}
+```
+このファイルからPDFを生成すると、次のような結果が得られます。
+
+![基本的なコマンドを使ったファイル](basic-output.png)
 
 
 [^1]: `\date{}`コマンドを省略した場合にも同じように今日の日付が出力されます。
