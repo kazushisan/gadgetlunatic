@@ -20,7 +20,11 @@ type: "documentation"
 \end{document}
 ```
 基本的な構成は`html`などと変わりません。`\begin{document}`以前が`<head>`に相当するプリアンブル、`\begin{document} \end{document}`で囲まれた部分が`<body>`に相当します。
-保存したディレクトリで`$ lualatex article`を実行すると`article.pdf`をはじめとしたファイルが作成されます。今後はこのファイルに追記していきます。
+保存したディレクトリで`$ lualatex article`を実行すると`article.pdf`をはじめとしたファイルが作成されます。`article.pdf`は次の画像のようになっているはずです
+
+![基本のPDF](basic-pdf.png)
+
+今後はこのファイルに追記していきます。
 
 ## タイトルの設定
 
