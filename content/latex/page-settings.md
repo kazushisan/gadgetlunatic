@@ -19,7 +19,7 @@ type: "documentation"
 |myheadings|自分でカスタマイズしたヘッダー|
 
 例えば全てのページにページ番号のみを表示する場合には、プリアンブルに
-```
+```latex
 \pagestyle{plain}
 ```
 と記述します。`\pagestyle{myheadings}`を選んだ場合には、`\markright{右ページのヘッダー}`や`\markleft{左ページのヘッダー}`コマンドを用いて左右いづれかのヘッダーのみを指定するか、`\markboth{左ページのヘッダー}{右ページのヘッダー}`コマンドで左右両方のヘッダーを指定します。
@@ -27,7 +27,7 @@ type: "documentation"
 ## ページ余白の設定
 
 普段よく使う四方25mmのマージンに設定するには、
-```
+```latex
 % 縦
 \setlength{\textheight}{\paperheight} % 本文の高さを紙面の高さにする
 \setlength{\topmargin}{-0.4truemm}

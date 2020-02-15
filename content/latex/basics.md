@@ -11,7 +11,7 @@ type: "documentation"
 
 まずは、最低限のソースファイルを作ってみます。仮に`article.tex`として、下の内容でテキストファイルを作成します。
 
-```
+```latex
 \documentclass[12pt,a4j]{ltjsarticle}
 % プリアンブル
 \usepackage{luatexja}
@@ -25,7 +25,7 @@ type: "documentation"
 ## タイトルの設定
 
 `\begin{document}`の直後に
-```
+```latex
 \title{タイトル}
 \author{作者\thanks{所属}}
 \date{2018年1月1日}
@@ -41,7 +41,7 @@ type: "documentation"
 
 主に使うのは以下のコマンドだと思います。
 
-```
+```latex
 \section{} % 節
 \subsection{} % 項
 \subsubsection{} % 目
@@ -69,7 +69,7 @@ type: "documentation"
 
 ## 箇条書き
 
-```
+```latex
 \begin{enumerate} % 順序ありのリスト
 \item 項目1
 \item 項目2
@@ -82,7 +82,7 @@ type: "documentation"
 ```
 
 箇条書きのスタイルを変更するには、プリアンブルに`\usepackage{enumitem}`を追加したうえで、オプションを
-```
+```latex
 \begin{enumerate}[label=\textbf{\arabic*}, leftmargin=*]
 ```
 のように指定します。

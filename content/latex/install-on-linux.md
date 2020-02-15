@@ -44,7 +44,7 @@ alias pacman="pacman --assume-installed texlive-bin $(\pacman -Sgq texlive-most 
 
 インストーラをダウンロードして実行。
 
-```
+```bash
 $ curl -OL http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 $ tar xvf install-tl-unx.tar.gz
 $ cd install-tl-20*
@@ -54,7 +54,7 @@ $ sudo ./install-tl --repository http://ftp.jaist.ac.jp/pub/CTAN/systems/texlive
 
 インストーラの動作が終了したらしたら、パスを通して、日本語環境とghostscriptをインストールします。
 
-```
+```bash
 $ sudo /usr/local/texlive/????/bin/*/tlmgr path add
 $ sudo tlmgr update --self -all
 $ sudo tlmgr install collection-langjapanese

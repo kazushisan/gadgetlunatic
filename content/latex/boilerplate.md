@@ -8,7 +8,7 @@ weight: 5
 ## 短いレポート
 私が普段短いレポート課題を提出するときに使う設定をまとめたボイラープレートです。
 
-```
+```latex
 \documentclass[12pt,a4j]{ltjsarticle}
 \usepackage{amsmath,amssymb}
 \usepackage{luatexja}
