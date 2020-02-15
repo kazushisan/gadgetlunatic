@@ -82,8 +82,12 @@ type: "documentation"
 \begin{itemize} % 順序なしのリスト
 \item 項目
 \item 項目
-\begin{itemize}
+\end{itemize}
 ```
+
+この出力結果は次のようになります。
+
+![箇条書きの出力](list-output.png)
 
 箇条書きのスタイルを変更するには、プリアンブルに`\usepackage{enumitem}`を追加したうえで、オプションを
 ```latex
