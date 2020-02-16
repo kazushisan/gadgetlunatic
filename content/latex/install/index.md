@@ -110,7 +110,16 @@ TeXのソースファイルでは、ヘッダーに
 \usepackage{enumitem}
 ```
 
-のように、パッケージを読み込む記述を追加する場合があります。これを行ったのちに、PDFの生成に失敗する場合、必要なパッケージがインストールされていない場合があるので、
+のように、パッケージを読み込む記述を追加する場合があります。これを行ったのちに、コマンドの実行時に次のようなエラーが発生した場合、
+
+```
+! LaTeX Error: File `enumitem.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+```
+
+必要なパッケージがインストールされていないので、
 
 ```bash
 sudo tlmgr install enumitem
