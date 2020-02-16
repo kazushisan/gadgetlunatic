@@ -7,7 +7,7 @@ type: "documentation"
 ---
 ## はじめに
 
-[導入](/latex/introduction/)で書いたように、以降ではLuaLaTeXの使用を前提とします。
+[はじめに](/latex/introduction/)で書いたように、以降ではLuaLaTeXの使用を前提とします。
 
 まずは、最低限のソースファイルを作ってみます。仮に`article.tex`として、下の内容でテキストファイルを作成します。
 
@@ -30,7 +30,7 @@ type: "documentation"
 
 今後はこのファイルに追記していきます。
 
-## タイトルの設定
+## タイトル
 
 `\begin{document}`の直後に
 ```latex
@@ -136,9 +136,3 @@ type: "documentation"
 
 
 [^1]: `\date{}`コマンドを省略した場合にも同じように今日の日付が出力されます。
-
----
-
-#### 参考
-
-
