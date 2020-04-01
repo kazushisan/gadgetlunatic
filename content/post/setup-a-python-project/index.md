@@ -1,5 +1,5 @@
 ---
-title: "Node.a使いがPythonの環境構築をするお話 2020年版"
+title: "Node.js使いがPythonの環境構築をするお話 2020年版"
 date: 2020-04-01T06:57:17+09:00
 draft: true
 toc: true
@@ -76,7 +76,7 @@ Node.jsのプロジェクトであれば，npm/yarnを使ってプロジェク�
 
 などの問題があります．
 
-## 仮想環境を使ってPythonの環境を使い分ける
+### 仮想環境を使ってPythonの環境を使い分ける
 
 そこで，Python標準で用意されているvenvを使って，プロジェクトに必要な依存性のみを管理する方法が生まれました．
 
@@ -86,18 +86,18 @@ python -m venv your-virtual-env-name
 
 のようにして仮想環境を作って，開発の際にはこの環境の中に入ってdepsをインストール・Pythonのスクリプトを実行することで，他のプロジェクトの依存ライブラリに影響を受けずに開発できるという次第です．
 
-## pipenvを使って仮想環境の設定と依存性の管理を自動化する
+### pipenvを使って仮想環境の設定と依存性の管理を自動化する
 
 仮想環境を都度作るのは面倒なので，代わりにvenvとpipをまとめて使えるようにしたのが，pipenvです．pipenvを使ってプロジェクトの依存性を管理すると，プロジェクトルートに `Pipfile` と `Pipfile.lock` が生成されます．ちょうど `package.json` と　`package-lock.json` のような感じです．
 
 しかし，pipenvは [If this project is dead, just tell us #4058
 ](https://github.com/pypa/pipenv/issues/4058) があがるぐらいには微妙な状態です．
 
-## Poetryを使ってパッケージ管理を行う
+### Poetryを使ってパッケージ管理を行う
 
 pipenvの代替としてPoetryがあります．[PEP 518](https://www.python.org/dev/peps/pep-0518) の `pyproject.toml` でパッケージの管理を行います．一方で， `package.json` の　`scripts` のように，プロジェクトのタスクランナーとしては活用できないようです．一番将来性がありそうなので最近はこれを使っています．
 
-### インストール
+#### インストール
 
 基本的には[docs](https://python-poetry.org/docs/)にまとまっています．
 
@@ -107,7 +107,7 @@ curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poet
 
 [この設定](https://github.com/python-poetry/poetry#enable-tab-completion-for-bash-fish-or-zsh) を行うことでターミナル上で補完が効くようになります．
 
-### プロジェクトでの使用
+#### プロジェクトでの使用
 
 ```bash
 poetry init # プロジェクトルートで実行することで pyproject.toml が生成されます．
