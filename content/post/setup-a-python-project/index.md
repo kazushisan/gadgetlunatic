@@ -7,13 +7,15 @@ toc: true
 
 ## TL;DR
 
-普段主にNode.jsで開発する人が，Pythonでもいい感じにプロジェクトをセットアップできるように，Pythonの各種ツール類やセットアップ方法をまとめた個人的なメモです．
+普段主にNode.jsで開発する人が，Pythonでもいい感じにプロジェクトをセットアップできるように，Pythonの各種ツール類やセットアップ方法をまとめた個人的なメモです．情報の正確さには気をつけましたが，Pythonエキスパートではないので間違った認識があるかもしれません．🙇‍♂️
 
 長すぎて読めないという人のためにざっくりとまとめると，
 - Pythonのバージョンはpyenvで切り替え
 - Jupyterやpandasなどシステムワイドで使用するライブラリはpipで管理
 - プロジェクトのdependencyはPoetryで管理
-- コードの治安はflake8とautopep8で守る
+- コードの治安はflake8とautopep8で維持する
+
+という感じの内容になっています．
 
 ## Pythonのバージョン管理
 
@@ -48,7 +50,7 @@ pyenv global 3.8.1 ## デフォルトで使用するバージョンの切り替�
 
 パッケージ管理にはpipやanacondaが使われます．anacondaはデータ分析を行う人たちの間ではよく使用されます．pandasやmatplotlibなど一通りのライブラリがあらかじめ用意されているため，なにも考えずにデータ分析などの作業を開始することができ便利ですが，
 
-- ディスク容量をめちゃくちゃ食う
+- ディスク容量をめっちゃ消費する
 - anacondaのリポジトリに登録されていないライブラリを使うにはpipと併用する必要があり，そのためにいろいろとするのが面倒
 
 などの問題があるので，ここではミニマルに使えるpipを採用します．
@@ -61,7 +63,7 @@ pip install notebook # Jupyter Notebookのインストール
 
 などのようにして，任意のライブラリをインストールして，使うことができます．
 
-## プロジェクトの依存性の管理
+## プロジェクトの依存ライブラリ管理
 
 Node.jsのプロジェクトであれば，npm/yarnを使ってプロジェクトディレクトリの　`node_modules/` 配下に依存ライブラリをインストールすると思いますが，Pythonではなかなかスタンダードな依存性の管理の方法が定まらず，複数の方法が存在します．
 
@@ -91,7 +93,7 @@ python -m venv your-virtual-env-name
 仮想環境を都度作るのは面倒なので，代わりにvenvとpipをまとめて使えるようにしたのが，pipenvです．pipenvを使ってプロジェクトの依存性を管理すると，プロジェクトルートに `Pipfile` と `Pipfile.lock` が生成されます．ちょうど `package.json` と　`package-lock.json` のような感じです．
 
 しかし，pipenvは [If this project is dead, just tell us #4058
-](https://github.com/pypa/pipenv/issues/4058) があがるぐらいには微妙な状態です．
+](https://github.com/pypa/pipenv/issues/4058) がissueとして挙がるぐらいには微妙な状態です．
 
 ### Poetryを使ってパッケージ管理を行う
 
@@ -117,3 +119,51 @@ poetry add --dev autopep8 # 開発用の依存性もyarnと同じ雰囲気で追
 ```
 
 
+## コードの治安を維持したい
+
+Node.js環境でいうEslint/Prettier的なことをしたいと思いましたが，これもデファクトスタンダードはないようです．
+
+### PEP 8のお話
+
+[PEP 8](https://www.python.org/dev/peps/pep-0008/) というコードスタイルガイドが公式で定義されています．インデントサイズや改行などのスタイルが指定されています．コードがスタイルに沿っているかを判定するリンターが `pycodestyle`（旧 `pep8`）です．
+
+### flake8でコードのチェックを行う
+
+上記の `pycodestyle` に加えて，コードの論理的なエラーをチェックする `PyFlakes` と複雑度を判定する　`mccabe` をラップしているのがflake8です．さきほどのPoetryを使ってプロジェクトルートで次のようにしてインストールできます．
+
+```bash
+poetry add --dev flake8
+```
+
+Lint自体は次のようにして行えます．
+
+```bash
+flake8 --show-source .
+```
+
+ちなみにvscodeを使っている場合は，設定でデフォルトのpylintを無効にして，代わりにflake8を有効にすることで，エディタ上でエラーを確認できるようになります．
+
+```json
+{
+	"python.linting.pylintEnabled": false,
+	"python.linting.flake8Enabled": true
+}
+```
+
+### autopep8で自動フォーマットする
+
+ESLintのように，flake8にフォーマッターの機能までついていればいいのですが，あいにくありません！なので，別途`autopep8`というツールを追加します．
+
+```bash
+poetry add --dev autopep8
+```
+
+このツールを使うことによって，PEP 8沿うようにコードを自動でフォーマットしてくれます．
+
+```bash
+autopep8 -ivr .
+```
+
+## まとめ
+
+いかがでしたか？（） 今回は触れませんでしたが，[mypy](http://mypy-lang.org/) を使って静的型チェックもしてみたいです．
