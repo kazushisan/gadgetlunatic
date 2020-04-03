@@ -1,5 +1,5 @@
 ---
-title: "Node.js使いがPythonの環境構築をするお話 2020年版"
+title: "MacにPythonの環境構築をするお話 2020年版"
 date: 2020-04-01T06:57:17+09:00
 draft: false
 toc: true
@@ -7,20 +7,25 @@ toc: true
 
 ## TL;DR
 
-普段主にNode.jsで開発する人が，Pythonでもいい感じにプロジェクトをセットアップできるように，Pythonの各種ツール類やセットアップ方法をまとめた個人的なメモです．情報の正確さには気をつけましたが，Pythonエキスパートではないので間違った認識があるかもしれません．🙇‍♂️
+普段はNode.jsで開発しているのですが，Pythonでもいい感じにプロジェクトをセットアップできるように，Pythonの各種ツール類やセットアップ方法をまとめた個人的なメモです．情報の正確さには気をつけましたが，Pythonエキスパートではないので間違った認識があるかもしれません．🙇‍適宜Node.jsのツールと比較してみました．
 
 長すぎて読めないという人のためにざっくりとまとめると，
 
 - Pythonのバージョンはpyenvで切り替え
-- Jupyterやpandasなどシステムワイドで使用するライブラリはpipで管理
+- Anacondaを使いたくない
+- Globalに使うPython製のアプリはpipxでインストール
 - プロジェクトのdependencyはPoetryで管理
 - コードの治安はflake8とautopep8で維持する
 
-という感じの内容になっています．
+という感じの内容になっています．この記事は[My Python Development Environment, 2020 Edition](https://jacobian.org/2019/nov/11/python-environment-2020/)をかなり参考にしています．
 
-## Pythonのバージョン管理
+## Pythonのインストールとバージョン管理
 
-Node.js同様，Pythonも複数のプロジェクトでPythonのバージョンを使いわけるためにPython自体のバージョンを切り替えるツールを使います．
+はじめにmacOSに標準でインストールされているPythonのバージョンを確認してみましょう．
+
+![システムのPythonバージョン](python-version.png)
+
+古くてつらいので，別途Pythonをインストールします．HomebrewからPythonを直接インストールすることもできますが，プロジェクトによって使い分けるためにもPython自体のバージョンを切り替えるツールを使います．Node.jsの`nvm`やRubyの`rbenv`と同様です．
 
 [pyenv](https://github.com/pyenv/pyenv) がデファクトスタンダードなようなので，ここではpyenvを使ってバージョン管理を行います．
 
@@ -47,38 +52,72 @@ pyenv install 3.8.1 ##インストール
 pyenv global 3.8.1 ## デフォルトで使用するバージョンの切り替え　
 ```
 
-## パッケージ管理
+## Anacondaを使わない
 
-パッケージ管理にはpipやanacondaが使われます．anacondaはデータ分析を行う人たちの間ではよく使用されます．pandasやmatplotlibなど一通りのライブラリがあらかじめ用意されているため，なにも考えずにデータ分析などの作業を開始することができ便利ですが，
+標準で使えるpip以外に，Anacondaというパッケージマネージャ・仮想環境管理ツールを含むPythonのディストリビューションがあります．
 
-- ディスク容量をめっちゃ消費する
-- anacondaのリポジトリに登録されていないライブラリを使うにはpipと併用する必要があり，そのためにいろいろとするのが面倒
+> Anaconda® is a package manager, an environment manager, a Python/R data science distribution, and a collection of over 7,500+ open-source packages. Anaconda is free and easy to install, and it offers free community support. [^quote]
 
-などの問題があるので，ここではミニマルに使えるpipを採用します．
+[^quote]: https://docs.anaconda.com/anaconda/
 
-### システム全体で使うライブラリのインストール
+こちらは機械学習はデータサイエンスを目的にPythonを使う人たちの間ではよく使用されます．最初からmatplotlibやpandas，Jupyterなどデータ分析に必要なライブラリ，ツールが一通り揃っているため，なにも考えずにデータ分析など作業を開始できます．
+
+付属するcondaというパッケージマネージャでは標準のパッケージのフォーマットとは異なるフォーマットが採用されており，condaとpipのパッケージには互換性がありません．しかし，condaが参照するライブラリのリポジトリにも上記の通り十分なライブラリが揃っているため，普通につかう分には問題ないです．
+
+AnacondaにはPython以外で書かれたライブラリやバイナリも含めて統合的に扱いたいという思想があり，[^philosophy] 公式リポジトリではないですが，コミュニティリポジトリからはNode.jsまでインストールできてしまいます．[^conda-node]
+
+[^philosophy]: https://stackoverflow.com/questions/20994716/what-is-the-difference-between-pip-and-conda また併せて，[こちらのアーカイブ](http://web.archive.org/web/20170415041123/www.continuum.io/blog/developer-blog/python-packages-and-environments-conda)も参照されたし
+
+[^conda-node]: https://anaconda.org/conda-forge/nodejs
+
+また，pipをfreezeして生成する `requirements.txt` はトップレベルの依存性と，ライブラリの依存性をすべて並列にならべるだけでつらい[^better-pip]ので，依存ツリーを管理してくれるAnacondaはこの点も人気に影響したようです．
+
+[^better-pip]: つらさを解消しようとした例 https://www.kennethreitz.org/essays/a-better-pip-workflow
+
+しかし，以下の理由から，現在はわざわざAnacondaを採用する必要はないと感じました．
+
+- Anaconda自体が全部盛りなのでディスク容量をめっちゃ消費する
+- anacondaのリポジトリに登録されていないライブラリを使うにはpipと併用する必要があり，両方使おうとするとコンフリクトが発生してつらい場合がある
+- `requirements.txt` による依存性管理の問題も別途ツールをを使うことで解消できる（後述）
+- pipも[wheel](https://www.python.org/dev/peps/pep-0427/) によってバイナリを扱えるようになった
+- pandasなどのライブラリを，プロジェクトベースでバージョンを管理してインストールするのではなく，システムワイドなインストールを参照するのはいかがなのか🤔
+- node.jsまでインストールできてしまうcondaの思想が気に入らない（）
+
+なので，このガイドではAnacondaを使用しません．
+
+## Python製アプリケーションのインストール
+
+pipで公開されているパッケージのなかには，Pythonのスクリプト内でインポートして使えるライブラリだけでなく，PATHが通った実行可能なコマンドをインストールするものもあります．httpieやJupyter Notebookなど，これらのパッケージをpipで直接インストールしてしまうと，すぐに`pip list`の結果が膨れ上がります．実際問題，これらのパッケージの依存がプロジェクトに影響をおよぼしたり，相互に影響をおよぼして意図しない動作をする可能性が十分に考えられます．
+
+そのため，venv （後述）を使ってパッケージを隔離することもできますが，手間がかかります．そこで登場するのが [pipx](https://github.com/pipxproject/pipx/) です．
+
+> pip is a general-purpose package installer for both libraries and apps with no environment isolation. pipx is made specifically for application installation, as it adds isolation yet still makes the apps available in your shell: pipx creates an isolated environment for each application and its associated packages. [^what-is-pipx]
+
+[^what-is-pipx]: https://pipxproject.github.io/pipx/#how-is-it-different-from-pip
+
+### pipxのインストール
+
+Macであればbrewでインストールできます．
 
 ```bash
-pip install notebook # Jupyter Notebookのインストール
+brew install pipx
 ```
 
-などのようにして，任意のライブラリをインストールして，使うことができます．
+### 例: Jupyterのインストール
+
+```bash
+pipx install --include-deps jupyter
+```
+
+Jupyterの場合は複数のパッケージの集合で，内包されるそれぞれのパッケージで実行可能なコマンドが定義されているので， `--include-deps` を渡します．
 
 ## プロジェクトの依存ライブラリ管理
 
-Node.jsのプロジェクトであれば，npm/yarnを使ってプロジェクトディレクトリの　`node_modules/` 配下に依存ライブラリをインストールすると思いますが，Pythonではなかなかスタンダードな依存性の管理の方法が定まらず，複数の方法が存在します．
-
-### pipでシステムに全部インストールする
-
-一番な簡単な例では，さきほど使ったpipを使ってシステムにライブラリをインストールしてしまうことができます．必要とするパッケージの一覧は `pip freeze > requirements.txt` のような形でファイルに書き出して，新しく環境をセットアップする際にはこのファイルから依存性一覧をセットアップすることができます．
-
-しかし，このようにシステム全体で依存性を管理すると，
+npm/yarnを使ってプロジェクトディレクトリの　`node_modules/` 配下に依存ライブラリをインストールするNode.jsのプロジェクトの場合と異なり，`pip install` を使ってプロジェクトの依存もインストールしてしまうと，システム全体に影響を与えてしまいます．そのほかに以下の問題があります．
 
 - プロジェクトごとに依存性のバージョンを使い分けることができない
-- 特定のプロジェクトでは必要としていないライブラリも他のプロジェクトで必要としていたらインストールされてしまう
-- 依存するライブラリの一覧で管理するので，直接依存しているのか．使っているライブラリが依存するライブラリなのかわからない
-
-などの問題があります．
+- `pip freeze`の結果には，プロジェクトでは必要としていないライブラリを含めてすべてのライブラリが含まれてしまう．
+- 直接依存しているのか．使っているライブラリが依存するライブラリなのかわからない
 
 ### 仮想環境を使ってPythonの環境を使い分ける
 
@@ -88,30 +127,61 @@ Node.jsのプロジェクトであれば，npm/yarnを使ってプロジェク�
 python -m venv your-virtual-env-name
 ```
 
-のようにして仮想環境を作って，開発の際にはこの環境の中に入ってdepsをインストール・Pythonのスクリプトを実行することで，他のプロジェクトの依存ライブラリに影響を受けずに開発できるという次第です．
+のようにして仮想環境を作って，開発の際にはこの環境の中に入ってdepsをインストール・Pythonのスクリプトを実行することで，他のプロジェクトの依存ライブラリに影響を受けずに開発できます．一方で，依存ツリーを管理できていない問題は残ります．
 
 ### pipenvを使って仮想環境の設定と依存性の管理を自動化する
 
-仮想環境を都度作るのは面倒なので，代わりにvenvとpipをまとめて使えるようにしたのが，pipenvです．pipenvを使ってプロジェクトの依存性を管理すると，プロジェクトルートに `Pipfile` と `Pipfile.lock` が生成されます．ちょうど `package.json` と　`package-lock.json` のような感じです．
+仮想環境を都度作るのは面倒なので，代わりにvenvとpipをまとめて管理して使えるようにしたのが，pipenvです．pipenvを使ってプロジェクトの依存性を管理すると，プロジェクトルートに `Pipfile` と `Pipfile.lock` が生成されます．ちょうど `package.json` と　`package-lock.json` のような感じです．これによって `requirements.txt` とお別れして，依存ツリーを管理できます．
 
-しかし，pipenvは [If this project is dead, just tell us #4058
-](https://github.com/pypa/pipenv/issues/4058) がissueとして挙がるぐらいには微妙な状態です．
+pipenvはよさげなのですが，将来性に不安があります．[^pipenv-issue]
+
+[^pipenv-issue]: https://github.com/pypa/pipenv/issues/4058 このissueなど．
 
 ### Poetryを使ってパッケージ管理を行う
 
-pipenvの代替としてPoetryがあります．[PEP 518](https://www.python.org/dev/peps/pep-0518) の `pyproject.toml` でパッケージの管理を行います．一方で， `package.json` の　`scripts` のように，プロジェクトのタスクランナーとしては活用できないようです．一番将来性がありそうなので最近はこれを使っています．
+そんなpipenvに対し，alt-pipenvとして有力なのがPoetryです．[PEP 518](https://www.python.org/dev/peps/pep-0518) の `pyproject.toml` でパッケージの管理を行います．こちらを採用しました．
 
 #### インストール
 
-基本的には[docs](https://python-poetry.org/docs/)にまとまっています．
+すでにpipxを導入したので，インストーラスクリプトではなくて，pipxをつかってインストールします．
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+pipx install poetry
 ```
 
-[この設定](https://github.com/python-poetry/poetry#enable-tab-completion-for-bash-fish-or-zsh) を行うことでターミナル上で補完が効くようになります．
+環境に応じて，次のコマンドを実行することでターミナル上で補完が効くようになります．[^poetry-tab]
+
+```bash
+# Bash
+poetry completions bash > /etc/bash_completion.d/poetry.bash-completion
+
+# Bash (Homebrew)
+poetry completions bash > $(brew --prefix)/etc/bash_completion.d/poetry.bash-completion
+
+# Fish
+poetry completions fish > ~/.config/fish/completions/poetry.fish
+
+# Fish (Homebrew)
+poetry completions fish > $(brew --prefix)/share/fish/vendor_completions.d/poetry.fish
+
+# Zsh
+poetry completions zsh > ~/.zfunc/_poetry
+
+# Zsh (Homebrew)
+poetry completions zsh > $(brew --prefix)/share/zsh/site-functions/_poetry
+```
+
+[^poetry-tab]: https://github.com/python-poetry/poetry#enable-tab-completion-for-bash-fish-or-zsh より
 
 #### プロジェクトでの使用
+
+vscodeを使用している場合，あらかじめPoetryの仮想環境の設定を変更する必要があります．
+
+```bash
+poetry config virtualenvs.in-project true
+```
+
+これを実行することによって，poetryがプロジェクトディレクトリ内にvenvを生成するようになり，vscodeがimportを正しく認識するようになります．
 
 ```bash
 poetry init # プロジェクトルートで実行することで pyproject.toml が生成されます．
@@ -119,7 +189,6 @@ poetry install # yarn install のようにpyproject.tomlを参照して依存性
 poetry add flask # yarn add のようにプロジェクトに依存ライブラリを追加します．
 poetry add --dev autopep8 # 開発用の依存性もyarnと同じ雰囲気で追加できます，
 ```
-
 
 ## コードの治安を維持したい
 
@@ -154,7 +223,7 @@ flake8 --show-source .
 
 ### autopep8で自動フォーマットする
 
-ESLintのように，flake8にフォーマッターの機能までついていればいいのですが，あいにくありません！なので，別途`autopep8`というツールを追加します．
+ESLintのように，flake8にフォーマッターの機能までついていればいいのですが，あいにくありません．なので，別途`autopep8`というツールを追加します．
 
 ```bash
 poetry add --dev autopep8
@@ -166,6 +235,9 @@ poetry add --dev autopep8
 autopep8 -ivr .
 ```
 
-## まとめ
+[black](https://github.com/psf/black) もよさげなので，こちらに移行するかもしれません．
 
-いかがでしたか？（） 今回は触れませんでしたが，[mypy](http://mypy-lang.org/) を使って静的型チェックもしてみたいです．
+## 所感
+
+標準のPythonだとパッケージ管理・プロジェクトごとに依存性を隔離できないという点でつらさを感じていましたが，環境を整備することで楽しく（不安にならずに）作業できそうです．
+
