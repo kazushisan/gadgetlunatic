@@ -21,6 +21,13 @@ code {
   font-family: 'Source Code Pro', monospace;
 }
 
+.tex {
+  text-align: center;
+  font-family: bold;
+  font-size: $font-small;
+  color: $black;
+}
+
 #wrap {
   width: 100vw;
   overflow: hidden;
