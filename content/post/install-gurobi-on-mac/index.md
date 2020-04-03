@@ -13,7 +13,8 @@ MacでGurobiのダウンロード・インストール・アカデミックラ�
 
 - macOS 10.14.6
 - Python 3.8.2 (pyenvでインストールした状態)
-- pip
+- pip（宗教上の理由でanacondaは使えないので）
+- インストールするGurobi: v9.0
 
 ## Gurobiのセットアップ
 
@@ -22,7 +23,6 @@ MacでGurobiのダウンロード・インストール・アカデミックラ�
 https://pages.gurobi.com/registration からGurobiのアカウントを発行できます．`Academic` をプルダウンから選択した上で，メールアドレスには `.ac.jp` ドメインのものを設定しました．
 
 ![登録画面](gurobi-register.png)
-
 
 指定したメールアドレスにパスワード設定用のリンクを含むメールが飛んできます．パスワードを設定したら https://www.gurobi.com/account/ にログインします．
 
@@ -51,4 +51,28 @@ https://www.gurobi.com/downloads/licenses/ にさきほど発行したライセ�
 gurobi.sh
 ```
 
-を実行するとGurobiのインタラクティブシェルが起動します．
+を実行して，Gurobiのインタラクティブシェルが問題なく起動することを確認します．
+
+### Pythonスクリプト内でインポートして使えるようにする
+
+Gurobi自体にもPythonのランタイムは付属しており，`gurobi.sh your-file-name.py` といった形で実行したり，Gurobiのインタラクティブシェルだけを使っている分にはなにもしなくていいのですが，自分で用意したPython環境内でGurobiを使いたいので次の手順を実行しました．
+
+はじめに次のコマンドを実行してGurobiがインストールされているディレクトリを探します．
+
+```bash
+readlink `which gurobi.sh`
+```
+
+`//Library/gurobi901/mac64/bin/gurobi.sh` のような出力が得られるので，`bin/gurobi.sh` 以前の部分のパスに移動します．
+
+```bash
+cd /Library/gurobi901/mac64
+```
+
+最後に次のコマンドを実行して，自分で用意したPython環境内にGurobiのライブラリを追加します．
+
+```bash
+python setup.py install
+```
+
+問題なく追加できた場合，`pip list` を実行すると `gurobipy` が一覧に含まれているの確認できます．
