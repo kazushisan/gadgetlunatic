@@ -2,10 +2,12 @@
 
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
+import SmoothScroll from 'smooth-scroll'
+import katex from 'katex'
+import TableOfContents from './TableOfContents'
 
 import '../scss/style.scss'
-import TableOfContents from './TableOfContents'
-import SmoothScroll from 'smooth-scroll'
+import 'katex/dist/katex.min.css'
 
 const navHeight = 60
 
@@ -85,4 +87,9 @@ window.addEventListener('scroll', () => {
 		toc.style.bottom = bottom
 		ticking = false
 	})
+})
+
+// render math equations
+Array.from(document.querySelectorAll('.tex'), element => {
+	katex.render(element.getAttribute('data-expr'), element)
 })
