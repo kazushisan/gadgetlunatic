@@ -1,7 +1,7 @@
 ---
 title: "Gurobi + Pythonを使ってMacで最適化問題を解く"
 date: 2020-04-03T23:26:37+09:00
-draft: true
+draft: false
 toc: true
 ---
 
