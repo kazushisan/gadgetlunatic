@@ -1,5 +1,5 @@
 ---
-title: "MacでJupter Notebookの環境を構築する"
+title: "MacにJupter Notebookの環境を構築する"
 date: 2019-10-24T11:25:13+09:00
 draft: false
 toc: true
@@ -49,17 +49,10 @@ docker-jupyter
 
 ### セットアップ
 
-ここではanacondaというデータ分析向けのパッケージでjupyterをインストールします。はじめにpyenvで
-
 ```bash
-pyenv install --list | grep anaconda
-```
-
-を実行してインストール可能なanacondaのバージョンを探します。適当なバージョンを決めたら、
-
-```bash
-pyenv install anaconda3-5.3.1 # Jupyterなどのパッケージが入っているPythonの環境をインストール
-pyenv global anaconda3-5.3.1 # anacondaに環境を切り替える
+pyenv install 3.8.2 # 適当なPythonのバージョンをインストールする（なければ）
+pyenv global 3.8.2 # Pythonのバージョンを切り替える
+pip install notebook # Jupyter　Notebook をpipでインストールする
 ```
 
 ### 起動
