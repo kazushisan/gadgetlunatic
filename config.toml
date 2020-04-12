@@ -2,7 +2,7 @@ baseURL = "https://gadgetlunatic.com/"
 languageCode = "ja"
 title = "gadgetlunatic"
 hasCJKLanguage = true
-paginate = 3
+paginate = 10
 googleAnalytics = "UA-131471081-1"
 
 pygmentsCodeFences= true
