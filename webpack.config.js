@@ -11,7 +11,7 @@ module.exports = env => {
 	return {
 		mode: isProduction ? 'production' : 'development',
 		devtool: isProduction ? 'source-map' : 'inline-source-map',
-		entry: path.resolve(__dirname, 'src/index.js'),
+		entry: path.resolve(__dirname, 'src/index.bs.js'),
 		output: {
 			path: path.resolve(__dirname, 'static/'),
 			filename: `js/${isProduction ? '[hash].' : ''}bundle.js`,
