@@ -6,7 +6,7 @@ import SmoothScroll from 'smooth-scroll'
 import katex from 'katex'
 import TableOfContents from './TableOfContents'
 
-import '../scss/style.scss'
+import './scss/style.scss'
 import 'katex/dist/katex.min.css'
 
 const navHeight = 60
