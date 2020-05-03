@@ -2,6 +2,45 @@
 {{- .CurrentSection.Title }} {{ .Title }} | {{ .Site.Title -}}
 {{ end }}
 {{ define "main" }}
+{{ $headers := findRE "<h2.*?>(.|\n])+?</h2>" .Content }}
+{{ $hasHeader := ge (len $headers) 1 }}
+{{ $permalink := .Permalink }}
+{{ $first := true }}
+<script type="application/json" id="table-of-contents">
+{
+	"title": {{- .Page.CurrentSection.Title | htmlEscape -}},
+	"headings": [
+	{{- range (where .Site.RegularPages "Section" .CurrentSection.Section).ByWeight -}}
+	{{- if $first }}{{ $first = false }}{{ else }},{{ end -}}
+	{{- if (eq .Permalink $permalink | and $hasHeader) -}}
+		{
+			"name": {{ .Title | htmlEscape }},
+			"url": {{ .Permalink }},
+			"sub": false,
+			"alwaysOn": true
+		}
+	{{- range $header := $headers -}}
+	{{- $name := $header | plainify | htmlEscape -}}
+	{{- $id := htmlEscape $header | replaceRE "^.+id=&#34;(.+)&#34;.+$" "$1" -}}
+	{{- $url := delimit ( slice "#" $id) "" -}}
+		,
+		{
+			"name": {{ $name }},
+			"url": {{ $url }},
+			"sub": true
+		}
+	{{- end -}}
+	{{- else -}}
+		{
+			"name": {{ .Title | htmlEscape }},
+			"url": {{ .Permalink }},
+			"sub": false
+		}
+	{{- end -}}
+	{{- end -}}
+	]
+}
+</script>
 <article class="toc">
 	<header class="post-header">
 		<h1>{{ .Title }}</h1>
