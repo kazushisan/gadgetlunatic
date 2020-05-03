@@ -3,7 +3,7 @@
 {{ if $toc }}
 {{ $headers := findRE "<h[2-3].*?>(.|\n])+?</h[2-3]>" .Content }}
 {{ $last := $headers | len | add -1 }}
-<script type="application/json" id="table-of-contents">
+<script type="application/json" id="table-of-contents-data">
 {
 	"title": {{ .Title }},
 	"headings": [

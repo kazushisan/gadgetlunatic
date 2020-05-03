@@ -6,7 +6,7 @@
 {{ $hasHeader := ge (len $headers) 1 }}
 {{ $permalink := .Permalink }}
 {{ $first := true }}
-<script type="application/json" id="table-of-contents">
+<script type="application/json" id="table-of-contents-data">
 {
 	"title": {{- .Page.CurrentSection.Title | htmlEscape -}},
 	"headings": [
