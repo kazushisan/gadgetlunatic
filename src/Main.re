@@ -47,3 +47,16 @@ let useAsToggle = element =>
 
 Document.querySelector(".sp-header__button", document)->useAsToggle;
 Document.querySelector(".sp-close-area", document)->useAsToggle;
+
+// handle scrolling
+[@bs.val] external parseFloat: string => float = "parseFloat";
+
+let calcOffset = anchor => {
+  Window.getComputedStyle(anchor, window)
+  ->CssStyleDeclaration.marginTop
+  ->Js.String.replace("px", "", _)
+  ->parseFloat;
+};
+
+let scroll =
+  SmoothScroll.createScroll("a[href*=\"#\"]", {"offset": calcOffset});
