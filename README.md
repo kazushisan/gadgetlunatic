@@ -2,9 +2,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/6167cc58-9975-4a8e-8f29-8b5cb061ec6f/deploy-status)](https://app.netlify.com/sites/gadgetlunatic/deploys)
 
-## What is this repo?
-
-This repository contains the source code for `gadgetlunatic.com`, a personal webite / tech blog built with Hugo.
+> `gadgetlunatic.com` – a personal website / tech blog built with Hugo.
 
 ```
 ├── README.md
@@ -37,6 +35,7 @@ yarn install
 ## Develop / Write
 
 ```bash
+yarn bs:build # run first to compile ReasonML code
 yarn start
 ```
 
@@ -46,7 +45,11 @@ Webpack is used to bundle and handle assets under `/src`. To reduce disk writes,
 
 Hugo will run a server on `http://localhost:1313` and reference the Javascript / SCSS files hosted on `http://localhost:1314`.
 
-Therefore, make sure that `webpack-dev-server` is also running along with Hugo when developing or writing.
+In order to convert ReasonML files, run the following command to convert such files on save.
+
+```bash
+yarn bs:start
+```
 
 ## Build
 

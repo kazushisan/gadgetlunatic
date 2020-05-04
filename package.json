@@ -4,8 +4,11 @@
   "description": "Personal Website",
   "main": "index.js",
   "scripts": {
+    "bs:build": "bsb -make-world",
+    "bs:start": "bsb -make-world -w -ws _ ",
+    "bs:clean": "bsb -clean-world",
     "start": "webpack-dev-server & hugo server",
-    "build": "webpack --env.production && hugo --minify",
+    "build": "yarn bs:build && webpack --env.production && hugo --minify",
     "lint": "eslint ./src && stylelint ./src",
     "lint:fix": "eslint --fix ./src && stylelint --fix ./src"
   },
