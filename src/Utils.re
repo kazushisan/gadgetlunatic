@@ -1,3 +1,5 @@
+open Webapi.Dom;
+
 let andThen = (f: 'a => option('b)) =>
   fun
   | Some(v) => f(v)
@@ -57,3 +59,10 @@ let assertExists: option('a) => 'a = element => {
 }
 
 let noop1 = (_: 'a) => () 
+
+let body =
+  document
+  |> Document.asHtmlDocument
+  |> assertExists
+  |> HtmlDocument.body
+  |> assertExists;

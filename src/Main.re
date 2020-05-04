@@ -25,15 +25,10 @@ Document.querySelectorAll(".tex", document)
    });
 
 // handle menu actions
-let body =
-  document
-  |> Document.asHtmlDocument
-  |> Utils.assertExists
-  |> HtmlDocument.body
-  |> Utils.assertExists;
+let body = Utils.body;
 
 let onClickMenu = e => {
-  Event.stopImmediatePropagation(e);
+  Event.stopPropagation(e);
 
   Element.classList(body) |> DomTokenList.toggle("show-menu") |> Utils.noop1;
 };

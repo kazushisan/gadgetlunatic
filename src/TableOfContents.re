@@ -17,9 +17,17 @@ type position = {
   url: string,
 };
 
+let body = Utils.body;
+
 module Row = {
   [@react.component]
   let make = (~heading: heading, ~current: string) => {
+    let onClick =
+      React.useCallback0(_ => {
+        Element.classList(body)
+        |> DomTokenList.remove("show-menu")
+        |> Utils.noop1
+      });
     let linkClassName =
       React.useMemo2(
         () => {
@@ -38,7 +46,7 @@ module Row = {
       );
 
     <li className={heading.sub ? "toc__sub-item" : "toc__item"}>
-      <a className=linkClassName href={heading.url}>
+      <a className=linkClassName href={heading.url} onClick>
         {React.string(heading.name)}
       </a>
     </li>;
