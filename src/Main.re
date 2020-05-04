@@ -60,3 +60,11 @@ let calcOffset = anchor => {
 
 let scroll =
   SmoothScroll.createScroll("a[href*=\"#\"]", {"offset": calcOffset});
+
+// handle table of contents react component
+Document.querySelector("#table-of-contents", document)
+->(
+    fun
+    | Some(element) => ReactDOMRe.render(<TableOfContents />, element)
+    | None => ()
+  );
