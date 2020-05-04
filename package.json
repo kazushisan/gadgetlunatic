@@ -4,8 +4,11 @@
   "description": "Personal Website",
   "main": "index.js",
   "scripts": {
+    "bs:build": "bsb -make-world",
+    "bs:start": "bsb -make-world -w -ws _ ",
+    "bs:clean": "bsb -clean-world",
     "start": "webpack-dev-server & hugo server",
-    "build": "webpack --env.production && hugo --minify",
+    "build": "yarn bs:build && webpack --env.production && hugo --minify",
     "lint": "eslint ./src && stylelint ./src",
     "lint:fix": "eslint --fix ./src && stylelint --fix ./src"
   },
@@ -16,6 +19,7 @@
     "@babel/preset-env": "^7.5.5",
     "autoprefixer": "^9.6.1",
     "babel-loader": "^8.0.6",
+    "bs-platform": "^7.2.2",
     "css-loader": "^3.2.0",
     "cssnano": "^4.1.10",
     "eslint": "^6.3.0",
@@ -35,10 +39,13 @@
     "webpack-manifest-plugin": "^2.0.4"
   },
   "dependencies": {
+    "bs-webapi": "^0.15.9",
     "core-js": "^3.2.1",
     "katex": "^0.11.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "reason-react": "^0.7.1",
     "regenerator-runtime": "^0.13.3",
-    "smooth-scroll": "^16.1.0",
     "stylelint-config-standard": "^18.3.0"
   }
 }

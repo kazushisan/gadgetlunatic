@@ -11,7 +11,7 @@ module.exports = env => {
 	return {
 		mode: isProduction ? 'production' : 'development',
 		devtool: isProduction ? 'source-map' : 'inline-source-map',
-		entry: path.resolve(__dirname, 'src/js/index.js'),
+		entry: path.resolve(__dirname, 'src/index.js'),
 		output: {
 			path: path.resolve(__dirname, 'static/'),
 			filename: `js/${isProduction ? '[hash].' : ''}bundle.js`,
@@ -26,7 +26,14 @@ module.exports = env => {
 			})
 		],
 		devServer: {
-			port: 1314
+			port: 1314,
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Methods':
+					'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+				'Access-Control-Allow-Headers':
+					'X-Requested-With, content-type, Authorization'
+			}
 		},
 		module: {
 			rules: [

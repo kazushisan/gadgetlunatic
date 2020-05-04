@@ -9,18 +9,16 @@
 	<div class="global-header__sub">
 		<ul class="global-header__list">
 			{{ range .Site.Menus.main }}
-				<li class="global-header__item">
-					<a href="{{ .URL }}">
-						{{ .Pre }}
-						<span>{{ .Name }}</span>
-					</a>
-				</li>
+			<li class="global-header__item">
+				<a href="{{ .URL }}">
+					{{ .Pre }}
+					<span>{{ .Name }}</span>
+				</a>
+			</li>
 			{{ end}}
 		</ul>
 	</div>
-	{{ if ( eq .Type "documentation" | and .IsPage) }}
-		{{- partial "table-for-documentation.html" . -}}
-	{{ else if .IsPage }}
-		{{- partial "table-of-contents.html" . -}}
+	{{ if or ( eq .Type "documentation" | and .IsPage) (.IsPage | and $.Params.toc) }}
+	<div id="table-of-contents"></div>
 	{{ end }}
 </header>
