@@ -19,6 +19,9 @@ type position = {
 
 let body = Utils.body;
 
+let footer =
+  Document.querySelector(".global-footer", document)->Utils.assertExists;
+
 module Row = {
   [@react.component]
   let make = (~heading: heading, ~current: string) => {
@@ -56,6 +59,7 @@ module Row = {
 [@bs.scope "JSON"] [@bs.val] external parseData: string => data = "parse";
 
 let getTop = (rect: Dom.domRect) => Utils.getDomRectValues(rect).top;
+let getY = (rect: Dom.domRect) => Utils.getDomRectValues(rect).y;
 
 let calcBoundaryPosition = (heading: Dom.element) => {
   let top = Element.getBoundingClientRect(heading)->getTop;
@@ -74,10 +78,18 @@ let make = () => {
   let (positions, setPositions) = React.useState(() => [||]);
   let (current, setCurrent) = React.useState(() => "");
   let (title, setTitle) = React.useState(initTitle);
+  let (bottom, setBottom) = React.useState(() => "0px");
 
   let onScroll =
     React.useCallback1(
       () => {
+        // first, change the size of the table of contents to align with the footer
+        let footerY = Element.getBoundingClientRect(footer)->getY;
+        let innerHeight = Window.innerHeight(window)->Js.Int.toFloat;
+        let bottom = footerY < innerHeight ? innerHeight -. footerY : 0.0;
+
+        let _ = setBottom(_ => Js.Float.toString(bottom) ++ "px");
+        // then, apply style to items of the table of contents based on scroll position
         let item =
           Belt.Array.reverse(positions)
           |> Js.Array.find(item => item.y <= Window.scrollY(window));
@@ -133,7 +145,7 @@ let make = () => {
     Some(() => ());
   });
 
-  <div className="toc">
+  <div className="toc" style={ReactDOMRe.Style.make(~bottom, ())}>
     {switch (title) {
      | Some(value) => <h1 className="toc__title"> {React.string(value)} </h1>
      | None => React.null
