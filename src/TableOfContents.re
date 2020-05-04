@@ -14,8 +14,13 @@ type data = {
 
 [@bs.scope "JSON"] [@bs.val] external parseData: string => data = "parse";
 
+[@react.component]
+let make = () => {
+	let (headings, setHeadings) = React.useState(() => [||]);
+	let (title, setTitle) = React.useState(() => "");
+
 let loadData = () => {
-  let data =
+  let jsonData =
     Document.getElementById("table-of-contents-data", document)
     ->(
         fun
@@ -24,13 +29,15 @@ let loadData = () => {
       )
 		->parseData;
 	
-	Js.log(data);
 
+	setHeadings(_ => jsonData.headings);
+	switch(jsonData.title) {
+		| Some(title) => setTitle(_ => title);
+		| None => ();
+	}
 	Some(() => ());
 };
 
-[@react.component]
-let make = () => {
   React.useEffect0(loadData);
   <div> {React.string("hello world")} </div>;
 };

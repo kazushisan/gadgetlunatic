@@ -18,8 +18,7 @@
 			{{ end}}
 		</ul>
 	</div>
-	{{ if or ( eq .Type "documentation" | and .IsPage) (.IsPage | and $.Params.toc
-	) }}
+	{{ if or ( eq .Type "documentation" | and .IsPage) (.IsPage | and $.Params.toc) }}
 	<div id="table-of-contents"></div>
 	{{ end }}
 </header>
