@@ -1,15 +1,10 @@
 open Webapi.Dom;
 
-type heading = {
-  name: string,
-  url: string,
-  sub: bool,
-  currentPage: option(bool),
-};
+module Row = TableOfContents__Row;
 
 type data = {
   title: option(string),
-  headings: array(heading),
+  headings: array(Row.heading),
 };
 
 type position = {
@@ -17,44 +12,8 @@ type position = {
   url: string,
 };
 
-let body = Utils.body;
-
 let footer =
   Document.querySelector(".global-footer", document)->Utils.assertExists;
-
-module Row = {
-  [@react.component]
-  let make = (~heading: heading, ~current: string) => {
-    let onClick =
-      React.useCallback0(_ => {
-        Element.classList(body)
-        |> DomTokenList.remove("show-menu")
-        |> Utils.noop1
-      });
-    let linkClassName =
-      React.useMemo2(
-        () => {
-          let currentPage =
-            switch (heading.currentPage) {
-            | Some(value) => value
-            | None => false
-            };
-
-          let className =
-            current == heading.url ? "toc__link toc__link--on" : "toc__link";
-
-          currentPage ? {j|$className toc__link--current-page|j} : className;
-        },
-        (heading, current),
-      );
-
-    <li className={heading.sub ? "toc__sub-item" : "toc__item"}>
-      <a className=linkClassName href={heading.url} onClick>
-        {React.string(heading.name)}
-      </a>
-    </li>;
-  };
-};
 
 [@bs.scope "JSON"] [@bs.val] external parseData: string => data = "parse";
 
@@ -127,7 +86,7 @@ let make = () => {
     let positions =
       jsonData.headings
       ->Js.Array.filter(
-          (heading: heading) => Utils.isAnchorLink(heading.url),
+          (heading: Row.heading) => Utils.isAnchorLink(heading.url),
           _,
         )
       ->Belt.Array.map(heading => {
