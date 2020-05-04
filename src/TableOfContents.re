@@ -20,7 +20,16 @@ type position = {
 
 module Row = {
   [@react.component]
-  let make = (~heading: heading, ~on: bool) => {
+  let make = (~heading: heading, ~current: string) => {
+    let on = React.useMemo2(() => {
+      let alwaysOn = switch (heading.alwaysOn) {
+        | Some(value) => value
+        | None => false
+      };
+
+      alwaysOn || current == heading.url;
+    }, (heading, current));
+
     <li className={heading.sub ? "toc__sub-item" : "toc__item"}>
       <a
         className={on ? "toc__link toc__link--on" : "toc__link"}
@@ -115,7 +124,9 @@ let make = () => {
   <div className="toc">
     <ul>
       {headings
-       ->Belt.Array.mapWithIndex((_, heading) => {<Row heading on=true />})
+       ->Belt.Array.mapWithIndex((_, heading) => {
+         <Row heading={heading} current={current} />
+        })
        ->React.array}
     </ul>
   </div>;
