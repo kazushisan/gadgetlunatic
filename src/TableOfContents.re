@@ -4,7 +4,6 @@ type heading = {
   name: string,
   url: string,
   sub: bool,
-  enableScrollStatus: bool,
   alwaysOn: option(bool),
 };
 
@@ -21,14 +20,19 @@ type position = {
 module Row = {
   [@react.component]
   let make = (~heading: heading, ~current: string) => {
-    let on = React.useMemo2(() => {
-      let alwaysOn = switch (heading.alwaysOn) {
-        | Some(value) => value
-        | None => false
-      };
+    let on =
+      React.useMemo2(
+        () => {
+          let alwaysOn =
+            switch (heading.alwaysOn) {
+            | Some(value) => value
+            | None => false
+            };
 
-      alwaysOn || current == heading.url;
-    }, (heading, current));
+          alwaysOn || current == heading.url;
+        },
+        (heading, current),
+      );
 
     <li className={heading.sub ? "toc__sub-item" : "toc__item"}>
       <a
@@ -62,12 +66,14 @@ let calcBoundaryPosition = (heading: option(Dom.element)) => {
   Window.scrollY(window) +. top -. marginTop -. 60.0;
 };
 
+let initTitle: unit => option(string) = () => None;
+
 [@react.component]
 let make = () => {
   let (headings, setHeadings) = React.useState(() => [||]);
   let (positions, setPositions) = React.useState(() => [||]);
   let (current, setCurrent) = React.useState(() => "");
-  let (title, setTitle) = React.useState(() => "");
+  let (title, setTitle) = React.useState(initTitle);
 
   let onScroll =
     React.useCallback1(
@@ -96,7 +102,10 @@ let make = () => {
 
     let positions =
       jsonData.headings
-      ->Js.Array.filter(heading => heading.enableScrollStatus, _)
+      ->Js.Array.filter(
+          (heading: heading) => Utils.isAnchorLink(heading.url),
+          _,
+        )
       ->Belt.Array.map(heading => {
           let element = Document.querySelector(heading.url, document);
           {y: calcBoundaryPosition(element), url: heading.url};
@@ -104,11 +113,7 @@ let make = () => {
 
     setPositions(_ => positions);
     setHeadings(_ => jsonData.headings);
-
-    switch (jsonData.title) {
-    | Some(title) => setTitle(_ => title)
-    | None => ()
-    };
+    setTitle(_ => jsonData.title);
 
     Some(() => ());
   });
@@ -122,11 +127,16 @@ let make = () => {
   );
 
   <div className="toc">
+    {switch (title) {
+     | Some(value) => <h1 className="toc__title"> {React.string(value)} </h1>
+     | None => React.null
+     }}
     <ul>
       {headings
-       ->Belt.Array.mapWithIndex((_, heading) => {
-         <Row heading={heading} current={current} />
-        })
+       ->Belt.Array.mapWithIndex((_, heading) => {<Row
+       heading
+       current
+       key={heading.url} />})
        ->React.array}
     </ul>
   </div>;

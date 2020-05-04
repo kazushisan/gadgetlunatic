@@ -25,7 +25,8 @@ Document.querySelectorAll(".tex", document)
    });
 
 // handle menu actions
-let body = document |> Document.asHtmlDocument |> Utils.andThen(HtmlDocument.body);
+let body =
+  document |> Document.asHtmlDocument |> Utils.andThen(HtmlDocument.body);
 
 let onClickMenu = e => {
   Event.stopImmediatePropagation(e);
