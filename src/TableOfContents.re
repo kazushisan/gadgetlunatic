@@ -12,6 +12,20 @@ type data = {
   headings: array(heading),
 };
 
+module Row = {
+	[@react.component]
+	let make = (~heading: heading) => {
+		<li className="table-of-contents__item">
+			<a
+				className="table-of-contents__link"
+				href={heading.url}
+			>
+			{React.string(heading.name)}
+			</a>
+		</li>
+	}
+}
+
 [@bs.scope "JSON"] [@bs.val] external parseData: string => data = "parse";
 
 [@react.component]
@@ -39,5 +53,11 @@ let loadData = () => {
 };
 
   React.useEffect0(loadData);
-  <div> {React.string("hello world")} </div>;
+  <div className="table-of-contents">
+		<ul>
+			{headings->Belt.Array.mapWithIndex((_, heading) => {
+				<Row heading={heading} />
+			})->React.array}
+		</ul>
+	</div>;
 };
