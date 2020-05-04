@@ -17,11 +17,8 @@ let footer =
 
 [@bs.scope "JSON"] [@bs.val] external parseData: string => data = "parse";
 
-let getTop = (rect: Dom.domRect) => Utils.getDomRectValues(rect).top;
-let getY = (rect: Dom.domRect) => Utils.getDomRectValues(rect).y;
-
 let calcBoundaryPosition = (heading: Dom.element) => {
-  let top = Element.getBoundingClientRect(heading)->getTop;
+  let top = Element.getBoundingClientRect(heading)->Utils.getTop;
   let marginTop =
     Window.getComputedStyle(heading, window)
     ->Utils.getComputedStyle("marginTop");
@@ -43,7 +40,7 @@ let make = () => {
     React.useCallback1(
       () => {
         // first, change the size of the table of contents to align with the footer
-        let footerY = Element.getBoundingClientRect(footer)->getY;
+        let footerY = Element.getBoundingClientRect(footer)->Utils.getY;
         let innerHeight = Window.innerHeight(window)->Js.Int.toFloat;
         let bottom = footerY < innerHeight ? innerHeight -. footerY : 0.0;
 

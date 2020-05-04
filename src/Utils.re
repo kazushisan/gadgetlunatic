@@ -66,3 +66,6 @@ let body =
   |> assertExists
   |> HtmlDocument.body
   |> assertExists;
+
+let getTop = (rect: Dom.domRect) => getDomRectValues(rect).top;
+let getY = (rect: Dom.domRect) => getDomRectValues(rect).y;
