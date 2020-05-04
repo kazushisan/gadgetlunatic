@@ -5,7 +5,6 @@
 {{ $last := $headers | len | add -1 }}
 <script type="application/json" id="table-of-contents-data">
 {
-	"title": {{ .Title }},
 	"headings": [
 	{{- range $i, $header := $headers }}
 		{{- $name := $header | plainify | htmlEscape }}
