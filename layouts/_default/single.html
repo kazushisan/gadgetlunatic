@@ -15,7 +15,8 @@
 		{
 			"name": {{ $name }},
 			"url": {{ $url }},
-			"sub": {{ $sub }}
+			"sub": {{ $sub }},
+			"enableScrollStatus": true
 		}
 		{{- if ne $i $last }},{{ end -}}
 	{{ end }}

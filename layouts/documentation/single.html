@@ -17,7 +17,8 @@
 			"name": {{ .Title | htmlEscape }},
 			"url": {{ .Permalink }},
 			"sub": false,
-			"alwaysOn": true
+			"alwaysOn": true,
+			"enableScrollStatus": true
 		}
 	{{- range $header := $headers -}}
 	{{- $name := $header | plainify | htmlEscape -}}
@@ -27,14 +28,16 @@
 		{
 			"name": {{ $name }},
 			"url": {{ $url }},
-			"sub": true
+			"sub": true,
+			"enableScrollStatus": true
 		}
 	{{- end -}}
 	{{- else -}}
 		{
 			"name": {{ .Title | htmlEscape }},
 			"url": {{ .Permalink }},
-			"sub": false
+			"sub": false,
+			"enableScrollStatus": true
 		}
 	{{- end -}}
 	{{- end -}}

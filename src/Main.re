@@ -1,10 +1,5 @@
 open Webapi.Dom;
 
-let andThen = (f: 'a => option('b)) =>
-  fun
-  | Some(v) => f(v)
-  | None => None;
-
 // render math equations in articles
 module Katex = {
   [@bs.module "katex"]
@@ -30,7 +25,7 @@ Document.querySelectorAll(".tex", document)
    });
 
 // handle menu actions
-let body = document |> Document.asHtmlDocument |> andThen(HtmlDocument.body);
+let body = document |> Document.asHtmlDocument |> Utils.andThen(HtmlDocument.body);
 
 let onClickMenu = e => {
   Event.stopImmediatePropagation(e);

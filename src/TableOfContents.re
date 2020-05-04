@@ -1,9 +1,12 @@
 open Webapi.Dom;
 
+[@bs.send] external filter: (array('a), 'a => bool) => array('a) = "filter";
+
 type heading = {
   name: string,
   url: string,
   sub: bool,
+  enableScrollStatus: bool,
   alwaysOn: option(bool),
 };
 
@@ -27,9 +30,27 @@ module Row = {
 
 [@bs.scope "JSON"] [@bs.val] external parseData: string => data = "parse";
 
+let getTop = (rect: Dom.domRect) => Utils.getDomRectValues(rect).top;
+
+type exn += | HeadingNotFound
+
+let calcBoundaryPosition = (heading: option(Dom.element)) => {
+  let heading = switch (heading) {
+    | Some(element) => element
+    | None => raise(HeadingNotFound) 
+  };
+
+  let top = Element.getBoundingClientRect(heading)->getTop;
+  let marginTop = Window.getComputedStyle(heading, window)->Utils.getComputedStyle("marginTop");
+
+  Window.scrollY(window) +. top -. marginTop -. 60.0
+};
+
+
 [@react.component]
 let make = () => {
   let (headings, setHeadings) = React.useState(() => [||]);
+  let (positions, setPositions) = React.useState(() =>[||]);
   let (title, setTitle) = React.useState(() => "");
 
   let loadData = () => {
@@ -42,6 +63,16 @@ let make = () => {
         )
       ->parseData;
 
+    let positions =
+      jsonData.headings
+      ->filter(heading => heading.enableScrollStatus)
+      ->Belt.Array.map(heading => {
+          let heading = Document.querySelector(heading.url, document);
+
+          calcBoundaryPosition(heading);
+        });
+
+    setPositions(_ => positions);
     setHeadings(_ => jsonData.headings);
     switch (jsonData.title) {
     | Some(title) => setTitle(_ => title)
