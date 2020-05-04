@@ -13,51 +13,49 @@ type data = {
 };
 
 module Row = {
-	[@react.component]
-	let make = (~heading: heading) => {
-		<li className="table-of-contents__item">
-			<a
-				className="table-of-contents__link"
-				href={heading.url}
-			>
-			{React.string(heading.name)}
-			</a>
-		</li>
-	}
-}
+  [@react.component]
+  let make = (~heading: heading, ~on: bool) => {
+    <li className={heading.sub ? "toc__sub-item" : "toc__item"}>
+      <a
+        className={on ? "toc__link toc__link--on" : "toc__link"}
+        href={heading.url}>
+        {React.string(heading.name)}
+      </a>
+    </li>;
+  };
+};
 
 [@bs.scope "JSON"] [@bs.val] external parseData: string => data = "parse";
 
 [@react.component]
 let make = () => {
-	let (headings, setHeadings) = React.useState(() => [||]);
-	let (title, setTitle) = React.useState(() => "");
+  let (headings, setHeadings) = React.useState(() => [||]);
+  let (title, setTitle) = React.useState(() => "");
 
-let loadData = () => {
-  let jsonData =
-    Document.getElementById("table-of-contents-data", document)
-    ->(
-        fun
-        | Some(element) => Element.textContent(element)
-        | None => ""
-      )
-		->parseData;
-	
+  let loadData = () => {
+    let jsonData =
+      Document.getElementById("table-of-contents-data", document)
+      ->(
+          fun
+          | Some(element) => Element.textContent(element)
+          | None => ""
+        )
+      ->parseData;
 
-	setHeadings(_ => jsonData.headings);
-	switch(jsonData.title) {
-		| Some(title) => setTitle(_ => title);
-		| None => ();
-	}
-	Some(() => ());
-};
+    setHeadings(_ => jsonData.headings);
+    switch (jsonData.title) {
+    | Some(title) => setTitle(_ => title)
+    | None => ()
+    };
+    Some(() => ());
+  };
 
   React.useEffect0(loadData);
-  <div className="table-of-contents">
-		<ul>
-			{headings->Belt.Array.mapWithIndex((_, heading) => {
-				<Row heading={heading} />
-			})->React.array}
-		</ul>
-	</div>;
+  <div className="toc">
+    <ul>
+      {headings
+       ->Belt.Array.mapWithIndex((_, heading) => {<Row heading on=true />})
+       ->React.array}
+    </ul>
+  </div>;
 };

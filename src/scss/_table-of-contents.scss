@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-.table-of-contents {
+#table-of-contents .toc {
   position: relative;
   margin: 24px 0;
   padding-top: 24px;
@@ -29,10 +29,11 @@
   &__item {
     margin: 0.5em 0;
     font-size: 16px;
+  }
 
-    &--sub {
-      font-size: 14px;
-    }
+  &__sub-item {
+    margin: 0.5em 0;
+    font-size: 14px;
   }
 
   &__link {
@@ -46,17 +47,12 @@
       padding-left: 44px;
     }
 
-    &--sub-on {
-      color: $theme;
-    }
-
     &:hover {
       color: $theme;
     }
   }
 
-  // to be considered
-  &__item--sub &__link {
+  &__sub-item &__link {
     padding-left: 56px;
 
     &--on {
