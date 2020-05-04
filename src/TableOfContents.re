@@ -1,7 +1,5 @@
 open Webapi.Dom;
 
-[@bs.send] external filter: (array('a), 'a => bool) => array('a) = "filter";
-
 type heading = {
   name: string,
   url: string,
@@ -13,6 +11,11 @@ type heading = {
 type data = {
   title: option(string),
   headings: array(heading),
+};
+
+type position = {
+  y: float,
+  url: string,
 };
 
 module Row = {
@@ -32,28 +35,47 @@ module Row = {
 
 let getTop = (rect: Dom.domRect) => Utils.getDomRectValues(rect).top;
 
-type exn += | HeadingNotFound
+type exn +=
+  | HeadingNotFound;
 
 let calcBoundaryPosition = (heading: option(Dom.element)) => {
-  let heading = switch (heading) {
+  let heading =
+    switch (heading) {
     | Some(element) => element
-    | None => raise(HeadingNotFound) 
-  };
+    | None => raise(HeadingNotFound)
+    };
 
   let top = Element.getBoundingClientRect(heading)->getTop;
-  let marginTop = Window.getComputedStyle(heading, window)->Utils.getComputedStyle("marginTop");
+  let marginTop =
+    Window.getComputedStyle(heading, window)
+    ->Utils.getComputedStyle("marginTop");
 
-  Window.scrollY(window) +. top -. marginTop -. 60.0
+  Window.scrollY(window) +. top -. marginTop -. 60.0;
 };
-
 
 [@react.component]
 let make = () => {
   let (headings, setHeadings) = React.useState(() => [||]);
-  let (positions, setPositions) = React.useState(() =>[||]);
+  let (positions, setPositions) = React.useState(() => [||]);
+  let (current, setCurrent) = React.useState(() => "");
   let (title, setTitle) = React.useState(() => "");
 
-  let loadData = () => {
+  let onScroll =
+    React.useCallback1(
+      _ => {
+        let item =
+          Belt.Array.reverse(positions)
+          |> Js.Array.find(item => item.y <= Window.scrollY(window));
+
+        switch (item) {
+        | None => ()
+        | Some(current) => setCurrent(_ => current.url)
+        };
+      },
+      [|positions|],
+    );
+
+  React.useEffect0(() => {
     let jsonData =
       Document.getElementById("table-of-contents-data", document)
       ->(
@@ -65,23 +87,31 @@ let make = () => {
 
     let positions =
       jsonData.headings
-      ->filter(heading => heading.enableScrollStatus)
+      ->Js.Array.filter(heading => heading.enableScrollStatus, _)
       ->Belt.Array.map(heading => {
-          let heading = Document.querySelector(heading.url, document);
-
-          calcBoundaryPosition(heading);
+          let element = Document.querySelector(heading.url, document);
+          {y: calcBoundaryPosition(element), url: heading.url};
         });
 
     setPositions(_ => positions);
     setHeadings(_ => jsonData.headings);
+
     switch (jsonData.title) {
     | Some(title) => setTitle(_ => title)
     | None => ()
     };
-    Some(() => ());
-  };
 
-  React.useEffect0(loadData);
+    Some(() => ());
+  });
+
+  React.useEffect1(
+    () => {
+      Window.addEventListener("scroll", onScroll, window);
+      Some(() => Window.removeEventListener("scroll", onScroll, window));
+    },
+    [|onScroll|],
+  );
+
   <div className="toc">
     <ul>
       {headings
