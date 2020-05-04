@@ -6,6 +6,11 @@ let andThen = (f: 'a => option('b)) =>
   | None => None;
 
 // render math equations in articles
+module Katex = {
+  [@bs.module "katex"]
+  external render: (string, Dom.element) => unit = "render";
+};
+
 let renderEquation = element => {
   let expression = Element.getAttribute("data-expr", element);
 
