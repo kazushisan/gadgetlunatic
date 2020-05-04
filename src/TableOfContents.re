@@ -20,23 +20,25 @@ type position = {
 module Row = {
   [@react.component]
   let make = (~heading: heading, ~current: string) => {
-    let currentPage =
-      React.useMemo1(
+    let linkClassName =
+      React.useMemo2(
         () => {
-          switch (heading.currentPage) {
-          | Some(value) => value
-          | None => false
-          }
+          let currentPage =
+            switch (heading.currentPage) {
+            | Some(value) => value
+            | None => false
+            };
+
+          let className =
+            current == heading.url ? "toc__link toc__link--on" : "toc__link";
+
+          currentPage ? {j|$className toc__link--current-page|j} : className;
         },
-        [|heading|],
+        (heading, current),
       );
 
     <li className={heading.sub ? "toc__sub-item" : "toc__item"}>
-      <a
-        className={
-          current == heading.url ? "toc__link toc__link--on" : "toc__link"
-        }
-        href={heading.url}>
+      <a className=linkClassName href={heading.url}>
         {React.string(heading.name)}
       </a>
     </li>;

@@ -41,6 +41,10 @@
     padding: 0 48px;
     display: block;
 
+    &--current-page {
+      color: $theme;
+    }
+
     &--on {
       color: $theme;
       border-left: 4px $theme solid;
