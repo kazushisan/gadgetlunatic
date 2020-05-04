@@ -35,6 +35,10 @@ article {
 .post-content {
   margin: 24px 16px;
 
+  * {
+    scroll-margin-top: 60px;
+  }
+
   h1 {
     @include h(24px);
   }
