@@ -35,7 +35,7 @@ let body =
 let onClickMenu = e => {
   Event.stopImmediatePropagation(e);
 
-  Element.classList(body) |> DomTokenList.toggle("show-menu") |> (_ => ());
+  Element.classList(body) |> DomTokenList.toggle("show-menu") |> Utils.noop1;
 };
 
 let useAsToggle = element =>

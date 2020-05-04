@@ -55,3 +55,5 @@ let assertExists: option('a) => 'a = element => {
     | None => raise(AssertExistsError)
     };
 }
+
+let noop1 = (_: 'a) => () 
