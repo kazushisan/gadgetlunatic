@@ -4,7 +4,7 @@ article {
   max-width: 632px;
   margin: 48px auto;
 
-  &.toc {
+  &.with-toc {
     @media #{$pc} {
       padding-left: 300px;
     }

@@ -4,7 +4,7 @@ type heading = {
   name: string,
   url: string,
   sub: bool,
-  alwaysOn: option(bool),
+  currentPage: option(bool),
 };
 
 type data = {
@@ -20,23 +20,22 @@ type position = {
 module Row = {
   [@react.component]
   let make = (~heading: heading, ~current: string) => {
-    let on =
-      React.useMemo2(
+    let currentPage =
+      React.useMemo1(
         () => {
-          let alwaysOn =
-            switch (heading.alwaysOn) {
-            | Some(value) => value
-            | None => false
-            };
-
-          alwaysOn || current == heading.url;
+          switch (heading.currentPage) {
+          | Some(value) => value
+          | None => false
+          }
         },
-        (heading, current),
+        [|heading|],
       );
 
     <li className={heading.sub ? "toc__sub-item" : "toc__item"}>
       <a
-        className={on ? "toc__link toc__link--on" : "toc__link"}
+        className={
+          current == heading.url ? "toc__link toc__link--on" : "toc__link"
+        }
         href={heading.url}>
         {React.string(heading.name)}
       </a>
@@ -94,7 +93,9 @@ let make = () => {
     () => {
       Window.addEventListener("scroll", _ => onScroll(), window);
       onScroll();
-      Some(() => Window.removeEventListener("scroll", _ => onScroll(), window));
+      Some(
+        () => Window.removeEventListener("scroll", _ => onScroll(), window),
+      );
     },
     [|onScroll|],
   );
@@ -134,10 +135,9 @@ let make = () => {
      }}
     <ul>
       {headings
-       ->Belt.Array.mapWithIndex((_, heading) => {<Row
-       heading
-       current
-       key={heading.url} />})
+       ->Belt.Array.mapWithIndex((_, heading) => {
+           <Row heading current key={heading.url} />
+         })
        ->React.array}
     </ul>
   </div>;

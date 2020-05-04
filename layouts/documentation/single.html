@@ -17,7 +17,7 @@
 			"name": {{ .Title | htmlEscape }},
 			"url": {{ .Permalink }},
 			"sub": false,
-			"alwaysOn": true
+			"currentPage": true
 		}
 	{{- range $header := $headers -}}
 	{{- $name := $header | plainify | htmlEscape -}}
@@ -41,7 +41,7 @@
 	]
 }
 </script>
-<article class="toc">
+<article class="with-toc">
 	<header class="post-header">
 		<h1>{{ .Title }}</h1>
 		<p>Updated: {{ .Lastmod.Format "Mon Jan 2, 2006" -}}</p>
