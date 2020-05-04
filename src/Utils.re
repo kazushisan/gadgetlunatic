@@ -45,3 +45,13 @@ function(string) {
 }
 |}
 ];
+
+type exn +=
+  | AssertExistsError;
+
+let assertExists: option('a) => 'a = element => {
+    switch (element) {
+    | Some(element) => element
+    | None => raise(AssertExistsError)
+    };
+}

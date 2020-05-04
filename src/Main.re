@@ -26,18 +26,16 @@ Document.querySelectorAll(".tex", document)
 
 // handle menu actions
 let body =
-  document |> Document.asHtmlDocument |> Utils.andThen(HtmlDocument.body);
+  document
+  |> Document.asHtmlDocument
+  |> Utils.assertExists
+  |> HtmlDocument.body
+  |> Utils.assertExists;
 
 let onClickMenu = e => {
   Event.stopImmediatePropagation(e);
 
-  switch (body) {
-  | Some(element) =>
-    Element.classList(element)
-    |> DomTokenList.toggle("show-menu")
-    |> (_ => ())
-  | None => ()
-  };
+  Element.classList(body) |> DomTokenList.toggle("show-menu") |> (_ => ());
 };
 
 let useAsToggle = element =>

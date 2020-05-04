@@ -49,16 +49,7 @@ module Row = {
 
 let getTop = (rect: Dom.domRect) => Utils.getDomRectValues(rect).top;
 
-type exn +=
-  | HeadingNotFound;
-
-let calcBoundaryPosition = (heading: option(Dom.element)) => {
-  let heading =
-    switch (heading) {
-    | Some(element) => element
-    | None => raise(HeadingNotFound)
-    };
-
+let calcBoundaryPosition = (heading: Dom.element) => {
   let top = Element.getBoundingClientRect(heading)->getTop;
   let marginTop =
     Window.getComputedStyle(heading, window)
@@ -121,7 +112,10 @@ let make = () => {
         )
       ->Belt.Array.map(heading => {
           let element = Document.querySelector(heading.url, document);
-          {y: calcBoundaryPosition(element), url: heading.url};
+          {
+            y: Utils.assertExists(element)->calcBoundaryPosition,
+            url: heading.url,
+          };
         });
 
     setPositions(_ => positions);
