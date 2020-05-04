@@ -77,7 +77,7 @@ let make = () => {
 
   let onScroll =
     React.useCallback1(
-      _ => {
+      () => {
         let item =
           Belt.Array.reverse(positions)
           |> Js.Array.find(item => item.y <= Window.scrollY(window));
@@ -89,6 +89,15 @@ let make = () => {
       },
       [|positions|],
     );
+
+  React.useEffect1(
+    () => {
+      Window.addEventListener("scroll", _ => onScroll(), window);
+      onScroll();
+      Some(() => Window.removeEventListener("scroll", _ => onScroll(), window));
+    },
+    [|onScroll|],
+  );
 
   React.useEffect0(() => {
     let jsonData =
@@ -117,14 +126,6 @@ let make = () => {
 
     Some(() => ());
   });
-
-  React.useEffect1(
-    () => {
-      Window.addEventListener("scroll", onScroll, window);
-      Some(() => Window.removeEventListener("scroll", onScroll, window));
-    },
-    [|onScroll|],
-  );
 
   <div className="toc">
     {switch (title) {
