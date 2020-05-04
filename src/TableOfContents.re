@@ -83,9 +83,10 @@ let make = () => {
           Belt.Array.reverse(positions)
           |> Js.Array.find(item => item.y <= Window.scrollY(window));
 
-        switch (item) {
-        | None => ()
-        | Some(current) => setCurrent(_ => current.url)
+        switch (item, Belt.Array.length(positions) > 0) {
+        | (Some(current), _) => setCurrent(_ => current.url)
+        | (None, true) => setCurrent(_ => positions[0].url)
+        | (None, false) => ()
         };
       },
       [|positions|],
