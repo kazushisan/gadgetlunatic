@@ -30,6 +30,7 @@
     font-size: 0;
     margin: 16px;
     background-size: cover;
+    cursor: pointer;
 
     .show-menu & {
       background-image: url('../assets/ios-close.svg');
