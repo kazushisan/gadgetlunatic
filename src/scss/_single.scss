@@ -178,4 +178,10 @@ article {
       border-top: none;
     }
   }
+
+  hr {
+    border: none;
+    border-top: 1px $grey-darker solid;
+    margin: 1em 0;
+  }
 }

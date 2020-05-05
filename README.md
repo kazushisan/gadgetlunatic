@@ -2,21 +2,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/6167cc58-9975-4a8e-8f29-8b5cb061ec6f/deploy-status)](https://app.netlify.com/sites/gadgetlunatic/deploys)
 
-> `gadgetlunatic.com` – a personal website / tech blog built with Hugo.
-
-```
-├── README.md
-├── archetypes
-├── config.toml
-├── content # the articles
-├── layouts
-├── node_modules
-├── package.json
-├── resources
-├── src # the Javascript and SCSS files that make the website
-├── webpack.config.js
-└── yarn.lock
-```
+> personal website / tech blog built with Hugo + Webpack + ReasonML
 
 ## Prerequisites
 
