@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{ $toc := eq $.Params.toc true }}
 {{ if $toc }}
-{{ $headers := findRE "<h[2-3].*?>(.|\n])+?</h[2-3]>" .Content }}
+{{ $headers := findRE "<h[2-3].*?>(.|\n)+?</h[2-3]>" .Content }}
 {{ $last := $headers | len | add -1 }}
 <script type="application/json" id="table-of-contents-data">
 {
@@ -34,8 +34,10 @@
 		{{ end }}</p>
 	</header>
 	<section class="post-content">
-		{{ .Content }}
+		{{ .Content | replaceRE "<(h[1-6]) id=\"(.+?)\">((?:.|\n)+?)</(h[1-6])>" "<$1 id=\"$2\"><a href=\"#$2\">$3</a></$4>" | safeHTML }}
 	</section>
+	<code>
+	</code>
 	<footer class="post-footer"></footer>
 </article>
 {{ end }}
