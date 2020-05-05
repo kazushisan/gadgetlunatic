@@ -34,8 +34,10 @@
 		{{ end }}</p>
 	</header>
 	<section class="post-content">
-		{{ .Content }}
+		{{ .Content | replaceRE "<(h[1-6]) id=\"(.+?)\">((?:.|\n)+?)</(h[1-6])>" "<$1 id=\"$2\"><a href=\"#$2\">$3</a></$4>" | safeHTML }}
 	</section>
+	<code>
+	</code>
 	<footer class="post-footer"></footer>
 </article>
 {{ end }}

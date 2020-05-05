@@ -47,7 +47,7 @@
 		<p>Updated: {{ .Lastmod.Format "Mon Jan 2, 2006" -}}</p>
 	</header>
 	<section class="post-content">
-		{{ .Content }}
+		{{ .Content | replaceRE "<(h[1-6]) id=\"(.+?)\">((?:.|\n)+?)</(h[1-6])>" "<$1 id=\"$2\"><a href=\"#$2\">$3</a></$4>" | safeHTML }}
 	</section>
 </article>
 {{ end }}
