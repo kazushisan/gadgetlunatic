@@ -31,7 +31,7 @@ Webpack is used to bundle and handle assets under `/src`. To reduce disk writes,
 
 Hugo will run a server on `http://localhost:1313` and reference the Javascript / SCSS files hosted on `http://localhost:1314`.
 
-In order to convert ReasonML files, run the following command to convert such files on save.
+In order to edit ReasonML files, run the following command to convert such files to JavaScript on save.
 
 ```bash
 yarn bs:start
@@ -43,7 +43,9 @@ yarn bs:start
 yarn build
 ```
 
-Webpack will process Javascript/SCSS files and assets under `/src` and write to `/static`. It will also produce `/data/manifest.json` which includes the paths to bundled files.
+First, scripts written in ReasonML/BuckleScript will be converted to Javascript with bsb.
+
+Then, Webpack will process Javascript/SCSS files and assets under `/src` and write to `/static`. It will also produce `/data/manifest.json` which includes the paths to bundled files.
 
 Using this manifest, Hugo will build the articles to `/public`. Hugo will fail to build the website if `/data/manifest.json` is not present.
 
@@ -55,12 +57,10 @@ The website will deploy automatically when a commit is pushed to `origin/master`
 
 ## Lint
 
-Make sure that all Linters pass before making a commit.
+This project makes use of stylelint to lint scss files. Make sure that the linter passes before making a commit. For ReasonML files, use formatters included in editors.
 
 ```bash
 yarn lint
 # or to fix automatically,
 yarn lint:fix
 ```
-
-Uses ESLint, Prettier, Stylelint to lint Javascript and SCSS files.
