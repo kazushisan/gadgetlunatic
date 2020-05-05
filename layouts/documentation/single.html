@@ -2,7 +2,7 @@
 {{- .CurrentSection.Title }} {{ .Title }} | {{ .Site.Title -}}
 {{ end }}
 {{ define "main" }}
-{{ $headers := findRE "<h2.*?>(.|\n])+?</h2>" .Content }}
+{{ $headers := findRE "<h2.*?>(.|\n)+?</h2>" .Content }}
 {{ $hasHeader := ge (len $headers) 1 }}
 {{ $permalink := .Permalink }}
 {{ $first := true }}
