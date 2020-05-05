@@ -9,8 +9,8 @@
     "bs:clean": "bsb -clean-world",
     "start": "webpack-dev-server & hugo server",
     "build": "yarn bs:build && webpack --env.production && hugo --minify",
-    "lint": "eslint ./src && stylelint ./src",
-    "lint:fix": "eslint --fix ./src && stylelint --fix ./src"
+    "lint": "stylelint ./src",
+    "lint:fix": "stylelint --fix ./src"
   },
   "author": "Kazushi Konosu",
   "license": "MIT",
