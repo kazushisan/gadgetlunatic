@@ -9,8 +9,8 @@
     "bs:clean": "bsb -clean-world",
     "start": "webpack-dev-server & hugo server",
     "build": "yarn bs:build && webpack --env.production && hugo --minify",
-    "lint": "eslint ./src && stylelint ./src",
-    "lint:fix": "eslint --fix ./src && stylelint --fix ./src"
+    "lint": "stylelint ./src",
+    "lint:fix": "stylelint --fix ./src"
   },
   "author": "Kazushi Konosu",
   "license": "MIT",
@@ -22,16 +22,13 @@
     "bs-platform": "^7.2.2",
     "css-loader": "^3.2.0",
     "cssnano": "^4.1.10",
-    "eslint": "^6.3.0",
-    "eslint-config-prettier": "^6.1.0",
-    "eslint-plugin-prettier": "^3.1.0",
     "file-loader": "^4.2.0",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
     "postcss-loader": "^3.0.0",
-    "prettier": "^1.18.2",
     "sass-loader": "^8.0.0",
     "stylelint": "^10.1.0",
+    "stylelint-config-standard": "^18.3.0",
     "stylelint-scss": "^3.10.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7",
@@ -45,7 +42,6 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "reason-react": "^0.7.1",
-    "regenerator-runtime": "^0.13.3",
-    "stylelint-config-standard": "^18.3.0"
+    "regenerator-runtime": "^0.13.3"
   }
 }

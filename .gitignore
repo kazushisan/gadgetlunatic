@@ -9,3 +9,5 @@ data/
 .bsb.lock
 npm-debug.log
 /lib/bs/
+
+yarn-error.log
