@@ -5,7 +5,7 @@ draft: true
 toc: true
 ---
 
-## tl;dr
+## TL;DR
 
 最適化ソルバーSCIPとPythonベースのモデリング言語をPyomoを使ってPython上で最適化問題を解く方法をまとめました．Macでのインストールを想定していますが，UNIXライクなOSであれば，ほぼほぼ同じ手順で再現できると思います．
 
