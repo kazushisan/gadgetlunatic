@@ -8,7 +8,7 @@
     "bs:start": "bsb -make-world -w -ws _ ",
     "bs:clean": "bsb -clean-world",
     "start": "webpack serve & hugo server",
-    "build": "NODE_ENV=production yarn bs:build && webpack && hugo --minify",
+    "build": "yarn bs:build && NODE_ENV=production webpack && hugo --minify",
     "lint": "stylelint ./src",
     "lint:fix": "stylelint --fix ./src"
   },
