@@ -2,7 +2,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/6167cc58-9975-4a8e-8f29-8b5cb061ec6f/deploy-status)](https://app.netlify.com/sites/gadgetlunatic/deploys)
 
-> personal website / tech blog built with Hugo + Webpack + ReasonML
+> personal website / tech blog built with Hugo + Webpack + ReScript (Formerly Reason & BuckleScript)
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ yarn install
 ## Develop / Write
 
 ```bash
-yarn bs:build # run first to compile ReasonML code
+yarn bs:build # run first to compile ReScript code
 yarn start
 ```
 
@@ -31,7 +31,7 @@ Webpack is used to bundle and handle assets under `/src`. To reduce disk writes,
 
 Hugo will run a server on `http://localhost:1313` and reference the Javascript / SCSS files hosted on `http://localhost:1314`.
 
-In order to edit ReasonML files, run the following command to convert such files to JavaScript on save.
+In order to edit ReScript files, run the following command to convert such files to JavaScript on save.
 
 ```bash
 yarn bs:start
@@ -43,7 +43,7 @@ yarn bs:start
 yarn build
 ```
 
-First, scripts written in ReasonML/BuckleScript will be converted to Javascript with bsb.
+First, scripts written in ReScript will be converted to Javascript with bsb.
 
 Then, Webpack will process Javascript/SCSS files and assets under `/src` and write to `/static`. It will also produce `/data/manifest.json` which includes the paths to bundled files.
 
@@ -57,7 +57,7 @@ The website will deploy automatically when a commit is pushed to `origin/master`
 
 ## Lint
 
-This project makes use of stylelint to lint scss files. Make sure that the linter passes before making a commit. For ReasonML files, use formatters included in editors.
+This project makes use of stylelint to lint scss files. Make sure that the linter passes before making a commit. For ReScript files, use formatters included in editors.
 
 ```bash
 yarn lint
