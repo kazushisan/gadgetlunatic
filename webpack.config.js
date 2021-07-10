@@ -10,12 +10,12 @@ module.exports = {
   entry: path.resolve(__dirname, "src/index.js"),
   output: {
     path: path.resolve(__dirname, "static/"),
-    filename: `js/${isProduction ? "[hash]." : ""}bundle.js`,
+    filename: `js/${isProduction ? "[fullhash]." : ""}bundle.js`,
     publicPath: "/",
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: `css/${isProduction ? "[hash]." : ""}bundle.css`,
+      filename: `css/${isProduction ? "[fullhash]." : ""}bundle.css`,
     }),
     new WebpackManifestPlugin({
       fileName: "../data/manifest.json",
