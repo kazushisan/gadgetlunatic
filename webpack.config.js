@@ -1,6 +1,6 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const ManifestPlugin = require("webpack-manifest-plugin");
+const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -17,7 +17,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: `css/${isProduction ? "[hash]." : ""}bundle.css`,
     }),
-    new ManifestPlugin({
+    new WebpackManifestPlugin({
       fileName: "../data/manifest.json",
     }),
   ],
