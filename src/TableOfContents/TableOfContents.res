@@ -12,13 +12,13 @@ type position = {
   url: string,
 }
 
-let footer = Document.querySelector(".global-footer", document)->Utils.assertExists
+let footer = Document.querySelector(document, ".global-footer")->Utils.assertExists
 
 @bs.scope("JSON") @bs.val external parseData: string => data = "parse"
 
 let calcBoundaryPosition = (heading: Dom.element) => {
   let top = Element.getBoundingClientRect(heading)->Utils.getTop
-  let marginTop = Window.getComputedStyle(heading, window)->Utils.getComputedStyle("marginTop")
+  let marginTop = Window.getComputedStyle(window, heading)->Utils.getComputedStyle("marginTop")
 
   Window.scrollY(window) +. top -. marginTop -. 60.0
 }
@@ -52,13 +52,13 @@ let make = () => {
   }, [positions])
 
   React.useEffect1(() => {
-    Window.addEventListener("scroll", _ => onScroll(), window)
+    Window.addEventListener(window, "scroll", _ => onScroll())
     onScroll()
-    Some(() => Window.removeEventListener("scroll", _ => onScroll(), window))
+    Some(() => Window.removeEventListener(window, "scroll", _ => onScroll()))
   }, [onScroll])
 
   React.useEffect0(() => {
-    let jsonData = Document.getElementById("table-of-contents-data", document)
+    let jsonData = Document.getElementById(document, "table-of-contents-data")
     ->(x =>
       switch x {
       | Some(element) => Element.textContent(element)
@@ -70,7 +70,7 @@ let make = () => {
       jsonData.headings
       ->Js.Array.filter((heading: Row.heading) => Utils.isAnchorLink(heading.url), _)
       ->Belt.Array.map(heading => {
-        let element = Document.querySelector(heading.url, document)
+        let element = Document.querySelector(document, heading.url)
         {
           y: Utils.assertExists(element)->calcBoundaryPosition,
           url: heading.url,
@@ -84,7 +84,7 @@ let make = () => {
     Some(() => ())
   })
 
-  <div className="toc" style={ReactDOMRe.Style.make(~bottom, ())}>
+  <div className="toc" style={ReactDOM.Style.make(~bottom, ())}>
     {switch title {
     | Some(value) => <h1 className="toc__title"> {React.string(value)} </h1>
     | None => React.null

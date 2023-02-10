@@ -1,5 +1,4 @@
-{{ .Scratch.Set "css" "http://localhost:1314/css/bundle.css" }}
-{{ .Scratch.Set "js" "http://localhost:1314/js/bundle.js" }}
+{{ .Scratch.Set "js" "http://localhost:5173/src/index.js" }}
 {{ if not .Site.IsServer }}
 {{ .Scratch.Set "css" (index .Site.Data.manifest "main.css") }}
 {{ .Scratch.Set "js" (index .Site.Data.manifest "main.js") }}
@@ -34,7 +33,7 @@
 			</div>
 			{{- partial "footer.html" . -}}
 			{{ $js := .Scratch.Get "js" }}
-			<script src="{{ $js }}"></script>
+			<script src="{{ $js }}" type="module"></script>
 		</div>
     </body>
 </html>

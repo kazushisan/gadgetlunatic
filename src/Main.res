@@ -2,12 +2,12 @@ open Webapi.Dom
 
 // render math equations in articles
 module Katex = {
-  @bs.module("katex")
+  @module("katex")
   external render: (string, Dom.element) => unit = "render"
 }
 
 let renderEquation = element => {
-  let expression = Element.getAttribute("data-expr", element)
+  let expression = Element.getAttribute(element, "data-expr")
 
   switch expression {
   | Some(string) => Katex.render(string, element)
@@ -15,7 +15,7 @@ let renderEquation = element => {
   }
 }
 
-Document.querySelectorAll(".tex", document)
+Document.querySelectorAll(document, ".tex")
 |> NodeList.toArray
 |> Js.Array.forEach((node: Dom.node) =>
   switch Element.ofNode(node) {
@@ -30,23 +30,23 @@ let body = Utils.body
 let onClickMenu = e => {
   Event.stopPropagation(e)
 
-  Element.classList(body) |> DomTokenList.toggle("show-menu") |> Utils.noop1
+  Element.classList(body)->DomTokenList.toggle("show-menu") |> Utils.noop1
 }
 
 let useAsToggle = element =>
   switch element {
-  | Some(element) => Element.addEventListener("click", onClickMenu, element)
+  | Some(element) => Element.addEventListener(element, "click", onClickMenu)
   | None => ()
   }
 
-Document.querySelector(".sp-header__button", document)->useAsToggle
-Document.querySelector(".sp-close-area", document)->useAsToggle
+Document.querySelector(document, ".sp-header__button")->useAsToggle
+Document.querySelector(document, ".sp-close-area")->useAsToggle
 
 // handle table of contents react component
-Document.getElementById("table-of-contents", document)->(
+Document.getElementById(document, "table-of-contents")->(
   x =>
     switch x {
-    | Some(element) => ReactDOMRe.render(<TableOfContents />, element)
+    | Some(element) => ReactDOM.render(<TableOfContents />, element)
     | None => ()
     }
 )

@@ -12,7 +12,7 @@ let body = Utils.body
 @react.component
 let make = (~heading: heading, ~current: string) => {
   let onClick = React.useCallback0(_ =>
-    Element.classList(body) |> DomTokenList.remove("show-menu") |> Utils.noop1
+    Element.classList(body) -> DomTokenList.remove("show-menu") |> Utils.noop1
   )
   let linkClassName = React.useMemo2(() => {
     let currentPage = switch heading.currentPage {
