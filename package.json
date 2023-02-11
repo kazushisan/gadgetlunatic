@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Personal Website",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "bs:build": "bsb -make-world",
     "bs:start": "bsb -make-world -w -ws _ ",
@@ -17,6 +18,7 @@
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
+    "@mdx-js/rollup": "^2.3.0",
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.2.6",
     "babel-loader": "^8.2.2",
@@ -26,6 +28,9 @@
     "mini-css-extract-plugin": "^2.1.0",
     "postcss": "^8.3.5",
     "postcss-loader": "^6.1.1",
+    "remark-frontmatter": "^4.0.1",
+    "remark-gfm": "^3.0.1",
+    "remark-mdx-frontmatter": "^2.1.1",
     "rescript": "^10.1.2",
     "sass": "^1.35.2",
     "sass-loader": "^12.1.0",
