@@ -14,5 +14,5 @@
   ],
   "suffix": ".bs.js",
   "bs-dependencies": ["rescript-webapi", "@rescript/react"],
-  "jsx": { "version": 4, "mode": "classic" }
+  "jsx": { "version": 4 }
 }
