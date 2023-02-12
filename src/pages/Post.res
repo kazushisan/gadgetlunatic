@@ -13,7 +13,7 @@ let make = (~title: string, ~headings: Js.Array.t<heading>, ~children: React.ele
       {headings
       ->Js.Array2.filter(heading => heading.depth == 2 || heading.depth == 3)
       ->Js.Array2.map(heading =>
-        <li key={heading.value}>
+        <li key={heading.id}>
           <a href={`#${heading.id}`}> {React.string(heading.value)} </a>
         </li>
       )
