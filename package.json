@@ -17,6 +17,7 @@
   "license": "MIT",
   "devDependencies": {
     "@mdx-js/rollup": "^2.3.0",
+    "@vcarl/remark-headings": "^0.1.0",
     "@vitejs/plugin-react": "^3.1.0",
     "remark-frontmatter": "^4.0.1",
     "remark-gfm": "^3.0.1",

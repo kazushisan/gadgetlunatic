@@ -1,9 +1,15 @@
 type options = {eager?: bool}
 
+type heading = {
+	value: string,
+	depth: int,
+}
+
 type file = {
   title?: string,
   draft?: bool,
   date?: string,
+	headings: Js.Array.t<heading>,
   default: React.component<{.}>,
 }
 
@@ -19,6 +25,7 @@ type route = {
   title: string,
   draft: bool,
   date: string,
+	headings: Js.Array.t<heading>,
   element: React.element,
 }
 
@@ -45,6 +52,7 @@ let routes = Js.Dict.entries(files)->Js.Array2.map(((key, value)) => {
     title,
     draft,
     date,
+		headings: value.headings,
     element: React.createElement(value.default, Js.Obj.empty()),
   }
 })
