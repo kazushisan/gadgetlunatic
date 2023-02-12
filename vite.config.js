@@ -4,7 +4,6 @@ import mdx from '@mdx-js/rollup';
 import remarkGfm from 'remark-gfm';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
-import remarkHeadings from '@vcarl/remark-headings';
 import headings from './lib/headings';
 import rehypeSlug from 'rehype-slug';
 import rehypeKatex from 'rehype-katex';
@@ -18,7 +17,6 @@ export default defineConfig({
       providerImportSource: '@mdx-js/react',
       remarkPlugins: [
         remarkGfm,
-        remarkHeadings,
         remarkFrontmatter,
         remarkMdxFrontmatter,
         remarkMath,
