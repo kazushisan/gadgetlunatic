@@ -1,9 +1,5 @@
 import { MDXProvider } from '@mdx-js/react';
 import { createElement } from 'react';
-const H2 = (props) => {
-  console.log('custom h2', props);
-  return <h2>{props.children}</h2>;
-};
 
 const createHeadingComponent = (tag) => {
   const Component = ({ id, children }) => {
