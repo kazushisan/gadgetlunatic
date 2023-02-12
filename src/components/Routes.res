@@ -1,15 +1,10 @@
 type options = {eager?: bool}
 
-type heading = {
-	value: string,
-	depth: int,
-}
-
 type file = {
   title?: string,
   draft?: bool,
   date?: string,
-	headings: Js.Array.t<heading>,
+  headings: Js.Array.t<Post.heading>,
   default: React.component<{.}>,
 }
 
@@ -25,7 +20,7 @@ type route = {
   title: string,
   draft: bool,
   date: string,
-	headings: Js.Array.t<heading>,
+  headings: Js.Array.t<Post.heading>,
   element: React.element,
 }
 
@@ -45,14 +40,15 @@ let routes = Js.Dict.entries(files)->Js.Array2.map(((key, value)) => {
   | None => raise(InvalidFile(`date not found for ${key}`))
   }
 
-  let path = key |> Js.String.replaceByRe(%re("/^\.\.\/\.\.\/content(.+?)(\/index|)\.(md|mdx)$/"), "$1")
+  let path =
+    key |> Js.String.replaceByRe(%re("/^\.\.\/\.\.\/content(.+?)(\/index|)\.(md|mdx)$/"), "$1")
 
   {
     path,
     title,
     draft,
     date,
-		headings: value.headings,
+    headings: value.headings,
     element: React.createElement(value.default, Js.Obj.empty()),
   }
 })
@@ -65,13 +61,14 @@ let make = () => {
 
   let target = Js.Array2.find(routes, item => item.path == path)
 
-  switch target {
-  | Some(res) =>
+  switch (target, url.path) {
+  | (Some(res), list{"post", ..._}) =>
+    <Post title={res.title} headings={res.headings}> {res.element} </Post>
+  | (Some(res), _) =>
     <div>
-      <h1> {React.string(res.title)} </h1>
+      <h1> {React.string("default page")} </h1>
       <div> {res.element} </div>
     </div>
-
-  | None => <div> {React.string("page not found")} </div>
+  | (None, _) => <div> {React.string("page not found")} </div>
   }
 }
