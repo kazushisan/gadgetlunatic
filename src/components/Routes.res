@@ -16,7 +16,7 @@ type file = {
 @val
 external importMetaGlob: (~glob: string, ~options: options) => Js.Dict.t<file> = "import.meta.glob"
 
-let files = importMetaGlob(~glob="../content/**/*.{md,mdx}", ~options={eager: true})
+let files = importMetaGlob(~glob="../../content/**/*.{md,mdx}", ~options={eager: true})
 
 exception InvalidFile(string)
 
@@ -45,7 +45,7 @@ let routes = Js.Dict.entries(files)->Js.Array2.map(((key, value)) => {
   | None => raise(InvalidFile(`date not found for ${key}`))
   }
 
-  let path = key |> Js.String.replaceByRe(%re("/^\.\.\/content(.+?)(\/index|)\.(md|mdx)$/"), "$1")
+  let path = key |> Js.String.replaceByRe(%re("/^\.\.\/\.\.\/content(.+?)(\/index|)\.(md|mdx)$/"), "$1")
 
   {
     path,
@@ -56,8 +56,6 @@ let routes = Js.Dict.entries(files)->Js.Array2.map(((key, value)) => {
     element: React.createElement(value.default, Js.Obj.empty()),
   }
 })
-
-Js.log(routes)
 
 @react.component
 let make = () => {
