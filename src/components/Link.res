@@ -6,6 +6,7 @@ let make = (
   ~children: React.element,
   ~to: string,
   ~onClick: option<ReactEvent.Mouse.t => unit>=?,
+  ~className: option<string>=?,
 ) => {
   let handleClick = e => {
     let href = getHref(e)
@@ -26,5 +27,5 @@ let make = (
     }
   }
 
-  <a onClick={handleClick} href={to}> {children} </a>
+  <a onClick={handleClick} href={to} ?className> {children} </a>
 }

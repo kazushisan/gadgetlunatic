@@ -5,13 +5,17 @@ module HeadingProvider = {
 
 @react.component
 let make = () => {
-  <div>
+  <div className="flex flex-col min-h-screen">
     <HeadingProvider>
-      <Header />
-      <div>
+      <div className="flex-none">
+        <Header />
+      </div>
+      <div className="flex-auto">
         <Routes />
       </div>
-      <Footer />
+      <div className="flex-none">
+        <Footer />
+      </div>
     </HeadingProvider>
   </div>
 }
