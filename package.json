@@ -15,6 +15,7 @@
   "author": "Kazushi Konosu",
   "license": "MIT",
   "devDependencies": {
+    "@leafac/rehype-shiki": "^2.2.1",
     "@mdx-js/react": "^2.3.0",
     "@mdx-js/rollup": "^2.3.0",
     "@tailwindcss/typography": "^0.5.9",
@@ -31,6 +32,7 @@
     "remark-math": "^5.1.1",
     "remark-mdx-frontmatter": "^2.1.1",
     "rescript": "^10.1.2",
+    "shiki": "^0.11.1",
     "tailwindcss": "^3.2.6",
     "unist-util-visit": "^4.1.2",
     "vite": "^4.1.1"

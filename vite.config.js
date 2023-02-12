@@ -8,6 +8,8 @@ import headings from './lib/headings';
 import rehypeSlug from 'rehype-slug';
 import rehypeKatex from 'rehype-katex';
 import remarkMath from 'remark-math';
+import rehypeShiki from '@leafac/rehype-shiki';
+import shiki from 'shiki';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -21,7 +23,15 @@ export default defineConfig({
         remarkMdxFrontmatter,
         remarkMath,
       ],
-      rehypePlugins: [rehypeSlug, headings, rehypeKatex],
+      rehypePlugins: [
+        rehypeSlug,
+        headings,
+        rehypeKatex,
+        [
+          rehypeShiki,
+          { highlighter: await shiki.getHighlighter({ theme: 'nord' }) },
+        ],
+      ],
     }),
   ],
   build: {
