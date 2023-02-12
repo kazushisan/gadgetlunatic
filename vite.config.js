@@ -7,6 +7,8 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import remarkHeadings from '@vcarl/remark-headings';
 import headings from './lib/headings';
 import rehypeSlug from 'rehype-slug';
+import rehypeKatex from 'rehype-katex';
+import remarkMath from 'remark-math';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -19,8 +21,9 @@ export default defineConfig({
         remarkHeadings,
         remarkFrontmatter,
         remarkMdxFrontmatter,
+        remarkMath,
       ],
-      rehypePlugins: [rehypeSlug, headings],
+      rehypePlugins: [rehypeSlug, headings, rehypeKatex],
     }),
   ],
   build: {
