@@ -3,15 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  .prose a.heading-anchor::before {
-    content: '';
-    display: block;
-    height: 116px;
-    margin-top: -116px;
-    position: relative;
-    visibility: hidden;
-  }
-
   .prose a.heading-anchor :where(h1, h2, h3, h4, h5, h6):hover::before {
     content: '#';
     display: inline-block;

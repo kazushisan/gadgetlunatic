@@ -2,9 +2,9 @@ let year = Js.Date.getFullYear(Js.Date.make())->Js.Float.toString
 
 @react.component
 let make = () => {
-  <footer className="bg-slate-100 overflow-hidden">
-    <div className="container mx-auto max-w-4xl my-8 px-4">
-      <div className="my-4">
+  <footer className="overflow-hidden bg-slate-100">
+    <div className="container max-w-4xl mx-auto xl:px-72 box-content my-16">
+      <div className="my-4 px-4">
         <h3 className="font-bold"> {React.string("gadgetlunatic")} </h3>
         <p>
           {React.string("Created by ")}
@@ -15,7 +15,7 @@ let make = () => {
           <a href="https://github.com/kazushisan"> {React.string("kazushisan")} </a>
         </p>
       </div>
-      <div className="my-4">
+      <div className="my-4 px-4">
         <p>
           {React.string("This website is managed on ")}
           <a href="https://github.com/kazushisan/gadgetlunatic">
@@ -23,7 +23,7 @@ let make = () => {
           </a>
         </p>
       </div>
-      <div className="my-4">
+      <div className="my-4 px-4">
         <p> {React.string(`© ${year} gadgetlunatic`)} </p>
       </div>
     </div>

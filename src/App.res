@@ -8,8 +8,7 @@ let make = () => {
   <HeadingProvider>
     <Header />
     <div className="flex flex-col min-h-screen">
-      <div className="flex-none h-[116px]" />
-      <div className="flex-auto overflow-hidden">
+      <div className="flex-auto">
         <Routes />
       </div>
       <div className="flex-none">

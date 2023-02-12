@@ -4,11 +4,17 @@ let make = (
   ~headings: Js.Array.t<TableOfContents.heading>,
   ~children: React.element,
 ) => {
-  <div>
-    <TableOfContents headings />
-    <header>
-      <h1 className="max-w-4xl px-4 mx-auto font-bold text-3xl my-8"> {React.string(title)} </h1>
-    </header>
-    <article className="prose px-4 mb-16 max-w-4xl mx-auto prose-slate"> {children} </article>
+  <div className="xl:flex xl:justify-center">
+    <div className="container md:mx-auto xl:mx-0 xl:pl-72 max-w-4xl box-content flex-1 min-w-0">
+      <div className="px-4">
+        <header>
+          <h1 className="font-bold text-3xl my-8"> {React.string(title)} </h1>
+        </header>
+        <article className="prose mb-16 max-w-none prose-slate"> {children} </article>
+      </div>
+    </div>
+    <div className="hidden xl:block flex-none w-72">
+      <TableOfContents headings />
+    </div>
   </div>
 }

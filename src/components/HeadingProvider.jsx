@@ -4,8 +4,8 @@ import { createElement } from 'react';
 const createHeadingComponent = (tag) => {
   const Component = ({ id, children }) => {
     return (
-      <a href={`#${id}`} id={id} className="heading-anchor">
-        {createElement(tag, {}, children)}
+      <a href={`#${id}`} className="heading-anchor">
+        {createElement(tag, { id }, children)}
       </a>
     );
   };
