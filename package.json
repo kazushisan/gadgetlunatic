@@ -10,8 +10,7 @@
     "bs:clean": "bsb -clean-world",
     "start": "webpack serve & hugo server",
     "build": "yarn bs:build && NODE_ENV=production webpack && hugo --minify",
-    "lint": "stylelint ./src",
-    "lint:fix": "stylelint --fix ./src"
+    "lint": "prettier --check ./**/*.js"
   },
   "author": "Kazushi Konosu",
   "license": "MIT",
@@ -19,6 +18,7 @@
     "@mdx-js/rollup": "^2.3.0",
     "@vcarl/remark-headings": "^0.1.0",
     "@vitejs/plugin-react": "^3.1.0",
+    "prettier": "^2.8.4",
     "remark-frontmatter": "^4.0.1",
     "remark-gfm": "^3.0.1",
     "remark-mdx-frontmatter": "^2.1.1",
