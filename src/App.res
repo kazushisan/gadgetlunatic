@@ -7,7 +7,7 @@ module HeadingProvider = {
 let make = () => {
   <div>
     <HeadingProvider>
-      <h1> {React.string("gadgetlunatic")} </h1>
+      <Header />
       <div>
         <Routes />
       </div>
