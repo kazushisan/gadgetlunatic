@@ -11,6 +11,7 @@ let make = () => {
       <div>
         <Routes />
       </div>
+      <Footer />
     </HeadingProvider>
   </div>
 }
