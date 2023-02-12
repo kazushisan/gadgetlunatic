@@ -5,20 +5,22 @@ import remarkGfm from 'remark-gfm';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import remarkHeadings from '@vcarl/remark-headings';
-import remarkMdxHeadings from './lib/remarkMdxHeadings';
+import headings from './lib/headings';
+import rehypeSlug from 'rehype-slug';
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
     mdx({
+      providerImportSource: '@mdx-js/react',
       remarkPlugins: [
+        remarkGfm,
         remarkHeadings,
-        remarkMdxHeadings,
         remarkFrontmatter,
         remarkMdxFrontmatter,
-        remarkGfm,
       ],
+      rehypePlugins: [rehypeSlug, headings],
     }),
   ],
   build: {
