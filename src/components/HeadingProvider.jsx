@@ -3,7 +3,11 @@ import { createElement } from 'react';
 
 const createHeadingComponent = (tag) => {
   const Component = ({ id, children }) => {
-    return <a href={`#${id}`} className="heading-anchor">{createElement(tag, { id }, children)}</a>;
+    return (
+      <a href={`#${id}`} id={id} className="heading-anchor">
+        {createElement(tag, {}, children)}
+      </a>
+    );
   };
 
   Component.displayName = `Heading${tag.slice(1, 2)}`;

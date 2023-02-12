@@ -4,7 +4,7 @@ type file = {
   title?: string,
   draft?: bool,
   date?: string,
-  headings: Js.Array.t<Post.heading>,
+  headings: Js.Array.t<TableOfContents.heading>,
   default: React.component<{.}>,
 }
 
@@ -20,7 +20,7 @@ type route = {
   title: string,
   draft: bool,
   date: string,
-  headings: Js.Array.t<Post.heading>,
+  headings: Js.Array.t<TableOfContents.heading>,
   element: React.element,
 }
 
