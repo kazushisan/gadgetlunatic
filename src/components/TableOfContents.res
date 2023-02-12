@@ -8,7 +8,7 @@ type heading = {
 let make = (~headings: Js.Array.t<heading>) => {
   let (show, setShow) = React.useState(_ => false)
 
-  <div className="fixed top-[60px] left-0 right-0 bg-slate-100">
+  <div className="fixed top-[60px] left-0 right-0 shadow-sm bg-white">
     <button
       onClick={unit => setShow(_ => !show)}
       className="w-full flex justify-between items-center p-4">
