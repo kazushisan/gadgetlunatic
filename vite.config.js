@@ -1,39 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import mdx from '@mdx-js/rollup';
-import remarkGfm from 'remark-gfm';
-import remarkFrontmatter from 'remark-frontmatter';
-import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
-import headings from './lib/headings';
-import rehypeSlug from 'rehype-slug';
-import rehypeKatex from 'rehype-katex';
-import remarkMath from 'remark-math';
-import rehypeShiki from '@leafac/rehype-shiki';
-import shiki from 'shiki';
+import mdx from './lib/mdx';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    mdx({
-      providerImportSource: '@mdx-js/react',
-      remarkPlugins: [
-        remarkGfm,
-        remarkFrontmatter,
-        remarkMdxFrontmatter,
-        remarkMath,
-      ],
-      rehypePlugins: [
-        rehypeSlug,
-        headings,
-        rehypeKatex,
-        [
-          rehypeShiki,
-          { highlighter: await shiki.getHighlighter({ theme: 'nord' }) },
-        ],
-      ],
-    }),
-  ],
+  plugins: [react(), mdx()],
   build: {
     manifest: true,
   },
