@@ -1,6 +1,10 @@
 @react.component
 let make = (
   ~title: string,
+  ~date: string,
+  ~permalink: option<string>=?,
+  ~modifiedDate: option<string>=?,
+  ~hash: option<string>=?,
   ~headings: Js.Array.t<TableOfContents.heading>,
   ~children: React.element,
 ) => {
@@ -9,6 +13,7 @@ let make = (
       <div className="px-4">
         <header>
           <h1 className="font-bold text-3xl my-8"> {React.string(title)} </h1>
+          <PostMeta ?modifiedDate ?hash ?permalink date />
         </header>
         <article className="prose mb-16 max-w-none prose-slate"> {children} </article>
       </div>

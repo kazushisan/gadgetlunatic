@@ -4,6 +4,9 @@ type file = {
   title?: string,
   draft?: bool,
   date?: string,
+  permalink?: string,
+  modifiedDate?: string,
+  hash?: string,
   headings: Js.Array.t<TableOfContents.heading>,
   default: React.component<{.}>,
 }
@@ -20,6 +23,9 @@ type route = {
   title: string,
   draft: bool,
   date: string,
+  permalink?: string,
+  modifiedDate?: string,
+  hash?: string,
   headings: Js.Array.t<TableOfContents.heading>,
   element: React.element,
 }
@@ -48,6 +54,9 @@ let routes = Js.Dict.entries(files)->Js.Array2.map(((key, value)) => {
     title,
     draft,
     date,
+    permalink: ?value.permalink,
+    modifiedDate: ?value.modifiedDate,
+    hash: ?value.hash,
     headings: value.headings,
     element: React.createElement(value.default, Js.Obj.empty()),
   }
@@ -63,7 +72,16 @@ let make = () => {
 
   switch (target, url.path) {
   | (Some(res), list{"post", ..._}) =>
-    <Post title={res.title} headings={res.headings}> {res.element} </Post>
+    Js.log(res)
+    <Post
+      title={res.title}
+      headings={res.headings}
+      date={res.date}
+      permalink=?{res.permalink}
+      modifiedDate=?{res.modifiedDate}
+      hash=?{res.hash}>
+      {res.element}
+    </Post>
   | (Some(res), _) =>
     <div>
       <h1> {React.string("default page")} </h1>

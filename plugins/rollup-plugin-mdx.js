@@ -9,6 +9,9 @@ import { VFile } from 'vfile';
 import rehypeHeadings from './rehype-headings';
 import rehypeHighlightCode from './rehype-highlight-code';
 import rehypeHeadingAnchor from './rehype-heading-anchor';
+import { execSync } from 'child_process';
+import { relative } from 'path';
+import { cwd } from 'process';
 
 function namedExports(data) {
   return Object.entries(data).reduce(
@@ -17,6 +20,8 @@ function namedExports(data) {
     '',
   );
 }
+
+const REPO_URL = 'https://github.com/kazushisan/gadgetlunatic';
 
 function mdx() {
   return {
@@ -30,6 +35,21 @@ function mdx() {
 
       const { data, content } = matter(value);
 
+      const output = execSync(
+        `git log --pretty=format:"%H %cd" --date=iso-strict -- ${file.path}`,
+      )
+        .toString()
+        .split('\n');
+
+      const hash = output.length > 0 ? output[0].split(' ')[0] : undefined;
+
+      const permalink = hash
+        ? `${REPO_URL}/blob/${hash}/${relative(cwd(), file.path)}`
+        : undefined;
+
+      const modifiedDate =
+        output.length > 1 ? output[0].split(' ')[1] : undefined;
+
       const result = await compile(content, {
         remarkPlugins: [remarkGfm, remarkMath],
         rehypePlugins: [
@@ -41,7 +61,12 @@ function mdx() {
         ],
       });
 
-      return `${namedExports(data)}${result.toString()}`;
+      return `${namedExports({
+        ...data,
+        hash,
+        permalink,
+        modifiedDate,
+      })}${result.toString()}`;
     },
   };
 }
