@@ -2,7 +2,7 @@ import { visit } from 'unist-util-visit';
 import { toText } from 'hast-util-to-text';
 import shiki from 'shiki';
 import { removePosition } from 'unist-util-remove-position';
-import rehypeParse from 'rehype-parse/lib';
+import rehypeParse from 'rehype-parse';
 import { unified } from 'unified';
 
 const highlighter = await shiki.getHighlighter({ theme: 'nord' });
