@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { startTransition, useCallback, useEffect, useState } from 'react';
 
 const getPosition = (element) => {
   const sibling = element.parentElement.previousElementSibling;
@@ -53,7 +53,9 @@ export const useTableOfContentsActiveItem = (headings) => {
       );
 
       if (target.id !== activeId) {
-        setActiveId(target.id);
+        startTransition(() => {
+          setActiveId(target.id);
+        });
       }
     });
 
