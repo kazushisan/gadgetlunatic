@@ -11,10 +11,4 @@
     font-weight: theme('fontWeight.normal');
     color: theme('colors.slate.200');
   }
-
-  /* align pre style with shiki */
-  .prose pre {
-    background-color: rgb(46, 52, 64);
-    color: rgb(216, 222, 233);
-  }
 }
