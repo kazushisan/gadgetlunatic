@@ -8,6 +8,7 @@ import stringifyObject from 'stringify-object';
 import { VFile } from 'vfile';
 import rehypeHeadings from './rehype-headings';
 import rehypeHighlightCode from './rehype-highlight-code';
+import rehypeHeadingAnchor from './rehype-heading-anchor';
 
 function namedExports(data) {
   return Object.entries(data).reduce(
@@ -30,10 +31,10 @@ function mdx() {
       const { data, content } = matter(value);
 
       const result = await compile(content, {
-        providerImportSource: '@mdx-js/react',
         remarkPlugins: [remarkGfm, remarkMath],
         rehypePlugins: [
           rehypeSlug,
+          rehypeHeadingAnchor,
           rehypeKatex,
           rehypeHeadings,
           rehypeHighlightCode,
