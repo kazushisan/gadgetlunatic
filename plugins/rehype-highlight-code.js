@@ -41,8 +41,6 @@ const highlightCode = () => {
 
       element.properties = parsed.properties;
       element.children = parsed.children;
-
-      console.log(element.properties);
     });
   };
 };
