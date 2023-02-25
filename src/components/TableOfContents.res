@@ -17,11 +17,14 @@ let make = (~headings: Js.Array.t<heading>) => {
     ->Js.Array2.map(heading =>
       <li
         key={heading.id}
-        className={`list-none my-2 block ${switch (heading.depth, heading.id === activeId) {
-          | (2, true) => "border-l-4 border-slate-200 pl-4"
-          | (2, false) => "pl-5"
-          | (_, true) => "border-l-4 border-slate-200 pl-6"
-          | (_, false) => "pl-7"
+        className={`list-none py-1 block border-l-2 ${switch (
+            heading.depth,
+            heading.id === activeId,
+          ) {
+          | (2, true) => " border-blue-500 pl-4"
+          | (2, false) => " border-slate-200 pl-4"
+          | (_, true) => " border-blue-500 pl-6"
+          | (_, false) => " border-slate-200 pl-6"
           }}`}>
         <a href={`#${heading.id}`}> {React.string(heading.value)} </a>
       </li>
