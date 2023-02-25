@@ -6,8 +6,8 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import stringifyObject from 'stringify-object';
 import { VFile } from 'vfile';
-import headings from './headings';
-import highlightCode from './highlightCode';
+import rehypeHeadings from './rehype-headings';
+import rehypeHighlightCode from './rehype-highlight-code';
 
 function namedExports(data) {
   return Object.entries(data).reduce(
@@ -32,7 +32,12 @@ function mdx() {
       const result = await compile(content, {
         providerImportSource: '@mdx-js/react',
         remarkPlugins: [remarkGfm, remarkMath],
-        rehypePlugins: [rehypeSlug, rehypeKatex, headings, highlightCode],
+        rehypePlugins: [
+          rehypeSlug,
+          rehypeKatex,
+          rehypeHeadings,
+          rehypeHighlightCode,
+        ],
       });
 
       return `${namedExports(data)}${result.toString()}`;
