@@ -11,7 +11,7 @@ external useTableOfContentsActiveItem: Js.Array.t<heading> => string =
 @react.component
 let make = (~headings: Js.Array.t<heading>) => {
   let activeId = useTableOfContentsActiveItem(headings)
-  <ul className="p-4 sticky mt-32 top-32">
+  <ul className="p-4 sticky mt-40 top-40">
     {headings
     ->Js.Array2.filter(heading => heading.depth == 2 || heading.depth == 3)
     ->Js.Array2.map(heading =>
