@@ -12,6 +12,7 @@ import rehypeHeadingAnchor from './rehype-heading-anchor';
 import { execSync } from 'child_process';
 import { relative } from 'path';
 import { cwd } from 'process';
+import yaml from 'js-yaml';
 
 function namedExports(data) {
   return Object.entries(data).reduce(
@@ -33,7 +34,12 @@ function mdx() {
         return null;
       }
 
-      const { data, content } = matter(value);
+      const { data, content } = matter(value, {
+        engines: {
+          // specify engine with option to prevent date from being converted to Date instance with timezone info dropped
+          yaml: (s) => yaml.load(s, { schema: yaml.JSON_SCHEMA }),
+        },
+      });
 
       const output = execSync(
         `git log --pretty=format:"%H %cd" --date=iso-strict -- ${file.path}`,
