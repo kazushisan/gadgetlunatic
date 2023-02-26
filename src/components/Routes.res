@@ -7,6 +7,7 @@ type file = {
   permalink?: string,
   modifiedDate?: string,
   hash?: string,
+  weight?: int,
   headings: Js.Array.t<TableOfContents.heading>,
   default: React.component<{.}>,
 }
@@ -26,6 +27,7 @@ type route = {
   permalink?: string,
   modifiedDate?: string,
   hash?: string,
+  weight: int,
   headings: Js.Array.t<TableOfContents.heading>,
   element: React.element,
 }
@@ -57,10 +59,26 @@ let routes = Js.Dict.entries(files)->Js.Array2.map(((key, value)) => {
     permalink: ?value.permalink,
     modifiedDate: ?value.modifiedDate,
     hash: ?value.hash,
+    weight: value.weight->Belt.Option.getWithDefault(0),
     headings: value.headings,
     element: React.createElement(value.default, Js.Obj.empty()),
   }
 })
+
+let latexPages =
+  routes
+  ->Js.Array2.filter(item => {
+    item.path->Js.String2.startsWith("/latex")
+  })
+  ->Js.Array2.sortInPlaceWith((a, b) => a.weight - b.weight)
+  ->Js.Array2.map(item => {
+    let result: Latex.page = {
+      title: item.title,
+      path: item.path,
+    }
+
+    result
+  })
 
 @react.component
 let make = () => {
@@ -83,6 +101,8 @@ let make = () => {
     </Post>
   | (Some(res), list{"latex", ..._}) =>
     <Latex
+      path={path}
+      pages={latexPages}
       title={res.title}
       headings={res.headings}
       date={res.date}
