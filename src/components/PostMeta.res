@@ -1,15 +1,5 @@
-module IntlDateTimeFormat = {
-  type options = {dateStyle?: string}
-  type dateTimeFormat
-  @new
-  external make: (string, options) => dateTimeFormat = "Intl.DateTimeFormat"
-
-  @send
-  external format: (dateTimeFormat, Js.Date.t) => string = "format"
-}
-
 let formatDateFromIso = value => {
-  open IntlDateTimeFormat
+  open Intl.DateTimeFormat
   let date = Js.Date.fromString(value)
   let options = {dateStyle: "long"}
 
