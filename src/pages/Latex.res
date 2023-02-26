@@ -19,19 +19,24 @@ let make = (
 
   <div className="xl:flex xl:justify-center">
     <div>
-      <div className="flex justify-between p-4">
-        <div className="text-slate-700 font-bold">
-          <span> {React.string("LaTeXのガイド")} </span>
-          <span className="before:content-['/'] before:text-slate-300 before:m-1"> {React.string(title)} </span>
+      <div className="container md:mx-auto max-w-4xl">
+        <div className="p-4 flex justify-between">
+          <div className="text-slate-700 font-bold">
+            <span> {React.string("LaTeXのガイド")} </span>
+            <span className="before:content-['/'] before:text-slate-300 before:m-1">
+              {React.string(title)}
+            </span>
+          </div>
+          <button onClick={_ => setShow(value => !value)}>
+            <Icon.Bar3 className="w-6" />
+          </button>
         </div>
-        <button onClick={_ => setShow(value => !value)}>
-          <Icon.Bar3 className="w-6" />
-        </button>
       </div>
       {switch show {
       | true =>
         <div className="fixed inset-0 flex-col flex z-10">
-          <nav className=" bg-white shadow overflow-y-scroll m-4 rounded-md flex-initial">
+          <nav
+            className=" bg-white shadow overflow-y-scroll m-4 rounded-md flex-initial md:mx-auto md:m-4 md:w-[calc(100%-2rem)] max-w-4xl">
             <div className="flex justify-between p-4">
               <div className="text-slate-700 font-bold"> {React.string("LaTeXのガイド")} </div>
               <button onClick={_ => setShow(value => !value)}>
@@ -42,7 +47,8 @@ let make = (
               {pages
               ->Js.Array2.map(page => {
                 <div
-                  key={page.path} className={`${path === page.path ? "text-blue-500" : "text-slate-700"} my-2`}>
+                  key={page.path}
+                  className={`${path === page.path ? "text-blue-500" : "text-slate-700"} my-2`}>
                   <Link to={page.path} onClick={_ => setShow(_ => false)}>
                     {React.string(page.title)}
                   </Link>
@@ -56,7 +62,7 @@ let make = (
       | false => React.null
       }}
     </div>
-    <div className="container md:mx-auto xl:mx-0 xl:pl-72 max-w-4xl box-content flex-1 min-w-0">
+    <div className="container md:mx-auto xl:mx-0 xl:pl-72 max-w-4xl flex-1 min-w-0">
       <div className="px-4">
         <header>
           <h1 className="font-bold text-3xl my-8"> {React.string(title)} </h1>
