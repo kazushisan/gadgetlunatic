@@ -19,19 +19,6 @@ let files = importMetaGlob(~glob="../../content/**/*.{md,mdx}", ~options={eager:
 
 exception InvalidFile(string)
 
-type route = {
-  path: string,
-  title: string,
-  draft: bool,
-  date: string,
-  permalink?: string,
-  modifiedDate?: string,
-  hash?: string,
-  weight: int,
-  headings: Js.Array.t<TableOfContents.heading>,
-  element: React.element,
-}
-
 let routes = Js.Dict.entries(files)->Js.Array2.map(((key, value)) => {
   let title = switch value.title {
   | Some(title) => title
@@ -51,7 +38,7 @@ let routes = Js.Dict.entries(files)->Js.Array2.map(((key, value)) => {
   let path =
     key |> Js.String.replaceByRe(%re("/^\.\.\/\.\.\/content(.+?)(\/index|)\.(md|mdx)$/"), "$1")
 
-  {
+  let route: Route.t = {
     path,
     title,
     draft,
@@ -63,6 +50,8 @@ let routes = Js.Dict.entries(files)->Js.Array2.map(((key, value)) => {
     headings: value.headings,
     element: React.createElement(value.default, Js.Obj.empty()),
   }
+
+  route
 })
 
 let latexPages =
