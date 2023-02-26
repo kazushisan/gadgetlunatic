@@ -72,7 +72,6 @@ let make = () => {
 
   switch (target, url.path) {
   | (Some(res), list{"post", ..._}) =>
-    Js.log(res)
     <Post
       title={res.title}
       headings={res.headings}
@@ -82,6 +81,16 @@ let make = () => {
       hash=?{res.hash}>
       {res.element}
     </Post>
+  | (Some(res), list{"latex", ..._}) =>
+    <Latex
+      title={res.title}
+      headings={res.headings}
+      date={res.date}
+      permalink=?{res.permalink}
+      modifiedDate=?{res.modifiedDate}
+      hash=?{res.hash}>
+      {res.element}
+    </Latex>
   | (Some(res), _) =>
     <div>
       <h1> {React.string("default page")} </h1>
