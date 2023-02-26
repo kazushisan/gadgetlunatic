@@ -19,7 +19,7 @@ let make = (
 
   <div className="xl:flex xl:justify-center">
     <div>
-      <div className="container md:mx-auto max-w-4xl">
+      <div className="container md:mx-auto max-w-4xl xl:hidden">
         <div className="p-4 flex justify-between">
           <div className="text-slate-700 font-bold">
             <span> {React.string("LaTeXのガイド")} </span>
@@ -34,7 +34,7 @@ let make = (
       </div>
       {switch show {
       | true =>
-        <div className="fixed inset-0 flex-col flex z-10">
+        <div className="fixed inset-0 flex-col flex z-10 xl:hidden">
           <nav
             className=" bg-white shadow overflow-y-scroll m-4 rounded-md flex-initial md:mx-auto md:m-4 md:w-[calc(100%-2rem)] max-w-4xl">
             <div className="flex justify-between p-4">
@@ -62,7 +62,7 @@ let make = (
       | false => React.null
       }}
     </div>
-    <div className="container md:mx-auto xl:mx-0 xl:pl-72 max-w-4xl flex-1 min-w-0">
+    <div className="container md:mx-auto xl:mx-0 xl:pl-72 max-w-4xl flex-1 min-w-0 box-content">
       <div className="px-4">
         <header>
           <h1 className="font-bold text-3xl my-8"> {React.string(title)} </h1>
