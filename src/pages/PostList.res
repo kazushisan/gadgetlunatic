@@ -10,13 +10,13 @@ let make = (~posts: Js.Array.t<Route.t>) =>
             className="mt-8 pt-8 first-of-type:border-t-0 border-t border-slate-100">
             <Link to={post.path}>
               <h1 className="font-bold text-xl mb-4"> {React.string(post.title)} </h1>
-              <PostMeta
-                modifiedDate=?{post.modifiedDate}
-                hash=?{post.hash}
-                permalink=?{post.permalink}
-                date={post.date}
-              />
             </Link>
+            <PostMeta
+              modifiedDate=?{post.modifiedDate}
+              hash=?{post.hash}
+              permalink=?{post.permalink}
+              date={post.date}
+            />
           </div>
         })
         ->React.array}
