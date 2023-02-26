@@ -19,7 +19,9 @@ let make = (
       </div>
     </div>
     <div className="hidden xl:block flex-none w-72">
-      <TableOfContents headings />
+      <div className="p-4 sticky mt-40 top-40">
+        <TableOfContents headings />
+      </div>
     </div>
   </div>
 }
