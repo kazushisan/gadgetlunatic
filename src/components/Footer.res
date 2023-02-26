@@ -2,7 +2,7 @@ let year = Js.Date.getFullYear(Js.Date.make())->Js.Float.toString
 
 @react.component
 let make = () => {
-  <footer className="overflow-hidden border-t border-slate-100">
+  <footer className="overflow-hidden">
     <div className="container max-w-4xl mx-auto xl:px-72 box-content my-16">
       <div className="my-4 px-4">
         <h3 className="font-bold text-lg"> {React.string("gadgetlunatic")} </h3>

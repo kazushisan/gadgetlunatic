@@ -23,7 +23,7 @@ let make = (
   ~modifiedDate: option<string>=?,
   ~hash: option<string>=?,
 ) => {
-  <div className="text-sm text-slate-500 items-center my-5">
+  <div className="text-sm text-slate-500 items-center">
     <span> {date->formatDateFromIso->React.string} </span>
     {modifiedDate->Belt.Option.mapWithDefault(React.null, d =>
       <span className="before:content-['·'] before:px-1">

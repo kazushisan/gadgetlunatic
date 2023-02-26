@@ -13,7 +13,9 @@ let make = (
       <div className="px-4">
         <header>
           <h1 className="font-bold text-3xl my-8"> {React.string(title)} </h1>
-          <PostMeta ?modifiedDate ?hash ?permalink date />
+          <div className="my-8">
+            <PostMeta ?modifiedDate ?hash ?permalink date />
+          </div>
         </header>
         <article className="prose mb-16 max-w-none prose-slate"> {children} </article>
       </div>
