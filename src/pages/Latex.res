@@ -62,7 +62,23 @@ let make = (
       | false => React.null
       }}
     </div>
-    <div className="container md:mx-auto xl:mx-0 xl:pl-72 max-w-4xl flex-1 min-w-0 box-content">
+    <nav className="hidden xl:block flex-none w-72">
+      <div className="px-8 py-4 sticky mt-4 top-4">
+        <div className="font-bold"> {React.string("LaTeXのガイド")} </div>
+        {pages
+        ->Js.Array2.map(page => {
+          <div
+            key={page.path}
+            className={`${path === page.path ? "text-blue-500" : "text-slate-700"} my-2`}>
+            <Link to={page.path} onClick={_ => setShow(_ => false)}>
+              {React.string(page.title)}
+            </Link>
+          </div>
+        })
+        ->React.array}
+      </div>
+    </nav>
+    <div className="container md:mx-auto xl:mx-0 max-w-4xl flex-1 min-w-0 box-content">
       <div className="px-4">
         <header>
           <h1 className="font-bold text-3xl my-8"> {React.string(title)} </h1>
