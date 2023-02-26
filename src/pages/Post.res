@@ -5,7 +5,7 @@ let make = (
   ~permalink: option<string>=?,
   ~modifiedDate: option<string>=?,
   ~hash: option<string>=?,
-  ~headings: Js.Array.t<TableOfContents.heading>,
+  ~headings: Js.Array.t<Heading.t>,
   ~children: React.element,
 ) => {
   <div className="xl:flex xl:justify-center">

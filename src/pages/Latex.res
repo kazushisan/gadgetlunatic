@@ -12,7 +12,7 @@ let make = (
   ~hash: option<string>=?,
   ~pages: Js.Array.t<page>,
   ~path: string,
-  ~headings: Js.Array.t<TableOfContents.heading>,
+  ~headings: Js.Array.t<Heading.t>,
   ~children: React.element,
 ) => {
   let (show, setShow) = React.useState(() => false)

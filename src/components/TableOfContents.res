@@ -1,15 +1,9 @@
-type heading = {
-  value: string,
-  depth: int,
-  id: string,
-}
-
 @module("../hooks/useTableOfContentsActiveItem")
-external useTableOfContentsActiveItem: Js.Array.t<heading> => string =
+external useTableOfContentsActiveItem: Js.Array.t<Heading.t> => string =
   "useTableOfContentsActiveItem"
 
 @react.component
-let make = (~headings: Js.Array.t<heading>) => {
+let make = (~headings: Js.Array.t<Heading.t>) => {
   let activeId = useTableOfContentsActiveItem(headings)
   <ul>
     {headings

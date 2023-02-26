@@ -7,6 +7,6 @@ type t = {
   modifiedDate?: string,
   hash?: string,
   weight: int,
-  headings: Js.Array.t<TableOfContents.heading>,
+  headings: Js.Array.t<Heading.t>,
   element: React.element,
 }
