@@ -1,9 +1,11 @@
-type t
-
 @val
-external document: t = "document"
+external document: Dom.document = "document"
 
 @send
-external querySelectorAll: (t, string) => Js.Array2.array_like<Element.t> = "querySelectorAll"
+external querySelectorAll: (Dom.document, string) => Js.Array2.array_like<Dom.element> =
+  "querySelectorAll"
 
-let getElementById: (t, string) => option<Element.t> = %raw(`(d, i) => d.getElementById(i)`)
+let getElementById: (
+  Dom.document,
+  string,
+) => option<Dom.element> = %raw(`(d, i) => d.getElementById(i)`)

@@ -1,11 +1,10 @@
-let getPosition = (element: Element.t) => {
+let getPosition = element => {
   let sibling =
     element
     ->Element.parentElement
     ->Belt.Option.mapWithDefault(None, e => e->Element.previousElementSibling)
 
-  let rect = sibling->Belt.Option.getWithDefault(element)->Element.getBoundingClientRect
-  rect.bottom
+  sibling->Belt.Option.getWithDefault(element)->Element.getBoundingClientRect->DomRect.bottom
 }
 
 let getHeadingElements = (headings: array<Heading.t>) => {

@@ -1,10 +1,6 @@
-type t
+// todo: add support to use args in callback
+@new external make: (unit => unit) => Dom.intersectionObserver = "IntersectionObserver"
 
-@new
-external make: (unit => unit) => t = "IntersectionObserver"
+@send external observe: (Dom.intersectionObserver, Dom.element) => unit = "observe"
 
-@send
-external observe: (t, Element.t) => unit = "observe"
-
-@send
-external disconnect: t => unit = "disconnect"
+@send external disconnect: Dom.intersectionObserver => unit = "disconnect"

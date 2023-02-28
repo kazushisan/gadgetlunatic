@@ -1,22 +1,9 @@
-type t
+let parentElement: Dom.element => option<Dom.element> = %raw(`e => e.parentElement || undefined`)
 
-let parentElement: t => option<t> = %raw(`e => e.parentElement || undefined`)
+let previousElementSibling: Dom.element => option<
+  Dom.element,
+> = %raw(`e => e.previousElementSibling || undefined`)
 
-let previousElementSibling: t => option<t> = %raw(`e => e.previousElementSibling || undefined`)
+@get external id: Dom.element => string = "id"
 
-@get
-external id: t => string = "id"
-
-type boundingClientRect = {
-  top: float,
-  right: float,
-  bottom: float,
-  left: float,
-  x: float,
-  y: float,
-  width: float,
-  height: float,
-}
-
-@send
-external getBoundingClientRect: t => boundingClientRect = "getBoundingClientRect"
+@send external getBoundingClientRect: Dom.element => Dom.domRect = "getBoundingClientRect"
