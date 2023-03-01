@@ -82,7 +82,7 @@ let posts =
 
 @react.component
 let make = () => {
-  let url = RescriptReactRouter.useUrl()
+  let url = Router.useUrl()
 
   let path = `/${Belt.List.toArray(url.path)->Js.Array2.joinWith("/")}`
 

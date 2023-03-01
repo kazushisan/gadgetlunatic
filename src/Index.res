@@ -4,7 +4,11 @@
 switch ReactDOM.querySelector("#root") {
 | Some(container) => {
     let root = ReactDOM.Client.createRoot(container)
-    root->ReactDOM.Client.Root.render(<App />)
+    root->ReactDOM.Client.Root.render(
+      <Router.Provider>
+        <App />
+      </Router.Provider>,
+    )
   }
 
 | None => ()

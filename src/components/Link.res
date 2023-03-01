@@ -15,7 +15,7 @@ let make = (
     | true => {
         ReactEvent.Mouse.preventDefault(e)
 
-        RescriptReactRouter.push(href)
+        Router.push(href)
       }
 
     | false => ()
