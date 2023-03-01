@@ -3,8 +3,8 @@
 
 switch ReactDOM.querySelector("#root") {
 | Some(container) => {
-    let root = ReactDOM.Client.createRoot(container)
-    root->ReactDOM.Client.Root.render(
+    let _ = ReactDOM.Client.hydrateRoot(
+      container,
       <Router.Provider>
         <App />
       </Router.Provider>,
