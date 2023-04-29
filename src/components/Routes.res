@@ -12,6 +12,11 @@ type file = {
   default: React.component<{.}>,
 }
 
+@module("posts:blog") external blog: RouteExcerpt.t = "default"
+
+// todo: remove later
+Js.log(blog)
+
 @val
 external importMetaGlob: (~glob: string, ~options: options) => Js.Dict.t<file> = "import.meta.glob"
 
