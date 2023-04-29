@@ -13,3 +13,5 @@ npm-debug.log
 yarn-error.log
 .hugo_build.lock
 .vscode/
+
+dist/
