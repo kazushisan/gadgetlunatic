@@ -6,11 +6,8 @@
   "type": "module",
   "scripts": {
     "postinstall": "patch-package",
-    "bs:build": "bsb -make-world",
-    "bs:start": "bsb -make-world -w -ws _ ",
-    "bs:clean": "bsb -clean-world",
-    "start": "webpack serve & hugo server",
-    "build": "yarn bs:build && NODE_ENV=production webpack && hugo --minify",
+    "dev": "rescript build -w & node scripts/server.js",
+    "build": "rescript build && node scripts/build.js",
     "lint": "prettier --check ./**/*.js"
   },
   "author": "Kazushi Konosu",
