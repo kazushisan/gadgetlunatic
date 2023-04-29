@@ -13,9 +13,11 @@ type file = {
 }
 
 @module("posts:blog") external blog: RouteExcerpt.t = "default"
+@module("posts:latex") external latex: Latex.page = "default"
 
 // todo: remove later
 Js.log(blog)
+Js.log(latex)
 
 @val
 external importMetaGlob: (~glob: string, ~options: options) => Js.Dict.t<file> = "import.meta.glob"

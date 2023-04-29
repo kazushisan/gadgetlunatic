@@ -7,7 +7,10 @@ const virtualModulePrefix = 'posts:';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const blogCode = await readFile(resolve(__dirname, './misc/blog.js'), 'utf-8');
+const code = {
+  blog: await readFile(resolve(__dirname, './misc/blog.js'), 'utf-8'),
+  latex: await readFile(resolve(__dirname, './misc/latex.js'), 'utf-8'),
+};
 
 /** @type {() => import('vite').PluginOption} */
 function posts() {
@@ -23,6 +26,14 @@ function posts() {
         return null;
       }
 
+      const target = source.slice(virtualModulePrefix.length);
+
+      console.log(target);
+
+      if (!['blog', 'latex'].includes(target)) {
+        return null;
+      }
+
       return source;
     },
     async load(id) {
@@ -30,10 +41,14 @@ function posts() {
         return null;
       }
 
-      if (serve) {
-        console.log(blogCode);
+      const target = id.slice(virtualModulePrefix.length);
 
-        return blogCode;
+      if (!['blog', 'latex'].includes(target)) {
+        return null;
+      }
+
+      if (serve) {
+        return code[target];
       }
 
       const files = globSync('./content/**/*.{md,mdx}');
