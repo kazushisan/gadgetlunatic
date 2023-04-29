@@ -1,3 +1,14 @@
+type item = {
+  path: string,
+  title: string,
+  draft: bool,
+  date: string,
+  permalink?: string,
+  modifiedDate?: string,
+  hash?: string,
+  weight: int,
+}
+
 @react.component
 let make = (~posts: Js.Array.t<Route.t>) =>
   <div className="xl:flex xl:justify-center">

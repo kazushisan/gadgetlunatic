@@ -12,7 +12,7 @@ type file = {
   default: React.component<{.}>,
 }
 
-@module("posts:blog") external blog: RouteExcerpt.t = "default"
+@module("posts:blog") external blog: PostList.item = "default"
 @module("posts:latex") external latex: Latex.page = "default"
 
 // todo: remove later
