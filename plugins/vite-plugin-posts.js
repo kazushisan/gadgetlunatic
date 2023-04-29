@@ -28,8 +28,6 @@ function posts() {
 
       const target = source.slice(virtualModulePrefix.length);
 
-      console.log(target);
-
       if (!['blog', 'latex'].includes(target)) {
         return null;
       }
