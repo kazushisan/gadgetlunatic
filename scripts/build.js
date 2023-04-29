@@ -26,9 +26,12 @@ console.log('prerendering routes...');
 
 const files = globSync('./content/**/*.{md,mdx}');
 
-const routes = files.map((file) =>
-  file.replace(/^content(.+?)(\/index|)\.(md|mdx)$/, '$1'),
-);
+const routes = [
+  ...files.map((file) =>
+    file.replace(/^content(.+?)(\/index|)\.(md|mdx)$/, '$1'),
+  ),
+  '/',
+];
 
 const template = await readFile(
   resolve(__dirname, '../dist/static/index.html'),
