@@ -12,11 +12,6 @@ type file = {
   default: React.component<{.}>,
 }
 
-@module("virtual:latexPages") external latex: Latex.page = "default"
-
-// todo: remove later
-Js.log(latex)
-
 @val
 external importMetaGlob: (~glob: string, ~options: options) => Js.Dict.t<file> = "import.meta.glob"
 
@@ -107,7 +102,6 @@ let make = () => {
   | (Some(res), list{"latex", ..._}) =>
     <Latex
       path={path}
-      pages={latexPages}
       title={res.title}
       headings={res.headings}
       date={res.date}

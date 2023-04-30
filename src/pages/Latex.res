@@ -3,6 +3,8 @@ type page = {
   title: string,
 }
 
+@module("../hooks/useLazy") external useLazyLatexPages: unit => array<page> = "useLazyLatexPages"
+
 @react.component
 let make = (
   ~title: string,
@@ -10,11 +12,12 @@ let make = (
   ~permalink: option<string>=?,
   ~modifiedDate: option<string>=?,
   ~hash: option<string>=?,
-  ~pages: Js.Array.t<page>,
   ~path: string,
   ~headings: Js.Array.t<Heading.t>,
   ~children: React.element,
 ) => {
+  let pages = useLazyLatexPages()
+
   let (show, setShow) = React.useState(() => false)
 
   <div className="xl:flex xl:justify-center">

@@ -9,3 +9,15 @@ export const useLazyPosts = () => {
     posts = imported.default;
   });
 };
+
+let latexPages = null;
+
+export const useLazyLatexPages = () => {
+  if (latexPages) {
+    return latexPages;
+  }
+
+  throw import('virtual:latexPages').then((imported) => {
+    latexPages = imported.default;
+  });
+};
