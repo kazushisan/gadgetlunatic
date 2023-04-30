@@ -13,8 +13,6 @@ const pageInfoList = Object.entries(files).map(([key, value]) => {
     throw new Error(`date not found for ${key}`);
   }
 
-  console.log(key);
-
   const path = key.replace(/^\/content(.+?)(\/index|)\.(md|mdx)$/, '$1');
 
   return {
