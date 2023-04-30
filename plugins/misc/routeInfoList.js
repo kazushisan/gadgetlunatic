@@ -1,6 +1,6 @@
 // for vite-plugin-posts, used only for development
 const files = import.meta.glob('/content/**/*.{md,mdx}', { eager: true });
-const routes = Object.entries(files).map(([key, value]) => {
+const routeInfoList = Object.entries(files).map(([key, value]) => {
   if (typeof value.title === 'undefined') {
     throw new Error(`title not found for ${key}`);
   }
@@ -29,4 +29,4 @@ const routes = Object.entries(files).map(([key, value]) => {
   };
 });
 
-export default routes;
+export default routeInfoList;

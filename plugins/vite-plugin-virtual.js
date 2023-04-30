@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 import stringifyObject from 'stringify-object';
 
 const virtualModulePrefix = 'virtual:';
-const virtualModules = ['posts', 'latexPages', 'routes'];
+const virtualModules = ['posts', 'latexPages', 'routeInfoList'];
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -15,14 +15,17 @@ const code = {
     resolve(__dirname, './misc/latexPages.js'),
     'utf-8',
   ),
-  routes: await readFile(resolve(__dirname, './misc/routes.js'), 'utf-8'),
+  routeInfoList: await readFile(
+    resolve(__dirname, './misc/routeInfoList.js'),
+    'utf-8',
+  ),
 };
 
 /**
  * @this {import('rollup').PluginContext}
  * @param {string} file
  */
-async function postInfo(file) {
+async function routeInfo(file) {
   const resolution = await this.resolve(file, undefined, {
     skipSelf: true,
   });
@@ -93,12 +96,12 @@ function virtual() {
 
       const files = globSync('./content/**/*.{md,mdx}');
 
-      const routes = await Promise.all(
-        files.map((file) => postInfo.call(this, file)),
+      const routesInfoList = await Promise.all(
+        files.map((file) => routeInfo.call(this, file)),
       );
 
       if (target === 'posts') {
-        const posts = routes
+        const posts = routesInfoList
           .filter((item) => item.path.startsWith('/post'))
           .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
 
@@ -106,7 +109,7 @@ function virtual() {
       }
 
       if (target === 'latexPages') {
-        const latexPages = routes
+        const latexPages = routesInfoList
           .filter((item) => item.path.startsWith('/latex'))
           .sort((a, b) => a.weight - b.weight)
           .map((item) => ({ title: item.title, path: item.path }));
