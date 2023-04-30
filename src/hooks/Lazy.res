@@ -1,11 +1,23 @@
-@module("../hooks/useLazy") external useLazyPage: string => Page.t = "useLazyPage"
-
 type page = {
+  title: string,
+  draft: bool,
+  date: string,
+  permalink?: string,
+  modifiedDate?: string,
+  hash?: string,
+  weight: int,
+  headings: Js.Array.t<Heading.t>,
+  element: React.element,
+}
+
+@module("../hooks/useLazy") external useLazyPage: string => page = "useLazyPage"
+
+type latex = {
   path: string,
   title: string,
 }
 
-@module("../hooks/useLazy") external useLazyLatexList: unit => array<page> = "useLazyLatexList"
+@module("../hooks/useLazy") external useLazyLatexList: unit => array<latex> = "useLazyLatexList"
 
 type post = {
   path: string,

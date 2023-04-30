@@ -1,4 +1,9 @@
-@module("virtual:routes") external routes: array<Route.t> = "default"
+type route = {
+  path: string,
+  file: string,
+}
+
+@module("virtual:routes") external routes: array<route> = "default"
 
 @react.component
 let make = () => {
