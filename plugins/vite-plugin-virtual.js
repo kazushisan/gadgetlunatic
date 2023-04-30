@@ -113,7 +113,7 @@ function virtual() {
       if (target === 'postList') {
         const postList = pageInfoList
           .filter((item) => item.path.startsWith('/post'))
-          .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
         return `export default ${stringifyObject(postList)}`;
       }
