@@ -1,13 +1,7 @@
 @react.component
-let make = (
-  ~title: string,
-  ~date: string,
-  ~permalink: option<string>=?,
-  ~modifiedDate: option<string>=?,
-  ~hash: option<string>=?,
-  ~headings: Js.Array.t<Heading.t>,
-  ~children: React.element,
-) => {
+let make = (~file: string) => {
+  let {title, date, ?modifiedDate, ?hash, ?permalink, headings, element} = Lazy.useLazyPage(file)
+
   <div className="xl:flex xl:justify-center">
     <div className="container md:mx-auto xl:mx-0 xl:pl-72 max-w-4xl box-content flex-1 min-w-0">
       <div className="px-4">
@@ -17,7 +11,7 @@ let make = (
             <PostMeta ?modifiedDate ?hash ?permalink date />
           </div>
         </header>
-        <article className="prose mb-16 max-w-none prose-slate"> {children} </article>
+        <article className="prose mb-16 max-w-none prose-slate"> {element} </article>
       </div>
     </div>
     <div className="hidden xl:block flex-none w-72">

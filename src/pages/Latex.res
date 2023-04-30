@@ -6,16 +6,9 @@ type page = {
 @module("../hooks/useLazy") external useLazyLatexPages: unit => array<page> = "useLazyLatexPages"
 
 @react.component
-let make = (
-  ~title: string,
-  ~date: string,
-  ~permalink: option<string>=?,
-  ~modifiedDate: option<string>=?,
-  ~hash: option<string>=?,
-  ~path: string,
-  ~headings: Js.Array.t<Heading.t>,
-  ~children: React.element,
-) => {
+let make = (~file: string, ~path: string) => {
+  let {title, date, ?modifiedDate, ?hash, ?permalink, headings, element} = Lazy.useLazyPage(file)
+
   let pages = useLazyLatexPages()
 
   let (show, setShow) = React.useState(() => false)
@@ -73,7 +66,7 @@ let make = (
             <PostMeta ?modifiedDate ?hash ?permalink date />
           </div>
         </header>
-        <article className="prose mb-16 max-w-none prose-slate"> {children} </article>
+        <article className="prose mb-16 max-w-none prose-slate"> {element} </article>
       </div>
     </div>
     <div className="hidden xl:block flex-none w-72">
