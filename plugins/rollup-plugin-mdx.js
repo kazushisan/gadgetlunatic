@@ -9,6 +9,7 @@ import { VFile } from 'vfile';
 import rehypeHeadings from './rehype-headings';
 import rehypeHighlightCode from './rehype-highlight-code';
 import rehypeHeadingAnchor from './rehype-heading-anchor';
+import rehypeImage from './rehype-image';
 import { execSync } from 'child_process';
 import { relative } from 'path';
 import { cwd } from 'process';
@@ -64,6 +65,7 @@ function mdx() {
           rehypeKatex,
           rehypeHeadings,
           rehypeHighlightCode,
+          rehypeImage,
         ],
       });
 
