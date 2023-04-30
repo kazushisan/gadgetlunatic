@@ -1,4 +1,4 @@
-// for vite-plugin-posts, used only for development
+// for vite-plugin-virtual, used only for vite serve mode
 const files = import.meta.glob('/content/**/*.{md,mdx}', { eager: true });
 const pageInfoList = Object.entries(files).map(([key, value]) => {
   if (typeof value.title === 'undefined') {

@@ -1,4 +1,4 @@
-// for vite-plugin-posts, used only for development
+// for vite-plugin-virtual, used only for vite serve mode
 import pageInfoList from 'virtual:pageInfoList';
 
 const posts = pageInfoList
