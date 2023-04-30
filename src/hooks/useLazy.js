@@ -26,7 +26,7 @@ export const useLazyLatexList = () => {
 
 const loaded = new Map();
 
-let modules = import.meta.glob('../../content/**/*{md,mdx}');
+const modules = import.meta.glob('../../content/**/*{md,mdx}');
 
 export const useLazyPage = (file) => {
   const page = loaded.get(file);
