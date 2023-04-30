@@ -25,7 +25,7 @@ await build({
   },
 });
 
-console.log('prerendering routes...');
+console.log('Generating routes...');
 
 const files = globSync('./content/**/*.{md,mdx}');
 
@@ -70,3 +70,5 @@ const promises = routes.map(async (route) => {
 });
 
 await Promise.all(promises);
+
+console.log(`Finished generating ${promises.length} routes!`);
