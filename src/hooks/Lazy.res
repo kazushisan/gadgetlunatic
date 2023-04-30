@@ -18,4 +18,4 @@ type post = {
   weight: int,
 }
 
-@module("../hooks/useLazy") external useLazyPosts: unit => array<post> = "useLazyPosts"
+@module("../hooks/useLazy") external useLazyPostList: unit => array<post> = "useLazyPostList"

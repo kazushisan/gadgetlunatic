@@ -1,14 +1,14 @@
 import { createElement } from 'react';
 
-let posts = null;
+let postList = null;
 
-export const useLazyPosts = () => {
-  if (posts) {
-    return posts;
+export const useLazyPostList = () => {
+  if (postList) {
+    return postList;
   }
 
-  throw import('virtual:posts').then((imported) => {
-    posts = imported.default;
+  throw import('virtual:postList').then((imported) => {
+    postList = imported.default;
   });
 };
 

@@ -5,12 +5,12 @@ import { readFile } from 'node:fs/promises';
 import stringifyObject from 'stringify-object';
 
 const virtualModulePrefix = 'virtual:';
-const virtualModules = ['posts', 'latexPages', 'pageInfoList', 'routes'];
+const virtualModules = ['postList', 'latexPages', 'pageInfoList', 'routes'];
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const code = {
-  posts: await readFile(resolve(__dirname, './misc/posts.js'), 'utf-8'),
+  postList: await readFile(resolve(__dirname, './misc/postList.js'), 'utf-8'),
   latexPages: await readFile(
     resolve(__dirname, './misc/latexPages.js'),
     'utf-8',
@@ -110,12 +110,12 @@ function virtual() {
         return `export default ${stringifyObject(routes)}`;
       }
 
-      if (target === 'posts') {
-        const posts = pageInfoList
+      if (target === 'postList') {
+        const postList = pageInfoList
           .filter((item) => item.path.startsWith('/post'))
           .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
 
-        return `export default ${stringifyObject(posts)}`;
+        return `export default ${stringifyObject(postList)}`;
       }
 
       if (target === 'latexPages') {
