@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "postinstall": "patch-package",
-    "dev": "rescript build -w & node scripts/server.js",
+    "dev": "node scripts/server.js",
     "build": "rescript build && node scripts/build.js",
     "lint": "prettier --check ./**/*.js"
   },
