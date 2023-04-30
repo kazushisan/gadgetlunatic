@@ -5,7 +5,7 @@ type page = {
   title: string,
 }
 
-@module("../hooks/useLazy") external useLazyLatexPages: unit => array<page> = "useLazyLatexPages"
+@module("../hooks/useLazy") external useLazyLatexList: unit => array<page> = "useLazyLatexList"
 
 type post = {
   path: string,

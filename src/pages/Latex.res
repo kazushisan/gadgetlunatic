@@ -2,7 +2,7 @@
 let make = (~file: string, ~path: string) => {
   let {title, date, ?modifiedDate, ?hash, ?permalink, headings, element} = Lazy.useLazyPage(file)
 
-  let pages = Lazy.useLazyLatexPages()
+  let pages = Lazy.useLazyLatexList()
 
   let (show, setShow) = React.useState(() => false)
 

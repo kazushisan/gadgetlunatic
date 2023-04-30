@@ -5,14 +5,14 @@ import { readFile } from 'node:fs/promises';
 import stringifyObject from 'stringify-object';
 
 const virtualModulePrefix = 'virtual:';
-const virtualModules = ['postList', 'latexPages', 'pageInfoList', 'routes'];
+const virtualModules = ['postList', 'latexList', 'pageInfoList', 'routes'];
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const code = {
   postList: await readFile(resolve(__dirname, './misc/postList.js'), 'utf-8'),
-  latexPages: await readFile(
-    resolve(__dirname, './misc/latexPages.js'),
+  latexList: await readFile(
+    resolve(__dirname, './misc/latexList.js'),
     'utf-8',
   ),
   pageInfoList: await readFile(
@@ -118,13 +118,13 @@ function virtual() {
         return `export default ${stringifyObject(postList)}`;
       }
 
-      if (target === 'latexPages') {
-        const latexPages = pageInfoList
+      if (target === 'latexList') {
+        const latexList = pageInfoList
           .filter((item) => item.path.startsWith('/latex'))
           .sort((a, b) => a.weight - b.weight)
           .map((item) => ({ title: item.title, path: item.path }));
 
-        return `export default ${stringifyObject(latexPages)}`;
+        return `export default ${stringifyObject(latexList)}`;
       }
 
       throw new Error(`unexpected virtual module: ${{ serve, target }}`);

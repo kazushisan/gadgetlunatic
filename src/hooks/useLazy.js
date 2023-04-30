@@ -12,15 +12,15 @@ export const useLazyPostList = () => {
   });
 };
 
-let latexPages = null;
+let latexList = null;
 
-export const useLazyLatexPages = () => {
-  if (latexPages) {
-    return latexPages;
+export const useLazyLatexList = () => {
+  if (latexList) {
+    return latexList;
   }
 
-  throw import('virtual:latexPages').then((imported) => {
-    latexPages = imported.default;
+  throw import('virtual:latexList').then((imported) => {
+    latexList = imported.default;
   });
 };
 
