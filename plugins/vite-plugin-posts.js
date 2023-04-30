@@ -2,6 +2,7 @@ import { globSync } from 'glob';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readFile } from 'node:fs/promises';
+import stringifyObject from 'stringify-object';
 
 const virtualModulePrefix = 'posts:';
 
@@ -11,6 +12,42 @@ const code = {
   blog: await readFile(resolve(__dirname, './misc/blog.js'), 'utf-8'),
   latex: await readFile(resolve(__dirname, './misc/latex.js'), 'utf-8'),
 };
+
+/**
+ * @this {import('rollup').PluginContext}
+ * @param {string} file
+ */
+async function postInfo(file) {
+  const resolution = await this.resolve(file, undefined, {
+    skipSelf: true,
+  });
+
+  if (!resolution) {
+    throw new Error(`failed to resolve file: ${file}`);
+  }
+
+  const loaded = await this.load(resolution);
+
+  // node.js will throw an error when it tries to execute import statements in data uri code
+  // because it will fail to resolve the module.
+  // for now, removing the import statement will avoid throwing errors.
+  const modified = loaded.code.replaceAll(/^(import\s.+;)$/gm, '');
+
+  const executed = await import(
+    `data:text/javascript,${encodeURIComponent(modified)}`
+  );
+
+  return {
+    path: file.replace(/^content(.+?)(\/index|)\.(md|mdx)$/, '$1'),
+    title: executed.title,
+    draft: executed.draft,
+    date: executed.date,
+    permalink: executed.permalink,
+    modifiedDate: executed.modifiedDate,
+    hash: executed.hash,
+    weight: executed.weight || 0,
+  };
+}
 
 /** @type {() => import('vite').PluginOption} */
 function posts() {
@@ -51,20 +88,24 @@ function posts() {
 
       const files = globSync('./content/**/*.{md,mdx}');
 
-      const file = files[0];
+      const routes = await Promise.all(
+        files.map((file) => postInfo.call(this, file)),
+      );
 
-      const resolution = await this.resolve(file, undefined, {
-        skipSelf: true,
-      });
+      if (target === 'blog') {
+        const blog = routes
+          .filter((item) => item.path.startsWith('/post'))
+          .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
 
-      if (!resolution) {
-        throw new Error(`failed to resolve file: ${file}`);
+        return `export default ${stringifyObject(blog)}`;
       }
 
-      const loaded = await this.load(resolution);
+      const latex = routes
+        .filter((item) => item.path.startsWith('/latex'))
+        .sort((a, b) => a.weight - b.weight)
+        .map((item) => ({ title: item.title, path: item.path }));
 
-      console.log('here', loaded.code);
-      return 'export const a = 1;';
+      return `export default ${stringifyObject(latex)}`;
     },
   };
 }
