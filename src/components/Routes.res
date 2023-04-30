@@ -12,7 +12,7 @@ type file = {
   default: React.component<{.}>,
 }
 
-@module("posts:latex") external latex: Latex.page = "default"
+@module("virtual:latexPages") external latex: Latex.page = "default"
 
 // todo: remove later
 Js.log(latex)

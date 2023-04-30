@@ -4,13 +4,13 @@ import { fileURLToPath } from 'node:url';
 import { readFile } from 'node:fs/promises';
 import stringifyObject from 'stringify-object';
 
-const virtualModulePrefix = 'posts:';
+const virtualModulePrefix = 'virtual:';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const code = {
-  blog: await readFile(resolve(__dirname, './misc/blog.js'), 'utf-8'),
-  latex: await readFile(resolve(__dirname, './misc/latex.js'), 'utf-8'),
+  posts: await readFile(resolve(__dirname, './misc/posts.js'), 'utf-8'),
+  latexPages: await readFile(resolve(__dirname, './misc/latexPages.js'), 'utf-8'),
 };
 
 /**
@@ -50,11 +50,11 @@ async function postInfo(file) {
 }
 
 /** @type {() => import('vite').PluginOption} */
-function posts() {
+function virtual() {
   let serve = false;
 
   return {
-    name: 'posts',
+    name: 'virtual',
     config(_, env) {
       serve = env.command === 'serve';
     },
@@ -65,7 +65,7 @@ function posts() {
 
       const target = source.slice(virtualModulePrefix.length);
 
-      if (!['blog', 'latex'].includes(target)) {
+      if (!['posts', 'latexPages'].includes(target)) {
         return null;
       }
 
@@ -78,7 +78,7 @@ function posts() {
 
       const target = id.slice(virtualModulePrefix.length);
 
-      if (!['blog', 'latex'].includes(target)) {
+      if (!['posts', 'latexPages'].includes(target)) {
         return null;
       }
 
@@ -92,22 +92,22 @@ function posts() {
         files.map((file) => postInfo.call(this, file)),
       );
 
-      if (target === 'blog') {
-        const blog = routes
+      if (target === 'posts') {
+        const posts = routes
           .filter((item) => item.path.startsWith('/post'))
           .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
 
-        return `export default ${stringifyObject(blog)}`;
+        return `export default ${stringifyObject(posts)}`;
       }
 
-      const latex = routes
+      const latexPages = routes
         .filter((item) => item.path.startsWith('/latex'))
         .sort((a, b) => a.weight - b.weight)
         .map((item) => ({ title: item.title, path: item.path }));
 
-      return `export default ${stringifyObject(latex)}`;
+      return `export default ${stringifyObject(latexPages)}`;
     },
   };
 }
 
-export default posts;
+export default virtual;

@@ -1,11 +1,11 @@
 let posts = null;
 
-export const useLazyBlogPosts = () => {
+export const useLazyPosts = () => {
   if (posts) {
     return posts;
   }
 
-  throw import('posts:blog').then((imported) => {
+  throw import('virtual:posts').then((imported) => {
     posts = imported.default;
   });
 };

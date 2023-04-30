@@ -9,11 +9,11 @@ type item = {
   weight: int,
 }
 
-@module("../hooks/useLazy") external useLazyBlogPosts: unit => array<item> = "useLazyBlogPosts"
+@module("../hooks/useLazy") external useLazyPosts: unit => array<item> = "useLazyPosts"
 
 @react.component
 let make = () => {
-  let posts = useLazyBlogPosts()
+  let posts = useLazyPosts()
 
   <div className="xl:flex xl:justify-center">
     <div className="container md:mx-auto xl:mx-0 max-w-4xl flex-1 min-w-0">

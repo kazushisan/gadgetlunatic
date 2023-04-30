@@ -1,4 +1,4 @@
-// for vite-plugin-posts, used only for development 
+// for vite-plugin-posts, used only for development
 const files = import.meta.glob('/content/**/*.{md,mdx}', { eager: true });
 const routes = Object.entries(files).map(([key, value]) => {
   if (typeof value.title === 'undefined') {
@@ -13,7 +13,7 @@ const routes = Object.entries(files).map(([key, value]) => {
     throw new Error(`date not found for ${key}`);
   }
 
-  console.log(key)
+  console.log(key);
 
   const path = key.replace(/^\/content(.+?)(\/index|)\.(md|mdx)$/, '$1');
 
@@ -29,8 +29,8 @@ const routes = Object.entries(files).map(([key, value]) => {
   };
 });
 
-const blog = routes
+const posts = routes
   .filter((item) => item.path.startsWith('/post'))
   .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
 
-export default blog;
+export default posts;
