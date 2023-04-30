@@ -32,12 +32,12 @@ let make = (~file: string, ~path: string) => {
                 <Icon.XMark className="w-6" />
               </button>
             </div>
-            <div className="m-4">
+            <div className="mx-4 pb-2 border-slate-100 border-t">
               {pages
               ->Js.Array2.map(page => {
                 <div
                   key={page.path}
-                  className={`${path === page.path ? "text-blue-500" : "text-slate-700"} my-2`}>
+                  className={`${path === page.path ? "text-blue-500" : "text-slate-700"} my-4`}>
                   <Link to={page.path} onClick={_ => setShow(_ => false)}>
                     {React.string(page.title)}
                   </Link>
