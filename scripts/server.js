@@ -3,6 +3,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import express from 'express';
 import { createServer as createViteServer } from 'vite';
+import { createElement } from 'react';
+import { renderToPipeableStream } from 'react-dom/server';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -26,15 +28,27 @@ async function createServer() {
     try {
       const transformed = await vite.transformIndexHtml(url, template);
 
-      const { render } = await vite.ssrLoadModule('src/EntryServer.bs.js');
+      const [header, footer] = transformed.split('<!--ssr-outlet-->');
 
-      const appHtml = await render(url);
+      const { make: ServerRoot } = await vite.ssrLoadModule(
+        'src/EntryServer.bs.js',
+      );
 
-      const html = transformed.replace(`<!--ssr-outlet-->`, appHtml);
-
-      res.status(200).set({ 'Content-Type': 'text/html' }).end(html);
+      const stream = renderToPipeableStream(
+        createElement(ServerRoot, { serverUrlString: url }),
+        {
+          onAllReady() {
+            res.status(200).set({ 'Content-Type': 'text/html' });
+            res.write(header);
+            stream.pipe(res);
+            res.end(footer);
+          },
+          onError(e) {
+            throw e;
+          },
+        },
+      );
     } catch (e) {
-      console.log("error", e)
       vite.ssrFixStacktrace(e);
       next(e);
     }

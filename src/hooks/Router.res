@@ -18,4 +18,10 @@ let useUrl = () => {
   RescriptReactRouter.useUrl(~serverUrl=url, ())
 }
 
-let push = RescriptReactRouter.push
+@module("react") external startTransition: ((. unit) => unit) => unit = "startTransition"
+
+let push = string => {
+  startTransition((. ()) => {
+    RescriptReactRouter.push(string)
+  })
+}

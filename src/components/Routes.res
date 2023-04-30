@@ -12,11 +12,9 @@ type file = {
   default: React.component<{.}>,
 }
 
-@module("posts:blog") external blog: PostList.item = "default"
 @module("posts:latex") external latex: Latex.page = "default"
 
 // todo: remove later
-Js.log(blog)
 Js.log(latex)
 
 @val
@@ -118,7 +116,7 @@ let make = () => {
       hash=?{res.hash}>
       {res.element}
     </Latex>
-  | (None, list{}) => <PostList posts />
+  | (None, list{}) => <PostList />
   | (Some(res), _) =>
     <div>
       <h1> {React.string("default page")} </h1>

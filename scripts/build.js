@@ -4,6 +4,9 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
+import { PassThrough } from 'node:stream';
+import { renderToPipeableStream } from 'react-dom/server';
+import { createElement } from 'react';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -37,10 +40,23 @@ const template = await readFile(
   resolve(__dirname, '../dist/static/index.html'),
   'utf-8',
 );
-const { render } = await import('../dist/server/EntryServer.bs.js');
+const { make: ServerRoot } = await import('../dist/server/EntryServer.bs.js');
 
 const promises = routes.map(async (route) => {
-  const result = render(route);
+  const passThrough = new PassThrough();
+  const stream = renderToPipeableStream(
+    createElement(ServerRoot, { serverUrlString: route }),
+    {
+      onAllReady() {
+        stream.pipe(passThrough);
+      },
+      onError(e) {
+        throw e;
+      },
+    },
+  );
+
+  const result = await new Response(passThrough).text();
   const html = template.replace('<!--ssr-outlet-->', result);
 
   await mkdir(resolve(__dirname, '../dist/static', `./${route}`), {
