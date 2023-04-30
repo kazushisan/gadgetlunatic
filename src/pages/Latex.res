@@ -1,15 +1,8 @@
-type page = {
-  path: string,
-  title: string,
-}
-
-@module("../hooks/useLazy") external useLazyLatexPages: unit => array<page> = "useLazyLatexPages"
-
 @react.component
 let make = (~file: string, ~path: string) => {
   let {title, date, ?modifiedDate, ?hash, ?permalink, headings, element} = Lazy.useLazyPage(file)
 
-  let pages = useLazyLatexPages()
+  let pages = Lazy.useLazyLatexPages()
 
   let (show, setShow) = React.useState(() => false)
 

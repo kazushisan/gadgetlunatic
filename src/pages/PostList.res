@@ -1,19 +1,6 @@
-type item = {
-  path: string,
-  title: string,
-  draft: bool,
-  date: string,
-  permalink?: string,
-  modifiedDate?: string,
-  hash?: string,
-  weight: int,
-}
-
-@module("../hooks/useLazy") external useLazyPosts: unit => array<item> = "useLazyPosts"
-
 @react.component
 let make = () => {
-  let posts = useLazyPosts()
+  let posts = Lazy.useLazyPosts()
 
   <div className="xl:flex xl:justify-center">
     <div className="container md:mx-auto xl:mx-0 max-w-4xl flex-1 min-w-0">
