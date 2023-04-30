@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 import stringifyObject from 'stringify-object';
 
 const virtualModulePrefix = 'virtual:';
-const virtualModules = ['posts', 'latexPages', 'routeInfoList'];
+const virtualModules = ['posts', 'latexPages', 'routeInfoList', 'routes'];
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -19,6 +19,7 @@ const code = {
     resolve(__dirname, './misc/routeInfoList.js'),
     'utf-8',
   ),
+  routes: await readFile(resolve(__dirname, './misc/routes.js'), 'utf-8'),
 };
 
 /**
@@ -99,6 +100,15 @@ function virtual() {
       const routesInfoList = await Promise.all(
         files.map((file) => routeInfo.call(this, file)),
       );
+
+      if (target === 'routes') {
+        const routes = files.map((file) => ({
+          path: file.replace(/^content(.+?)(\/index|)\.(md|mdx)$/, '$1'),
+          file: `../../${file}`,
+        }));
+
+        return `export default ${stringifyObject(routes)}`;
+      }
 
       if (target === 'posts') {
         const posts = routesInfoList

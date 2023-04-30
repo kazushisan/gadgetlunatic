@@ -17,6 +17,8 @@ external importMetaGlob: (~glob: string, ~options: options) => Js.Dict.t<file> =
 
 let files = importMetaGlob(~glob="../../content/**/*.{md,mdx}", ~options={eager: true})
 
+// todo: remove later
+%raw(`import('virtual:routes').then(imported => console.log(imported.default))`)
 exception InvalidFile(string)
 
 let routes = Js.Dict.entries(files)->Js.Array2.map(((key, value)) => {
