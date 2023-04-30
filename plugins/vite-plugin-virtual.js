@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises';
 import stringifyObject from 'stringify-object';
 
 const virtualModulePrefix = 'virtual:';
-const virtualModules = ['posts', 'latexPages'];
+const virtualModules = ['posts', 'latexPages', 'routes'];
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -15,6 +15,7 @@ const code = {
     resolve(__dirname, './misc/latexPages.js'),
     'utf-8',
   ),
+  routes: await readFile(resolve(__dirname, './misc/routes.js'), 'utf-8'),
 };
 
 /**
@@ -104,12 +105,16 @@ function virtual() {
         return `export default ${stringifyObject(posts)}`;
       }
 
-      const latexPages = routes
-        .filter((item) => item.path.startsWith('/latex'))
-        .sort((a, b) => a.weight - b.weight)
-        .map((item) => ({ title: item.title, path: item.path }));
+      if (target === 'latexPages') {
+        const latexPages = routes
+          .filter((item) => item.path.startsWith('/latex'))
+          .sort((a, b) => a.weight - b.weight)
+          .map((item) => ({ title: item.title, path: item.path }));
 
-      return `export default ${stringifyObject(latexPages)}`;
+        return `export default ${stringifyObject(latexPages)}`;
+      }
+
+      throw new Error(`unexpected virtual module: ${{ serve, target }}`);
     },
   };
 }
