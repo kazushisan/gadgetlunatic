@@ -5,12 +5,16 @@ import { readFile } from 'node:fs/promises';
 import stringifyObject from 'stringify-object';
 
 const virtualModulePrefix = 'virtual:';
+const virtualModules = ['posts', 'latexPages'];
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const code = {
   posts: await readFile(resolve(__dirname, './misc/posts.js'), 'utf-8'),
-  latexPages: await readFile(resolve(__dirname, './misc/latexPages.js'), 'utf-8'),
+  latexPages: await readFile(
+    resolve(__dirname, './misc/latexPages.js'),
+    'utf-8',
+  ),
 };
 
 /**
@@ -65,7 +69,7 @@ function virtual() {
 
       const target = source.slice(virtualModulePrefix.length);
 
-      if (!['posts', 'latexPages'].includes(target)) {
+      if (!virtualModules.includes(target)) {
         return null;
       }
 
@@ -78,7 +82,7 @@ function virtual() {
 
       const target = id.slice(virtualModulePrefix.length);
 
-      if (!['posts', 'latexPages'].includes(target)) {
+      if (!virtualModules.includes(target)) {
         return null;
       }
 
