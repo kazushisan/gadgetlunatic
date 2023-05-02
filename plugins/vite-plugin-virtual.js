@@ -1,31 +1,19 @@
 import { globSync } from 'glob';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { readFile } from 'node:fs/promises';
 import stringifyObject from 'stringify-object';
 
 const virtualModulePrefix = 'virtual:';
-const virtualModules = ['postList', 'latexList', 'pageInfoList', 'routes'];
+const internalPrefix = 'virtual-internal:';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const code = {
-  postList: await readFile(resolve(__dirname, './misc/postList.js'), 'utf-8'),
-  latexList: await readFile(
-    resolve(__dirname, './misc/latexList.js'),
-    'utf-8',
-  ),
-  pageInfoList: await readFile(
-    resolve(__dirname, './misc/pageInfoList.js'),
-    'utf-8',
-  ),
-};
+const projectRoot = resolve(__dirname, '../');
 
 /**
  * @this {import('rollup').PluginContext}
  * @param {string} file
  */
-async function pageInfo(file) {
+async function extractFromFile(file) {
   const resolution = await this.resolve(file, undefined, {
     skipSelf: true,
   });
@@ -46,19 +34,16 @@ async function pageInfo(file) {
   );
 
   return {
+    data: executed,
     path: file.replace(/^content(.+?)(\/index|)\.(md|mdx)$/, '$1'),
-    title: executed.title,
-    draft: executed.draft,
-    date: executed.date,
-    permalink: executed.permalink,
-    modifiedDate: executed.modifiedDate,
-    hash: executed.hash,
-    weight: executed.weight || 0,
   };
 }
 
-/** @type {() => import('vite').PluginOption} */
-function virtual() {
+/**
+ * @param {{ [list: string]: string }} config
+ * @returns {import('vite').PluginOption}
+ */
+function virtual(config) {
   let serve = false;
 
   return {
@@ -67,17 +52,31 @@ function virtual() {
       serve = env.command === 'serve';
     },
     resolveId(source) {
-      if (!source.startsWith(virtualModulePrefix)) {
-        return null;
+      if (source === `${virtualModulePrefix}routes`) {
+        return source;
       }
 
-      const target = source.slice(virtualModulePrefix.length);
+      if (source.startsWith(virtualModulePrefix)) {
+        const target = source.slice(virtualModulePrefix.length);
 
-      if (!virtualModules.includes(target)) {
-        return null;
+        if (!Object.keys(config).includes(target)) {
+          return null;
+        }
+
+        return source;
       }
 
-      return source;
+      if (source.startsWith(internalPrefix)) {
+        const target = source.slice(internalPrefix.length);
+
+        if (!Object.keys(config).includes(target)) {
+          return null;
+        }
+
+        return resolve(projectRoot, config[target]);
+      }
+
+      return null;
     },
     async load(id) {
       if (!id.startsWith(virtualModulePrefix)) {
@@ -85,11 +84,6 @@ function virtual() {
       }
 
       const target = id.slice(virtualModulePrefix.length);
-
-      if (!virtualModules.includes(target)) {
-        return null;
-      }
-
       const files = globSync('./content/**/*.{md,mdx}');
 
       // use the same logic for serve and build
@@ -102,32 +96,33 @@ function virtual() {
         return `export default ${stringifyObject(routes)}`;
       }
 
-      if (serve) {
-        return code[target];
+      if (!Object.keys(config).includes(target)) {
+        return null;
       }
 
-      const pageInfoList = await Promise.all(
-        files.map((file) => pageInfo.call(this, file)),
+      if (serve) {
+        return `
+        import transformer from '${internalPrefix}${target}';
+        const files = import.meta.glob('/content/**/*.{md,mdx}', { eager: true });
+        const list = Object.entries(files).map(([path, data]) => ({
+          path: path.replace(/^\\/content(.+?)(\\/index|)\\.(md|mdx)$/, '$1'),
+          data,
+        }));
+        const result = transformer(list);
+        export default result;
+        `;
+      }
+
+      const list = await Promise.all(
+        files.map((file) => extractFromFile.call(this, file)),
       );
 
-      if (target === 'postList') {
-        const postList = pageInfoList
-          .filter((item) => item.path.startsWith('/post'))
-          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+      const { default: transformer } = await import(
+        resolve(projectRoot, config[target])
+      );
+      const result = transformer(list);
 
-        return `export default ${stringifyObject(postList)}`;
-      }
-
-      if (target === 'latexList') {
-        const latexList = pageInfoList
-          .filter((item) => item.path.startsWith('/latex'))
-          .sort((a, b) => a.weight - b.weight)
-          .map((item) => ({ title: item.title, path: item.path }));
-
-        return `export default ${stringifyObject(latexList)}`;
-      }
-
-      throw new Error(`unexpected virtual module: ${{ serve, target }}`);
+      return `export default ${stringifyObject(result)}`;
     },
   };
 }

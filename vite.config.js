@@ -5,5 +5,12 @@ import virtual from './plugins/vite-plugin-virtual';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), mdx(), virtual()],
+  plugins: [
+    react(),
+    mdx(),
+    virtual({
+      postList: './ssg/postList.js',
+      latexList: './ssg/latexList.js',
+    }),
+  ],
 });
