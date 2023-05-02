@@ -4,7 +4,7 @@ module RouteSwitch = {
     file: string,
   }
 
-  @module("virtual:routes") external routes: array<route> = "default"
+  @module("ssg:routes") external routes: array<route> = "default"
 
   @react.component
   let make = () => {

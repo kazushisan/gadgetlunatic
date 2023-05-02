@@ -3,8 +3,8 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import stringifyObject from 'stringify-object';
 
-const virtualModulePrefix = 'virtual:';
-const internalPrefix = 'virtual-internal:';
+const virtualModulePrefix = 'ssg:';
+const internalPrefix = 'ssg-internal:';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(__dirname, '../');
