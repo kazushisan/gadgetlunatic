@@ -19,7 +19,6 @@ const code = {
     resolve(__dirname, './misc/pageInfoList.js'),
     'utf-8',
   ),
-  routes: await readFile(resolve(__dirname, './misc/routes.js'), 'utf-8'),
 };
 
 /**
@@ -91,16 +90,9 @@ function virtual() {
         return null;
       }
 
-      if (serve) {
-        return code[target];
-      }
-
       const files = globSync('./content/**/*.{md,mdx}');
 
-      const pageInfoList = await Promise.all(
-        files.map((file) => pageInfo.call(this, file)),
-      );
-
+      // use the same logic for serve and build
       if (target === 'routes') {
         const routes = files.map((file) => ({
           path: file.replace(/^content(.+?)(\/index|)\.(md|mdx)$/, '$1'),
@@ -109,6 +101,14 @@ function virtual() {
 
         return `export default ${stringifyObject(routes)}`;
       }
+
+      if (serve) {
+        return code[target];
+      }
+
+      const pageInfoList = await Promise.all(
+        files.map((file) => pageInfo.call(this, file)),
+      );
 
       if (target === 'postList') {
         const postList = pageInfoList
