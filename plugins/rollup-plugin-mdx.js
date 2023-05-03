@@ -42,20 +42,25 @@ function mdx() {
         },
       });
 
-      const output = execSync(
-        `git log --pretty=format:"%H %cd" --date=iso-strict -- ${file.path}`,
+      const history = execSync(
+        `git log --pretty=format:"%H %cd %s" --date=iso-strict -- ${file.path}`,
       )
         .toString()
         .split('\n');
 
-      const hash = output.length > 0 ? output[0].split(' ')[0] : undefined;
+      const lastModified = history.find(
+        (line) => !line.includes('[skip modified]'),
+      );
+
+      const hash = lastModified ? lastModified.split(' ')[0] : undefined;
 
       const permalink = hash
         ? `${REPO_URL}/blob/${hash}/${relative(cwd(), file.path)}`
         : undefined;
 
-      const modifiedDate =
-        output.length > 1 ? output[0].split(' ')[1] : undefined;
+      const modifiedDate = lastModified
+        ? lastModified.split(' ')[1]
+        : undefined;
 
       const result = await compile(content, {
         remarkPlugins: [remarkGfm, remarkMath],
