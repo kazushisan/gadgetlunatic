@@ -1,10 +1,10 @@
 export const extract = ({ path, data }) => {
   if (typeof data.title === 'undefined') {
-    throw new Error(`title not found for ${key}`);
+    throw new Error(`title not found for ${path}`);
   }
 
   if (typeof data.date === 'undefined') {
-    throw new Error(`date not found for ${key}`);
+    throw new Error(`date not found for ${path}`);
   }
 
   return {

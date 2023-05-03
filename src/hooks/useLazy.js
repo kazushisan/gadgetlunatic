@@ -38,11 +38,11 @@ export const useLazyPage = (file) => {
   if (file in modules) {
     throw modules[file]().then((value) => {
       if (typeof value.title === 'undefined') {
-        throw new Error(`title not found for ${key}`);
+        throw new Error(`title not found for ${file}`);
       }
 
       if (typeof value.date === 'undefined') {
-        throw new Error(`date not found for ${key}`);
+        throw new Error(`date not found for ${file}`);
       }
 
       loaded.set(file, {
