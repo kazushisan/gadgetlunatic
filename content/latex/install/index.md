@@ -1,8 +1,6 @@
 ---
 title: "インストール"
 date: 2020-02-16T17:17:36+09:00
-draft: false
-type: "documentation"
 weight: 3
 ---
 

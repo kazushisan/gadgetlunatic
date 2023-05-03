@@ -1,8 +1,6 @@
 ---
 title: "はじめに"
 date: 2018-12-22T12:01:02+09:00
-draft: false
-type: "documentation"
 weight: 1
 ---
 ## はじめに
