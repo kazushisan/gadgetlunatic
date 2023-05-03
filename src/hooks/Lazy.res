@@ -1,6 +1,5 @@
 type page = {
   title: string,
-  draft: bool,
   date: string,
   permalink?: string,
   modifiedDate?: string,
@@ -22,7 +21,6 @@ type latex = {
 type post = {
   path: string,
   title: string,
-  draft: bool,
   date: string,
   permalink?: string,
   modifiedDate?: string,

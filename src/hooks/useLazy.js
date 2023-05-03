@@ -41,10 +41,6 @@ export const useLazyPage = (file) => {
         throw new Error(`title not found for ${key}`);
       }
 
-      if (typeof value.draft === 'undefined') {
-        throw new Error(`draft not found for ${key}`);
-      }
-
       if (typeof value.date === 'undefined') {
         throw new Error(`date not found for ${key}`);
       }

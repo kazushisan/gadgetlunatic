@@ -3,10 +3,6 @@ export const extract = ({ path, data }) => {
     throw new Error(`title not found for ${key}`);
   }
 
-  if (typeof data.draft === 'undefined') {
-    throw new Error(`draft not found for ${key}`);
-  }
-
   if (typeof data.date === 'undefined') {
     throw new Error(`date not found for ${key}`);
   }
@@ -14,7 +10,6 @@ export const extract = ({ path, data }) => {
   return {
     path,
     title: data.title,
-    draft: data.draft,
     date: data.date,
     permalink: data.permalink,
     modifiedDate: data.modifiedDate,
