@@ -26,38 +26,32 @@ export const useLazyLatexList = () => {
 
 const loaded = new Map();
 
-const modules = import.meta.glob('../../content/**/*{md,mdx}');
-
-export const useLazyPage = (file) => {
-  const page = loaded.get(file);
+export const useLazyPage = (path, load) => {
+  const page = loaded.get(path);
 
   if (page) {
     return page;
   }
 
-  if (file in modules) {
-    throw modules[file]().then((value) => {
-      if (typeof value.title === 'undefined') {
-        throw new Error(`title not found for ${file}`);
-      }
+  throw load().then((value) => {
+    if (typeof value.title === 'undefined') {
+      throw new Error(`title not found for ${path}`);
+    }
 
-      if (typeof value.date === 'undefined') {
-        throw new Error(`date not found for ${file}`);
-      }
+    if (typeof value.date === 'undefined') {
+      throw new Error(`date not found for ${path}`);
+    }
 
-      loaded.set(file, {
-        title: value.title,
-        draft: value.draft,
-        date: value.date,
-        permalink: value.permalink,
-        modifiedDate: value.modifiedDate,
-        hash: value.hash,
-        weight: value.weight || 0,
-        headings: value.headings,
-        element: createElement(value.default),
-      });
+    loaded.set(path, {
+      title: value.title,
+      draft: value.draft,
+      date: value.date,
+      permalink: value.permalink,
+      modifiedDate: value.modifiedDate,
+      hash: value.hash,
+      weight: value.weight || 0,
+      headings: value.headings,
+      element: createElement(value.default),
     });
-  }
-
-  throw new Error(`unexpected file: ${file}`);
+  });
 };

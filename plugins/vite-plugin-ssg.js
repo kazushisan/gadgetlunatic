@@ -1,3 +1,4 @@
+import { toJs } from 'estree-util-to-js';
 import { globSync } from 'glob';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -8,6 +9,72 @@ const internalPrefix = 'ssg-internal:';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(__dirname, '../');
+
+/**
+ * @param {{ path: string, file: string}[]} routes
+ */
+const generateExportCode = (routes) => {
+  return toJs({
+    type: 'Program',
+    body: [
+      {
+        type: 'ExportDefaultDeclaration',
+        declaration: {
+          type: 'ArrayExpression',
+          elements: routes.map(({ path, file }) => ({
+            type: 'ObjectExpression',
+            properties: [
+              {
+                type: 'Property',
+                method: false,
+                shorthand: false,
+                computed: false,
+                key: {
+                  type: 'Identifier',
+                  name: 'path',
+                },
+                value: {
+                  type: 'Literal',
+                  value: `${path}`,
+                  raw: `'${path}'`,
+                },
+                kind: 'init',
+              },
+              {
+                type: 'Property',
+                method: false,
+                shorthand: false,
+                computed: false,
+                key: {
+                  type: 'Identifier',
+                  name: 'load',
+                },
+                value: {
+                  type: 'ArrowFunctionExpression',
+                  id: null,
+                  expression: true,
+                  generator: false,
+                  async: false,
+                  params: [],
+                  body: {
+                    type: 'ImportExpression',
+                    source: {
+                      type: 'Literal',
+                      value: `${file}`,
+                      raw: `'${file}'`,
+                    },
+                  },
+                },
+                kind: 'init',
+              },
+            ],
+          })),
+        },
+      },
+    ],
+    sourceType: 'module',
+  }).value;
+};
 
 /**
  * @this {import('rollup').PluginContext}
@@ -90,10 +157,10 @@ function virtual(config) {
       if (target === 'routes') {
         const routes = files.map((file) => ({
           path: file.replace(/^content(.+?)(\/index|)\.(md|mdx)$/, '$1'),
-          file: `../../${file}`,
+          file: `/${file}`,
         }));
 
-        return `export default ${stringifyObject(routes)}`;
+        return generateExportCode(routes);
       }
 
       if (!Object.keys(config).includes(target)) {

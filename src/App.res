@@ -1,7 +1,7 @@
 module RouteSwitch = {
   type route = {
     path: string,
-    file: string,
+    load: Lazy.load,
   }
 
   @module("ssg:routes") external routes: array<route> = "default"
@@ -15,8 +15,8 @@ module RouteSwitch = {
     let target = Js.Array2.find(routes, item => item.path == path)
 
     switch (target, url.path) {
-    | (Some(res), list{"post", ..._}) => <Post file={res.file} />
-    | (Some(res), list{"latex", ..._}) => <Latex file={res.file} path={res.path} />
+    | (Some(res), list{"post", ..._}) => <Post load={res.load} path={res.path} />
+    | (Some(res), list{"latex", ..._}) => <Latex load={res.load} path={res.path} />
     | (None, list{}) => <PostList />
     | (_, _) => <div> {React.string("page not found")} </div>
     }

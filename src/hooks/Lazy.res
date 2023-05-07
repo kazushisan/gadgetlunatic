@@ -1,3 +1,5 @@
+type load
+
 type page = {
   title: string,
   date: string,
@@ -9,7 +11,7 @@ type page = {
   element: React.element,
 }
 
-@module("../hooks/useLazy") external useLazyPage: string => page = "useLazyPage"
+@module("../hooks/useLazy") external useLazyPage: (string, load) => page = "useLazyPage"
 
 type latex = {
   path: string,

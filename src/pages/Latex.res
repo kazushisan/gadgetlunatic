@@ -1,6 +1,9 @@
 @react.component
-let make = (~file: string, ~path: string) => {
-  let {title, date, ?modifiedDate, ?hash, ?permalink, headings, element} = Lazy.useLazyPage(file)
+let make = (~path: string, ~load: Lazy.load) => {
+  let {title, date, ?modifiedDate, ?hash, ?permalink, headings, element} = Lazy.useLazyPage(
+    path,
+    load,
+  )
 
   let pages = Lazy.useLazyLatexList()
 
