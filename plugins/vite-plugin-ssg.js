@@ -4,7 +4,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import stringifyObject from 'stringify-object';
 
-const virtualModulePrefix = 'ssg:';
+const ssgModulePrefix = 'ssg:';
 const internalPrefix = 'ssg-internal:';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -110,7 +110,7 @@ async function extractFromFile(file) {
  * @param {{ [list: string]: string }} config
  * @returns {import('vite').PluginOption}
  */
-function virtual(config) {
+function ssg(config) {
   let serve = false;
 
   return {
@@ -119,12 +119,12 @@ function virtual(config) {
       serve = env.command === 'serve';
     },
     resolveId(source) {
-      if (source === `${virtualModulePrefix}routes`) {
+      if (source === `${ssgModulePrefix}routes`) {
         return source;
       }
 
-      if (source.startsWith(virtualModulePrefix)) {
-        const target = source.slice(virtualModulePrefix.length);
+      if (source.startsWith(ssgModulePrefix)) {
+        const target = source.slice(ssgModulePrefix.length);
 
         if (!Object.keys(config).includes(target)) {
           return null;
@@ -146,11 +146,11 @@ function virtual(config) {
       return null;
     },
     async load(id) {
-      if (!id.startsWith(virtualModulePrefix)) {
+      if (!id.startsWith(ssgModulePrefix)) {
         return null;
       }
 
-      const target = id.slice(virtualModulePrefix.length);
+      const target = id.slice(ssgModulePrefix.length);
       const files = globSync('./content/**/*.{md,mdx}');
 
       // use the same logic for serve and build
@@ -194,4 +194,4 @@ function virtual(config) {
   };
 }
 
-export default virtual;
+export default ssg;
