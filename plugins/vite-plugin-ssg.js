@@ -120,7 +120,7 @@ function ssg(config) {
     },
     resolveId(source) {
       if (source === `${ssgModulePrefix}routes`) {
-        return source;
+        return `\0${source}`;
       }
 
       if (source.startsWith(ssgModulePrefix)) {
@@ -130,7 +130,7 @@ function ssg(config) {
           return null;
         }
 
-        return source;
+        return `\0${source}`;
       }
 
       if (source.startsWith(internalPrefix)) {
@@ -146,11 +146,11 @@ function ssg(config) {
       return null;
     },
     async load(id) {
-      if (!id.startsWith(ssgModulePrefix)) {
+      if (!id.startsWith(`\0${ssgModulePrefix}`)) {
         return null;
       }
 
-      const target = id.slice(ssgModulePrefix.length);
+      const target = id.slice(`\0${ssgModulePrefix}`.length);
       const files = globSync('./content/**/*.{md,mdx}');
 
       // use the same logic for serve and build
