@@ -11,11 +11,7 @@ const languages = highlighter.getLoadedLanguages();
 const parse = unified().use(rehypeParse, { fragment: true }).parse;
 
 const highlightCode = () => {
-  return (tree, file) => {
-    if (!file.toString().includes('Dockerを使う場合')) {
-      return;
-    }
-
+  return (tree) => {
     visit(tree, { type: 'element', tagName: 'pre' }, (element) => {
       if (!element.children[0]?.tagName === 'code') {
         return;
