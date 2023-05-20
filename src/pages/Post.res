@@ -1,8 +1,12 @@
 @react.component
 let make = (~path: string, ~load: Lazy.load) => {
-  let {title, date, ?modifiedDate, ?hash, ?permalink, headings, element} = Lazy.useLazyPage(path, load)
+  let {title, date, ?modifiedDate, ?hash, ?permalink, headings, element} = Lazy.useLazyPage(
+    path,
+    load,
+  )
 
   <div className="xl:flex xl:justify-center">
+    <Head title={`${title} | gadgetlunatic`} />
     <div className="container md:mx-auto xl:mx-0 xl:pl-72 max-w-4xl box-content flex-1 min-w-0">
       <div className="px-4">
         <header>

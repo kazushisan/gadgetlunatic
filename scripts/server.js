@@ -34,12 +34,19 @@ async function createServer() {
         'src/EntryServer.bs.js',
       );
 
+      const context = {};
+
       const stream = renderToPipeableStream(
-        createElement(ServerRoot, { serverUrlString: url }),
+        createElement(ServerRoot, { serverUrlString: url, context }),
         {
-          onAllReady() {
+          onShellReady() {
             res.status(200).set({ 'Content-Type': 'text/html' });
-            res.write(header);
+            res.write(
+              header.replace(
+                '<!--helmet-->',
+                `${context.helmet.title.toString()}${context.helmet.meta.toString()}`,
+              ),
+            );
             stream.pipe(res);
             res.end(footer);
           },

@@ -5,9 +5,11 @@ switch ReactDOM.querySelector("#root") {
 | Some(container) => {
     let _ = ReactDOM.Client.hydrateRoot(
       container,
-      <Router.Provider>
-        <App />
-      </Router.Provider>,
+      <Helmet.Provider context={None}>
+        <Router.Provider>
+          <App />
+        </Router.Provider>
+      </Helmet.Provider>,
     )
   }
 
