@@ -55,7 +55,11 @@ const promises = routes.map(async (route) => {
         passThrough.write(
           header.replace(
             '<!--helmet-->',
-            `${context.helmet.title.toString()}${context.helmet.meta.toString()}`,
+            [
+              context.helmet.title.toString(),
+              context.helmet.meta.toString(),
+              context.helmet.link.toString(),
+            ].join(''),
           ),
         );
         stream.pipe(passThrough);
