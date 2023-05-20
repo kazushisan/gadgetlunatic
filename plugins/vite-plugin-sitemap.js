@@ -19,7 +19,7 @@ function sitemap() {
     },
     async buildStart() {
       const stream = new SitemapStream({
-        hostname: 'https://gadgetluantic.com',
+        hostname: 'https://gadgetlunatic.com',
       });
 
       stream.write({ url: '' });
