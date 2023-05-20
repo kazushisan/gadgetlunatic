@@ -3,7 +3,7 @@ let make = () => {
   let postList = Lazy.useLazyPostList()
 
   <div className="xl:flex xl:justify-center">
-    <Head title="gadgetlunatic" />
+    <Head title="gadgetlunatic" path="" />
     <div className="container md:mx-auto xl:mx-0 max-w-4xl flex-1 min-w-0">
       <div className="px-4">
         {postList

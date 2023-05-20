@@ -10,7 +10,7 @@ let make = (~path: string, ~load: Lazy.load) => {
   let (show, setShow) = React.useState(() => false)
 
   <div className="xl:flex xl:justify-center">
-    <Head title={`LaTeXのガイド ${title} | gadgetlunatic`} />
+    <Head title={`LaTeXのガイド ${title} | gadgetlunatic`} path />
     <div>
       <div className="container md:mx-auto max-w-4xl xl:hidden">
         <div className="p-4 flex justify-between">

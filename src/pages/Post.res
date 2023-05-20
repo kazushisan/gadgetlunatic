@@ -6,7 +6,7 @@ let make = (~path: string, ~load: Lazy.load) => {
   )
 
   <div className="xl:flex xl:justify-center">
-    <Head title={`${title} | gadgetlunatic`} />
+    <Head title={`${title} | gadgetlunatic`} path />
     <div className="container md:mx-auto xl:mx-0 xl:pl-72 max-w-4xl box-content flex-1 min-w-0">
       <div className="px-4">
         <header>
