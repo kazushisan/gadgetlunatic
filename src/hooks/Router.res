@@ -1,5 +1,15 @@
 @module("react") external startTransition: ((. unit) => unit) => unit = "startTransition"
 
+let track: unit => unit = %raw(`
+function track() {
+  if (window.location.host === 'gadgetlunatic.com') {
+    gtag('event', 'page_view');
+  } else {
+    console.log('page_view');
+  }
+}
+`)
+
 let context = React.createContext(RescriptReactRouter.dangerouslyGetInitialUrl())
 
 module ContextProvider = {
@@ -33,16 +43,29 @@ let urlNotEqual = (a: RescriptReactRouter.url, b: RescriptReactRouter.url) => {
 
 // modified based on https://github.com/rescript-lang/rescript-react/blob/f8964f29a38f2301afcf02277ce5ee4caf970f54/src/RescriptReactRouter.res#L185
 // to add React.startTransition
+// should be called only once
 let useUrl = () => {
   let serverUrl = context->React.useContext
 
   let (url, setUrl) = React.useState(() => serverUrl)
 
+  let done = React.useRef(false)
+
   React.useEffect0(() => {
+    switch done.current {
+    | false => {
+        track()
+        done.current = true
+      }
+
+    | true => ()
+    }
+
     let watcherId = RescriptReactRouter.watchUrl(url => {
       startTransition(
         (. ()) => {
           setUrl(_ => url)
+          track()
         },
       )
     })
