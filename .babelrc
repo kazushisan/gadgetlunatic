@@ -1,9 +1,0 @@
-/** @type {import('@babel/core').TransformOptions} */
-{
-  "presets": [
-    [
-      "@babel/preset-env",
-      { "targets": "defaults", "useBuiltIns": "usage", "corejs": "3.15" }
-    ]
-  ]
-}

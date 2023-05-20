@@ -1,22 +1,18 @@
 {
-	"name": "gadgetlunatic",
-	"reason": {
-		"react-jsx": 3
-	},
-	"version": "0.0.1",
-	"sources": {
-		"dir": "src",
-		"subdirs": true
-	},
-	"package-specs": {
-		"module": "es6-global",
-		"in-source": true
-	},
-	"suffix": ".bs.js",
-	"bs-dependencies": ["bs-webapi", "reason-react"],
-	"warnings": {
-		"error": "+101"
-	},
-	"namespace": true,
-	"refmt": 3
+  "name": "gadgetlunatic",
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    }
+  ],
+  "package-specs": [
+    {
+      "module": "es6",
+      "in-source": true
+    }
+  ],
+  "suffix": ".bs.js",
+  "bs-dependencies": ["@rescript/react"],
+  "jsx": { "version": 4 }
 }

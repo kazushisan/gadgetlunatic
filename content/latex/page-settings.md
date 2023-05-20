@@ -1,9 +1,7 @@
 ---
 title: "ページの設定"
 date: 2019-01-08T20:17:54+09:00
-draft: false
 weight: 4
-type: "documentation"
 ---
 ## ヘッダー・ページ番号
 

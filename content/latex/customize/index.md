@@ -1,8 +1,6 @@
 ---
 title: "書式のカスタマイズ"
 date: 2020-02-16T18:17:46+09:00
-draft: false
-type: "documentation"
 weight: 4
 ---
 

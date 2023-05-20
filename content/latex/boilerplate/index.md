@@ -1,8 +1,6 @@
 ---
 title: "ボイラープレート"
 date: 2019-01-08T22:07:05+09:00
-draft: false
-type: "documentation"
 weight: 5
 ---
 ## 短いレポート

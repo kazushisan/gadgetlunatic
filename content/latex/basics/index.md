@@ -1,9 +1,7 @@
 ---
 title: "基本"
 date: 2019-01-08T19:17:07+09:00
-draft: false
 weight: 3
-type: "documentation"
 ---
 ## はじめに
 

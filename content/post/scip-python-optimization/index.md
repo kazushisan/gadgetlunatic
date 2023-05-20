@@ -1,8 +1,6 @@
 ---
 title: "最適化ソルバーSCIP，モデリング言語Pyomoを使ってPythonで最適化問題を解いてみた"
 date: 2020-09-16T21:11:56+09:00
-draft: false
-toc: true
 ---
 
 ## TL;DR
@@ -100,7 +98,7 @@ poetry add pyomo ## pyomo の追加
 
 [Gurobiを使った例](https://gadgetlunatic.com/post/install-gurobi-on-mac/#%E8%A9%A6%E3%81%97%E3%81%AB%E7%B0%A1%E5%8D%98%E3%81%AA%E6%9C%80%E9%81%A9%E5%8C%96%E5%95%8F%E9%A1%8C%E3%82%92%E8%A7%A3%E3%81%8F)と同様に，久保 幹雄，ジョア・ペドロ・ペドロソ，村松 正和，アブドル・レイス『あたらしい数理最適化: Python言語とGurobiで解く』より，1章2節の線形計画問題を解いてみます．
 
-{{< eq-display >}}
+$$
 \begin{array}{crc}
 \text{maximize} & 15 x_1 + 18 x_2 + 30 x_3 & \\
 \text{subject to} & 2 x_1 + x_2 + x_3 &\leq 60 \\
@@ -108,7 +106,7 @@ poetry add pyomo ## pyomo の追加
 & x_3 &\leq 30 \\
 & x_1, x_2, x_3 &\geq 0
 \end{array}
-{{< /eq-display >}}
+$$
 
 ### ソースコード
 
@@ -236,7 +234,7 @@ Model Sample
         None :  None : 30.0 :  30.0
 ```
 
-Gurobiで実行した場合と同様に，{{< eq >}} x_1 = 10, x_2 = 10, x_3 = 30{{< /eq >}} のとき最大値 {{< eq >}}1230{{< /eq >}} を取ることが求まりました．
+Gurobiで実行した場合と同様に，$ x_1 = 10, x_2 = 10, x_3 = 30$ のとき最大値 $1230$ を取ることが求まりました．
 
 ## Reference
 

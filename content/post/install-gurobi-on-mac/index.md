@@ -1,8 +1,6 @@
 ---
 title: "Gurobi + Pythonを使ってMacで最適化問題を解く"
 date: 2020-04-03T23:26:37+09:00
-draft: false
-toc: true
 ---
 
 ## これは何
@@ -81,7 +79,7 @@ python setup.py install
 
 久保 幹雄，ジョア・ペドロ・ペドロソ，村松 正和，アブドル・レイス『あたらしい数理最適化: Python言語とGurobiで解く』より，1章2節の線形計画問題を解いてみます．
 
-{{< eq-display >}}
+$$
 \begin{array}{crc}
 \text{maximize} & 15 x_1 + 18 x_2 + 30 x_3 & \\
 \text{subject to} & 2 x_1 + x_2 + x_3 &\leq 60 \\
@@ -89,7 +87,7 @@ python setup.py install
 & x_3 &\leq 30 \\
 & x_1, x_2, x_3 &\geq 0
 \end{array}
-{{< /eq-display >}}
+$$
 
 ほとんど本のサンプルコードの通りですが，次のコードを書きました．
 

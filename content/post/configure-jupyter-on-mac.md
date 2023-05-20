@@ -1,8 +1,6 @@
 ---
 title: "MacにJupter Notebookの環境を構築する"
 date: 2019-10-24T11:25:13+09:00
-draft: false
-toc: true
 ---
 
 ## Dockerを使う場合
