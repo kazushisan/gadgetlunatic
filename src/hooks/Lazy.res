@@ -11,14 +11,14 @@ type page = {
   element: React.element,
 }
 
-@module("../hooks/useLazy") external useLazyPage: (string, load) => page = "useLazyPage"
+@module("./useLazy") external useLazyPage: (string, load) => page = "useLazyPage"
 
 type latex = {
   path: string,
   title: string,
 }
 
-@module("../hooks/useLazy") external useLazyLatexList: unit => array<latex> = "useLazyLatexList"
+@module("./useLazy") external useLazyLatexList: unit => array<latex> = "useLazyLatexList"
 
 type post = {
   path: string,
@@ -30,4 +30,4 @@ type post = {
   weight: int,
 }
 
-@module("../hooks/useLazy") external useLazyPostList: unit => array<post> = "useLazyPostList"
+@module("./useLazy") external useLazyPostList: unit => array<post> = "useLazyPostList"
