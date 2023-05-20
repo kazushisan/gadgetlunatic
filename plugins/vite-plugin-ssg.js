@@ -114,7 +114,7 @@ function ssg(config) {
   let serve = false;
 
   return {
-    name: 'virtual',
+    name: 'ssg',
     config(_, env) {
       serve = env.command === 'serve';
     },
