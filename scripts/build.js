@@ -40,15 +40,26 @@ const template = await readFile(
   resolve(__dirname, '../dist/static/index.html'),
   'utf-8',
 );
+const [header, footer] = template.split('<!--ssr-outlet-->');
+
 const { make: ServerRoot } = await import('../dist/server/EntryServer.bs.js');
 
 const promises = routes.map(async (route) => {
   const passThrough = new PassThrough();
+  const context = {};
+
   const stream = renderToPipeableStream(
-    createElement(ServerRoot, { serverUrlString: route }),
+    createElement(ServerRoot, { serverUrlString: route, context }),
     {
-      onAllReady() {
+      onShellReady() {
+        passThrough.write(
+          header.replace(
+            '<!--helmet-->',
+            `${context.helmet.title.toString()}${context.helmet.meta.toString()}`,
+          ),
+        );
         stream.pipe(passThrough);
+        passThrough.end(footer);
       },
       onError(e) {
         throw e;
@@ -56,8 +67,7 @@ const promises = routes.map(async (route) => {
     },
   );
 
-  const result = await new Response(passThrough).text();
-  const html = template.replace('<!--ssr-outlet-->', result);
+  const html = await new Response(passThrough).text();
 
   await mkdir(resolve(__dirname, '../dist/static', `./${route}`), {
     recursive: true,
