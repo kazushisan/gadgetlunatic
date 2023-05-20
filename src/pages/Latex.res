@@ -55,7 +55,7 @@ let make = (~path: string, ~load: Lazy.load) => {
       | false => React.null
       }}
     </div>
-    <div className="container md:mx-auto xl:mx-0  xl:pl-72 max-w-4xl flex-1 min-w-0 box-content">
+    <div className="container md:mx-auto xl:mx-0 max-w-4xl box-content flex-none">
       <div className="px-4">
         <header>
           <h1 className="font-bold text-3xl my-8"> {React.string(title)} </h1>
