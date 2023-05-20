@@ -16,6 +16,8 @@ type page = {
 type latex = {
   path: string,
   title: string,
+  date: string,
+  modifiedDate?: string,
 }
 
 @module("./useLazy") external useLazyLatexList: unit => array<latex> = "useLazyLatexList"
