@@ -1,6 +1,6 @@
 import { extract } from './extract.js';
 
-const transformer = (list) =>
+const query = (list) =>
   list
     .map(extract)
     .filter((item) => item.path.startsWith('/latex'))
@@ -12,4 +12,4 @@ const transformer = (list) =>
       modifiedDate,
     }));
 
-export default transformer;
+export default query;

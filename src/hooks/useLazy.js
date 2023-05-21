@@ -7,7 +7,7 @@ export const useLazyPostList = () => {
     return postList;
   }
 
-  throw import('ssg:postList').then((imported) => {
+  throw import('content:postList').then((imported) => {
     postList = imported.default;
   });
 };
@@ -19,7 +19,7 @@ export const useLazyLatexList = () => {
     return latexList;
   }
 
-  throw import('ssg:latexList').then((imported) => {
+  throw import('content:latexList').then((imported) => {
     latexList = imported.default;
   });
 };
