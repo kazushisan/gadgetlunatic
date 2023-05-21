@@ -25,7 +25,7 @@ function sitemap() {
       stream.write({ url: '' });
 
       await Promise.all(
-        ['ssg:postList', 'ssg:latexList'].map(async (target) => {
+        ['content:postList', 'content:latexList'].map(async (target) => {
           const resolution = await this.resolve(target);
 
           if (!resolution) {

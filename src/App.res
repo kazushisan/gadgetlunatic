@@ -18,7 +18,7 @@ type route = {
   load: Lazy.load,
 }
 
-@module("ssg:routes") external routes: array<route> = "default"
+@module("content:routes") external routes: array<route> = "default"
 
 @react.component
 let make = () => {

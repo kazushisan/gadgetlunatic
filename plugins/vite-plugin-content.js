@@ -4,8 +4,8 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import stringifyObject from 'stringify-object';
 
-const ssgModulePrefix = 'ssg:';
-const internalPrefix = 'ssg-internal:';
+const prefix = 'content:';
+const internalPrefix = 'content-internal:';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(__dirname, '../');
@@ -107,26 +107,26 @@ async function extractFromFile(file) {
 }
 
 /**
- * @param {{ [list: string]: string }} config
+ * @param {{ query: { [list: string]: string }}} config
  * @returns {import('vite').PluginOption}
  */
-function ssg(config) {
+function content(config) {
   let serve = false;
 
   return {
-    name: 'ssg',
+    name: 'content',
     config(_, env) {
       serve = env.command === 'serve';
     },
     resolveId(source) {
-      if (source === `${ssgModulePrefix}routes`) {
+      if (source === `${prefix}routes`) {
         return `\0${source}`;
       }
 
-      if (source.startsWith(ssgModulePrefix)) {
-        const target = source.slice(ssgModulePrefix.length);
+      if (source.startsWith(prefix)) {
+        const target = source.slice(prefix.length);
 
-        if (!Object.keys(config).includes(target)) {
+        if (!Object.keys(config.query).includes(target)) {
           return null;
         }
 
@@ -136,21 +136,21 @@ function ssg(config) {
       if (source.startsWith(internalPrefix)) {
         const target = source.slice(internalPrefix.length);
 
-        if (!Object.keys(config).includes(target)) {
+        if (!Object.keys(config.query).includes(target)) {
           return null;
         }
 
-        return resolve(projectRoot, config[target]);
+        return resolve(projectRoot, config.query[target]);
       }
 
       return null;
     },
     async load(id) {
-      if (!id.startsWith(`\0${ssgModulePrefix}`)) {
+      if (!id.startsWith(`\0${prefix}`)) {
         return null;
       }
 
-      const target = id.slice(`\0${ssgModulePrefix}`.length);
+      const target = id.slice(`\0${prefix}`.length);
       const files = globSync('./content/**/*.{md,mdx}');
 
       // use the same logic for serve and build
@@ -163,19 +163,19 @@ function ssg(config) {
         return generateExportCode(routes);
       }
 
-      if (!Object.keys(config).includes(target)) {
+      if (!Object.keys(config.query).includes(target)) {
         return null;
       }
 
       if (serve) {
         return `
-        import transformer from '${internalPrefix}${target}';
+        import query from '${internalPrefix}${target}';
         const files = import.meta.glob('/content/**/*.{md,mdx}', { eager: true });
         const list = Object.entries(files).map(([path, data]) => ({
           path: path.replace(/^\\/content(.+?)(\\/index|)\\.(md|mdx)$/, '$1'),
           data,
         }));
-        const result = transformer(list);
+        const result = query(list);
         export default result;
         `;
       }
@@ -184,14 +184,14 @@ function ssg(config) {
         files.map((file) => extractFromFile.call(this, file)),
       );
 
-      const { default: transformer } = await import(
-        resolve(projectRoot, config[target])
+      const { default: query } = await import(
+        resolve(projectRoot, config.query[target])
       );
-      const result = transformer(list);
+      const result = query(list);
 
       return `export default ${stringifyObject(result)}`;
     },
   };
 }
 
-export default ssg;
+export default content;
