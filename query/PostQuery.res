@@ -1,5 +1,6 @@
-let getTime = (date: string) => Js.Date.fromString(date)->Js.Date.getTime->Belt.Int.fromFloat
-
+let getTime = (date: string) => {
+  (Js.Date.fromString(date)->Js.Date.getTime /. 1000.)->Belt.Int.fromFloat
+}
 let query = (list: array<Extract.item>) =>
   list
   ->Js.Array2.map(Extract.extract)
