@@ -4,6 +4,10 @@
     {
       "dir": "src",
       "subdirs": true
+    },
+    {
+      "dir": "query",
+      "subdirs": true
     }
   ],
   "package-specs": [

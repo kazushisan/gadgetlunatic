@@ -11,8 +11,8 @@ export default defineConfig({
     mdx(),
     content({
       query: {
-        postList: './query/postList.js',
-        latexList: './query/latexList.js',
+        postList: './query/PostQuery.bs.js',
+        latexList: './query/LatexQuery.bs.js',
       },
     }),
     sitemap(),
