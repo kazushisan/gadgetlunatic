@@ -8,7 +8,7 @@ import stringifyObject from 'stringify-object';
 import { VFile } from 'vfile';
 import rehypeHeadings from './rehype-headings';
 import rehypeHighlightCode from './rehype-highlight-code';
-import rehypeHeadingAnchor from './rehype-heading-anchor';
+import rehypeHeadingAnchor from 'rehype-heading-anchor';
 import rehypeImage from './rehype-image';
 import { execSync } from 'child_process';
 import { relative } from 'path';
@@ -66,7 +66,7 @@ function mdx() {
         remarkPlugins: [remarkGfm, remarkMath],
         rehypePlugins: [
           rehypeSlug,
-          rehypeHeadingAnchor,
+          [rehypeHeadingAnchor, { className: ['heading-anchor'] }],
           rehypeKatex,
           rehypeHeadings,
           rehypeHighlightCode,
