@@ -29,6 +29,7 @@
     "prettier": "^2.8.4",
     "rehype-heading-anchor": "^0.1.0",
     "rehype-katex": "^6.0.2",
+    "rehype-mdx-headings": "^0.1.0",
     "rehype-parse": "^8.0.4",
     "rehype-slug": "^5.1.0",
     "remark-gfm": "^3.0.1",
