@@ -6,7 +6,7 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import stringifyObject from 'stringify-object';
 import { VFile } from 'vfile';
-import rehypeHeadings from './rehype-headings';
+import rehypeMdxHeadings from 'rehype-mdx-headings';
 import rehypeHighlightCode from './rehype-highlight-code';
 import rehypeHeadingAnchor from 'rehype-heading-anchor';
 import rehypeImage from './rehype-image';
@@ -68,7 +68,7 @@ function mdx() {
           rehypeSlug,
           [rehypeHeadingAnchor, { className: ['heading-anchor'] }],
           rehypeKatex,
-          rehypeHeadings,
+          rehypeMdxHeadings,
           rehypeHighlightCode,
           rehypeImage,
         ],
